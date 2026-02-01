@@ -50,9 +50,256 @@ LABOR_KEYWORDS = [
 
 # 出力ディレクトリ
 OUTPUT_DIR = Path("news")
+DOCS_DIR = Path("docs")  # GitHub Pages用
 
 # デフォルトの収集日数
 DEFAULT_DAYS = 7
+
+# HTMLテンプレート
+HTML_TEMPLATE = """<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>労務関連ニュース - {period}</title>
+    <style>
+        :root {{
+            --primary-color: #2c5282;
+            --secondary-color: #4a5568;
+            --accent-color: #3182ce;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --text-color: #2d3748;
+            --text-muted: #718096;
+        }}
+
+        * {{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }}
+
+        body {{
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }}
+
+        .container {{
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }}
+
+        header {{
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 0 0 20px 20px;
+        }}
+
+        header h1 {{
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }}
+
+        header .period {{
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }}
+
+        header .meta {{
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 15px;
+        }}
+
+        .stats {{
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }}
+
+        .stat-item {{
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }}
+
+        .stat-number {{
+            font-size: 1.5rem;
+            font-weight: bold;
+        }}
+
+        .stat-label {{
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }}
+
+        .date-section {{
+            margin-bottom: 30px;
+        }}
+
+        .date-header {{
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px 10px 0 0;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }}
+
+        .date-header .count {{
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+        }}
+
+        .source-section {{
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-top: none;
+        }}
+
+        .source-section:last-child {{
+            border-radius: 0 0 10px 10px;
+        }}
+
+        .source-header {{
+            background: var(--bg-color);
+            padding: 10px 20px;
+            font-weight: bold;
+            color: var(--secondary-color);
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }}
+
+        .news-item {{
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.2s;
+        }}
+
+        .news-item:hover {{
+            background-color: #f0f7ff;
+        }}
+
+        .news-item:last-child {{
+            border-bottom: none;
+        }}
+
+        .news-title {{
+            margin-bottom: 8px;
+        }}
+
+        .news-title a {{
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+        }}
+
+        .news-title a:hover {{
+            text-decoration: underline;
+        }}
+
+        .news-time {{
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-left: 8px;
+        }}
+
+        .news-summary {{
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }}
+
+        footer {{
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }}
+
+        footer a {{
+            color: var(--accent-color);
+        }}
+
+        @media (max-width: 600px) {{
+            .container {{
+                padding: 10px;
+            }}
+
+            header {{
+                padding: 25px 15px;
+                border-radius: 0;
+            }}
+
+            header h1 {{
+                font-size: 1.4rem;
+            }}
+
+            .stats {{
+                gap: 15px;
+            }}
+
+            .stat-item {{
+                padding: 8px 15px;
+            }}
+
+            .date-header {{
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }}
+
+            .news-item {{
+                padding: 12px 15px;
+            }}
+
+            .news-title a {{
+                font-size: 0.95rem;
+            }}
+        }}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>労務関連ニュース</h1>
+        <div class="period">{period}</div>
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">{total_count}</div>
+                <div class="stat-label">ニュース件数</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{source_count}</div>
+                <div class="stat-label">情報ソース</div>
+            </div>
+        </div>
+        <div class="meta">収集日時: {collected_at}</div>
+    </header>
+
+    <div class="container">
+        {content}
+    </div>
+
+    <footer>
+        <p>RSSフィードから自動収集 | <a href="https://github.com/" target="_blank">GitHub</a>で公開中</p>
+    </footer>
+</body>
+</html>
+"""
 
 
 def clean_html(text: str) -> str:
@@ -200,16 +447,133 @@ def save_markdown(start_date: datetime, end_date: datetime, content: str) -> Pat
     return file_path
 
 
+def escape_html(text: str) -> str:
+    """HTMLエスケープ"""
+    return (
+        text.replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+    )
+
+
+def generate_html(
+    items: list[NewsItem], start_date: datetime, end_date: datetime
+) -> str:
+    """HTMLコンテンツを生成"""
+    start_str = start_date.strftime("%Y-%m-%d")
+    end_str = end_date.strftime("%Y-%m-%d")
+    period = f"{start_str} 〜 {end_str}"
+
+    # 日付ごとにグループ化
+    by_date = group_by_date(items)
+
+    # ソース数をカウント
+    sources = set(item.source for item in items)
+
+    # コンテンツ生成
+    content_parts = []
+
+    for date_str in sorted(by_date.keys(), reverse=True):
+        date_items = by_date[date_str]
+
+        # 日付ヘッダー
+        content_parts.append(f'<div class="date-section">')
+        content_parts.append(
+            f'<div class="date-header">'
+            f'<span>{date_str}</span>'
+            f'<span class="count">{len(date_items)}件</span>'
+            f'</div>'
+        )
+
+        # ソースごとにグループ化
+        by_source = defaultdict(list)
+        for item in date_items:
+            by_source[item.source].append(item)
+
+        for source, source_items in sorted(by_source.items()):
+            content_parts.append(f'<div class="source-section">')
+            content_parts.append(
+                f'<div class="source-header">{escape_html(source)}</div>'
+            )
+
+            for item in sorted(source_items, key=lambda x: x.published, reverse=True):
+                time_str = item.published.strftime("%H:%M")
+                title_escaped = escape_html(item.title)
+                link_escaped = escape_html(item.link)
+                summary_escaped = escape_html(item.summary) if item.summary else ""
+
+                content_parts.append(f'<div class="news-item">')
+                content_parts.append(f'<div class="news-title">')
+                content_parts.append(
+                    f'<a href="{link_escaped}" target="_blank" rel="noopener">{title_escaped}</a>'
+                )
+                content_parts.append(f'<span class="news-time">{time_str}</span>')
+                content_parts.append(f'</div>')
+                if summary_escaped:
+                    short_summary = (
+                        summary_escaped[:120] + "..."
+                        if len(summary_escaped) > 120
+                        else summary_escaped
+                    )
+                    content_parts.append(f'<div class="news-summary">{short_summary}</div>')
+                content_parts.append(f'</div>')
+
+            content_parts.append(f'</div>')
+
+        content_parts.append(f'</div>')
+
+    content = "\n".join(content_parts)
+
+    # テンプレートに埋め込み
+    html_content = HTML_TEMPLATE.format(
+        period=period,
+        total_count=len(items),
+        source_count=len(sources),
+        collected_at=datetime.now().strftime("%Y-%m-%d %H:%M"),
+        content=content,
+    )
+
+    return html_content
+
+
+def save_html(start_date: datetime, end_date: datetime, content: str) -> Path:
+    """HTMLファイルを保存（GitHub Pages用）"""
+    DOCS_DIR.mkdir(exist_ok=True)
+
+    # index.htmlとして保存（GitHub Pages用）
+    index_path = DOCS_DIR / "index.html"
+    index_path.write_text(content, encoding="utf-8")
+
+    # アーカイブ用にも保存
+    start_str = start_date.strftime("%Y-%m-%d")
+    end_str = end_date.strftime("%Y-%m-%d")
+    archive_path = DOCS_DIR / f"{start_str}_{end_str}.html"
+    archive_path.write_text(content, encoding="utf-8")
+
+    return index_path
+
+
 def parse_args():
     """コマンドライン引数をパース"""
     parser = argparse.ArgumentParser(
-        description="労務関連ニュースを収集してMarkdown形式で保存します"
+        description="労務関連ニュースを収集してMarkdown/HTML形式で保存します"
     )
     parser.add_argument(
         "--days",
         type=int,
         default=DEFAULT_DAYS,
         help=f"収集する日数（デフォルト: {DEFAULT_DAYS}日間）",
+    )
+    parser.add_argument(
+        "--no-html",
+        action="store_true",
+        help="HTML生成をスキップする",
+    )
+    parser.add_argument(
+        "--no-markdown",
+        action="store_true",
+        help="Markdown生成をスキップする",
     )
     return parser.parse_args()
 
@@ -251,11 +615,19 @@ def main():
         print("指定期間内にニュースが見つかりませんでした。")
         return
 
-    # 週次レポートとして1ファイルに保存
-    print("Markdownファイルを生成中...")
-    content = generate_markdown(filtered_items, start_date, end_date)
-    file_path = save_markdown(start_date, end_date, content)
-    print(f"  → {file_path}")
+    # Markdownファイルを生成
+    if not args.no_markdown:
+        print("Markdownファイルを生成中...")
+        md_content = generate_markdown(filtered_items, start_date, end_date)
+        md_path = save_markdown(start_date, end_date, md_content)
+        print(f"  → {md_path}")
+
+    # HTMLファイルを生成
+    if not args.no_html:
+        print("HTMLファイルを生成中...")
+        html_content = generate_html(filtered_items, start_date, end_date)
+        html_path = save_html(start_date, end_date, html_content)
+        print(f"  → {html_path} (GitHub Pages用)")
 
     print()
     print("完了しました！")
