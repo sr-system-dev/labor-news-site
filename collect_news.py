@@ -37,7 +37,6 @@ class NewsItem(NamedTuple):
 
 # RSSフィードの設定
 RSS_FEEDS = {
-    "厚生労働省": "https://www.mhlw.go.jp/stf/news.rdf",
     "労働新聞社": "https://www.rodo.co.jp/feed/",
     "労務ドットコム": "https://roumu.com/feed/",
     "日本の人事部": "https://jinjibu.jp/rss/?mode=atcl",
@@ -104,11 +103,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         }}
 
         body {{
-            font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Noto Sans JP', 'Inter', -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.7;
             min-height: 100vh;
+        }}
+
+        * {{
+            font-family: inherit;
         }}
 
         .hero {{
@@ -293,7 +296,6 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             font-size: 0.875rem;
         }}
 
-        .source-icon.mhlw {{ background: linear-gradient(135deg, #ef4444, #f97316); }}
         .source-icon.rodo {{ background: linear-gradient(135deg, #3b82f6, #6366f1); }}
         .source-icon.roumu {{ background: linear-gradient(135deg, #10b981, #14b8a6); }}
         .source-icon.jinjibu {{ background: linear-gradient(135deg, #8b5cf6, #a855f7); }}
@@ -384,7 +386,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
             border: 1px solid rgba(99, 102, 241, 0.3);
             border-radius: 20px;
-            padding: 32px;
+            padding: 28px;
             margin-bottom: 32px;
             position: relative;
             overflow: hidden;
@@ -404,7 +406,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
         }}
 
         .summary-icon {{
@@ -416,6 +419,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
+            flex-shrink: 0;
+        }}
+
+        .summary-header-text {{
+            flex: 1;
+            min-width: 150px;
         }}
 
         .summary-title {{
@@ -431,31 +440,38 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
         .summary-content {{
             color: var(--text-secondary);
-            line-height: 1.8;
+            line-height: 1.9;
+            font-size: 0.95rem;
         }}
 
         .summary-content ul {{
             list-style: none;
             padding: 0;
+            margin: 0;
         }}
 
         .summary-content li {{
-            padding: 12px 0;
-            padding-left: 28px;
+            padding: 16px 20px;
+            padding-left: 44px;
             position: relative;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--success);
         }}
 
         .summary-content li:last-child {{
-            border-bottom: none;
+            margin-bottom: 0;
         }}
 
         .summary-content li::before {{
             content: '✓';
             position: absolute;
-            left: 0;
+            left: 16px;
+            top: 16px;
             color: var(--success);
             font-weight: bold;
+            font-size: 1rem;
         }}
 
         .ai-badge {{
@@ -463,12 +479,95 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             align-items: center;
             gap: 6px;
             background: rgba(99, 102, 241, 0.2);
-            color: var(--primary);
-            padding: 4px 10px;
+            color: var(--accent);
+            padding: 6px 12px;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 600;
+        }}
+
+        .archive-section {{
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 28px;
+            margin-top: 40px;
+            border: 1px solid var(--border);
+        }}
+
+        .archive-header {{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }}
+
+        .archive-icon {{
+            width: 40px;
+            height: 40px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }}
+
+        .archive-title {{
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }}
+
+        .archive-list {{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }}
+
+        .archive-item {{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }}
+
+        .archive-item:hover {{
+            background: var(--bg-hover);
+            border-color: var(--primary);
+            color: var(--text-primary);
+        }}
+
+        .archive-item.current {{
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }}
+
+        .archive-item-icon {{
+            font-size: 1.25rem;
+        }}
+
+        .archive-item-date {{
+            font-weight: 500;
+        }}
+
+        .archive-item-badge {{
             margin-left: auto;
+            background: var(--bg-primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }}
+
+        .archive-item.current .archive-item-badge {{
+            background: var(--primary);
+            color: white;
         }}
 
         footer {{
@@ -598,6 +697,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <div class="container">
         {summary_section}
         {content}
+        {archive_section}
     </div>
 
     <footer>
@@ -657,8 +757,7 @@ def fetch_feed(url: str, source_name: str) -> list[NewsItem]:
             published = parse_date(entry)
 
             # タイトルまたはサマリーが労務関連の場合のみ追加
-            # 厚生労働省のフィードは全て含める
-            if "厚生労働省" in source_name or is_labor_related(title + summary):
+            if is_labor_related(title + summary):
                 items.append(NewsItem(
                     title=title,
                     link=link,
@@ -811,9 +910,7 @@ def escape_html(text: str) -> str:
 
 def get_source_icon_class(source: str) -> str:
     """ソース名からアイコンクラスを取得"""
-    if "厚生労働省" in source:
-        return "mhlw"
-    elif "労働新聞" in source:
+    if "労働新聞" in source:
         return "rodo"
     elif "労務ドットコム" in source or "roumu" in source.lower():
         return "roumu"
@@ -824,9 +921,7 @@ def get_source_icon_class(source: str) -> str:
 
 def get_source_emoji(source: str) -> str:
     """ソース名から絵文字を取得"""
-    if "厚生労働省" in source:
-        return "🏛️"
-    elif "労働新聞" in source:
+    if "労働新聞" in source:
         return "📰"
     elif "労務ドットコム" in source or "roumu" in source.lower():
         return "💼"
@@ -844,9 +939,18 @@ def get_weekday_jp(date_str: str) -> str:
 
 def generate_html(
     items: list[NewsItem], start_date: datetime, end_date: datetime,
-    summary: str | None = None
+    summary: str | None = None,
+    archives: list[tuple[str, str, bool]] | None = None
 ) -> str:
-    """HTMLコンテンツを生成"""
+    """HTMLコンテンツを生成
+
+    Args:
+        items: ニュースアイテムのリスト
+        start_date: 開始日
+        end_date: 終了日
+        summary: AIサマリー（オプション）
+        archives: アーカイブ一覧 [(ファイル名, 期間表示, 現在かどうか), ...]
+    """
     start_str = start_date.strftime("%Y-%m-%d")
     end_str = end_date.strftime("%Y-%m-%d")
     period = f"{start_str} 〜 {end_str}"
@@ -854,35 +958,42 @@ def generate_html(
     # サマリーセクションを生成
     if summary:
         # サマリーテキストをHTMLに変換（箇条書きをリストに）
-        summary_html = summary.replace("\n", "<br>")
-        # 箇条書きをリストに変換
         lines = summary.split("\n")
         list_items = []
         for line in lines:
             line = line.strip()
-            if line.startswith("- ") or line.startswith("・"):
-                item_text = line.lstrip("- ・").strip()
-                list_items.append(f"<li>{escape_html(item_text)}</li>")
+            if not line:
+                continue
+            # 箇条書きのパターンをチェック
+            if line.startswith("- ") or line.startswith("・") or line.startswith("• "):
+                item_text = line.lstrip("-・• ").strip()
+                if item_text:
+                    list_items.append(f"<li>{escape_html(item_text)}</li>")
             elif line.startswith("* "):
                 item_text = line.lstrip("* ").strip()
-                list_items.append(f"<li>{escape_html(item_text)}</li>")
-            elif line and not line.startswith("#"):
+                if item_text:
+                    list_items.append(f"<li>{escape_html(item_text)}</li>")
+            elif not line.startswith("#") and not line.startswith("**"):
                 # 番号付きリストも対応
-                import re as regex
-                match = regex.match(r'^\d+[\.\)]\s*(.+)$', line)
+                match = re.match(r'^\d+[\.\)]\s*(.+)$', line)
                 if match:
                     list_items.append(f"<li>{escape_html(match.group(1))}</li>")
+                elif len(line) > 10:  # 短すぎる行は除外
+                    # 通常のテキスト行も箇条書きとして追加
+                    list_items.append(f"<li>{escape_html(line)}</li>")
 
         if list_items:
             summary_list = "<ul>" + "".join(list_items) + "</ul>"
         else:
-            summary_list = f"<p>{escape_html(summary)}</p>"
+            # 箇条書きが見つからない場合は段落として表示
+            paragraphs = [f"<p>{escape_html(p.strip())}</p>" for p in summary.split("\n\n") if p.strip()]
+            summary_list = "".join(paragraphs) if paragraphs else f"<p>{escape_html(summary)}</p>"
 
         summary_section = f'''
         <div class="summary-card">
             <div class="summary-header">
                 <div class="summary-icon">🤖</div>
-                <div>
+                <div class="summary-header-text">
                     <div class="summary-title">今週のポイント</div>
                     <div class="summary-subtitle">AIによる自動サマリー</div>
                 </div>
@@ -974,6 +1085,33 @@ def generate_html(
 
     content = "\n".join(content_parts)
 
+    # アーカイブセクションを生成
+    if archives and len(archives) > 0:
+        archive_items = []
+        for filename, period_label, is_current in archives:
+            current_class = " current" if is_current else ""
+            badge_text = "現在" if is_current else "過去"
+            archive_items.append(
+                f'<a href="{filename}" class="archive-item{current_class}">'
+                f'<span class="archive-item-icon">📅</span>'
+                f'<span class="archive-item-date">{period_label}</span>'
+                f'<span class="archive-item-badge">{badge_text}</span>'
+                f'</a>'
+            )
+        archive_section = f'''
+        <div class="archive-section">
+            <div class="archive-header">
+                <div class="archive-icon">📚</div>
+                <div class="archive-title">過去のニュース一覧</div>
+            </div>
+            <div class="archive-list">
+                {"".join(archive_items)}
+            </div>
+        </div>
+        '''
+    else:
+        archive_section = ""
+
     # テンプレートに埋め込み
     html_content = HTML_TEMPLATE.format(
         period=period,
@@ -982,10 +1120,36 @@ def generate_html(
         day_count=day_count,
         collected_at=datetime.now().strftime("%Y-%m-%d %H:%M"),
         summary_section=summary_section,
+        archive_section=archive_section,
         content=content,
     )
 
     return html_content
+
+
+def get_archive_list(current_start: str, current_end: str) -> list[tuple[str, str, bool]]:
+    """既存のアーカイブ一覧を取得"""
+    archives = []
+    current_filename = f"{current_start}_{current_end}.html"
+
+    if DOCS_DIR.exists():
+        # HTMLファイルを検索（日付範囲形式のもののみ）
+        for html_file in sorted(DOCS_DIR.glob("????-??-??_????-??-??.html"), reverse=True):
+            filename = html_file.name
+            # ファイル名から期間を抽出
+            parts = filename.replace(".html", "").split("_")
+            if len(parts) == 2:
+                start, end = parts
+                period_label = f"{start} 〜 {end}"
+                is_current = (filename == current_filename)
+                archives.append((filename, period_label, is_current))
+
+    # 現在のファイルがまだ存在しない場合は追加
+    if not any(a[0] == current_filename for a in archives):
+        period_label = f"{current_start} 〜 {current_end}"
+        archives.insert(0, (current_filename, period_label, True))
+
+    return archives
 
 
 def save_html(start_date: datetime, end_date: datetime, content: str) -> Path:
@@ -1091,7 +1255,13 @@ def main():
     # HTMLファイルを生成
     if not args.no_html:
         print("HTMLファイルを生成中...")
-        html_content = generate_html(filtered_items, start_date, end_date, summary)
+        # アーカイブ一覧を取得
+        start_str = start_date.strftime("%Y-%m-%d")
+        end_str = end_date.strftime("%Y-%m-%d")
+        archives = get_archive_list(start_str, end_str)
+        print(f"  アーカイブ数: {len(archives)}件")
+
+        html_content = generate_html(filtered_items, start_date, end_date, summary, archives)
         html_path = save_html(start_date, end_date, html_content)
         print(f"  → {html_path} (GitHub Pages用)")
 

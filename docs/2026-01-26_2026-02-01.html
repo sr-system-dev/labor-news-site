@@ -38,11 +38,15 @@
         }
 
         body {
-            font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Noto Sans JP', 'Inter', -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.7;
             min-height: 100vh;
+        }
+
+        * {
+            font-family: inherit;
         }
 
         .hero {
@@ -227,7 +231,6 @@
             font-size: 0.875rem;
         }
 
-        .source-icon.mhlw { background: linear-gradient(135deg, #ef4444, #f97316); }
         .source-icon.rodo { background: linear-gradient(135deg, #3b82f6, #6366f1); }
         .source-icon.roumu { background: linear-gradient(135deg, #10b981, #14b8a6); }
         .source-icon.jinjibu { background: linear-gradient(135deg, #8b5cf6, #a855f7); }
@@ -318,7 +321,7 @@
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
             border: 1px solid rgba(99, 102, 241, 0.3);
             border-radius: 20px;
-            padding: 32px;
+            padding: 28px;
             margin-bottom: 32px;
             position: relative;
             overflow: hidden;
@@ -338,7 +341,8 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
         }
 
         .summary-icon {
@@ -350,6 +354,12 @@
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .summary-header-text {
+            flex: 1;
+            min-width: 150px;
         }
 
         .summary-title {
@@ -365,31 +375,38 @@
 
         .summary-content {
             color: var(--text-secondary);
-            line-height: 1.8;
+            line-height: 1.9;
+            font-size: 0.95rem;
         }
 
         .summary-content ul {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
 
         .summary-content li {
-            padding: 12px 0;
-            padding-left: 28px;
+            padding: 16px 20px;
+            padding-left: 44px;
             position: relative;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--success);
         }
 
         .summary-content li:last-child {
-            border-bottom: none;
+            margin-bottom: 0;
         }
 
         .summary-content li::before {
             content: '✓';
             position: absolute;
-            left: 0;
+            left: 16px;
+            top: 16px;
             color: var(--success);
             font-weight: bold;
+            font-size: 1rem;
         }
 
         .ai-badge {
@@ -397,12 +414,95 @@
             align-items: center;
             gap: 6px;
             background: rgba(99, 102, 241, 0.2);
-            color: var(--primary);
-            padding: 4px 10px;
+            color: var(--accent);
+            padding: 6px 12px;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 600;
+        }
+
+        .archive-section {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 28px;
+            margin-top: 40px;
+            border: 1px solid var(--border);
+        }
+
+        .archive-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .archive-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .archive-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .archive-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .archive-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .archive-item:hover {
+            background: var(--bg-hover);
+            border-color: var(--primary);
+            color: var(--text-primary);
+        }
+
+        .archive-item.current {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .archive-item-icon {
+            font-size: 1.25rem;
+        }
+
+        .archive-item-date {
+            font-weight: 500;
+        }
+
+        .archive-item-badge {
             margin-left: auto;
+            background: var(--bg-primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .archive-item.current .archive-item-badge {
+            background: var(--primary);
+            color: white;
         }
 
         footer {
@@ -513,11 +613,11 @@
             <div class="period">2026-01-26 〜 2026-02-01</div>
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-value">111</div>
+                    <div class="stat-value">47</div>
                     <div class="stat-label">ニュース</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">5</div>
+                    <div class="stat-value">4</div>
                     <div class="stat-label">ソース</div>
                 </div>
                 <div class="stat-card">
@@ -525,40 +625,11 @@
                     <div class="stat-label">日間</div>
                 </div>
             </div>
-            <div class="meta">Last updated: 2026-02-01 07:37</div>
+            <div class="meta">Last updated: 2026-02-01 22:35</div>
         </div>
     </div>
 
     <div class="container">
-        
-        <div class="summary-card">
-            <div class="summary-header">
-                <div class="summary-icon">🤖</div>
-                <div>
-                    <div class="summary-title">今週のポイント</div>
-                    <div class="summary-subtitle">AIによる自動サマリー</div>
-                </div>
-                <div class="ai-badge">✨ AI Generated</div>
-            </div>
-            <div class="summary-content">
-                <p>人事・労務担当者向け 今週の重要ポイント
-
-• **外国人雇用状況の届出（10月末時点）が発表**
-  外国人労働者の雇用動向を把握し、自社の雇用管理や届出義務の確認に活用しましょう。
-
-• **労働災害発生状況と熱中症防止対策検討会の続報**
-  労働災害の最新データを確認し、特に夏場に向けた職場の熱中症対策の見直しを検討する時期です。
-
-• **労働基準法違反の公表事案が更新**
-  他社の違反事例を参考に、自社の労務管理体制や法令遵守状況を再点検することが重要です。
-
-• **求人・雇用情勢（12月分・年間）の最新データが公表**
-  採用計画の見直しや労働市場の動向把握に役立つ情報として活用できます。
-
-• **労働基準法における「労働者」の定義に関する研究会が進行中**
-  業務委託やフリーランス等の働き方の法的整理に関わる重要な検討が行われており、今後の制度変更に注意が必要です。</p>
-            </div>
-        </div>
         
         <div class="date-card">
 <div class="date-header">
@@ -621,7 +692,7 @@
 <div class="date-weekday">金曜日</div>
 </div>
 </div>
-<div class="date-count">29件</div>
+<div class="date-count">6件</div>
 </div>
 <div class="source-group">
 <div class="source-header"><span class="source-icon rodo">📰</span>労働新聞社</div>
@@ -687,195 +758,6 @@
 </div>
 </div>
 </div>
-<div class="source-group">
-<div class="source-header"><span class="source-icon mhlw">🏛️</span>厚生労働省</div>
-<div class="news-list">
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/bunya/roudoukijun/anzeneisei11/rousai-hassei/index.html" target="_blank" rel="noopener">
-<div class="news-title">労働災害発生状況</div>
-<div class="news-meta">
-<span class="news-time">09:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69735.html" target="_blank" rel="noopener">
-<div class="news-title">職場における熱中症防止対策に係る検討会 第２回資料</div>
-<div class="news-meta">
-<span class="news-time">08:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69727.html" target="_blank" rel="noopener">
-<div class="news-title">ドナー関連業務実施法人を許可しました</div>
-<div class="news-meta">
-<span class="news-time">06:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/kinkyu/151106.html" target="_blank" rel="noopener">
-<div class="news-title">労働基準関係法令違反に係る公表事案</div>
-<div class="news-meta">
-<span class="news-time">06:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69786.html" target="_blank" rel="noopener">
-<div class="news-title">令和７年度地域・職域連携推進関係者会議 資料</div>
-<div class="news-meta">
-<span class="news-time">05:58</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/topics/medias/c-med/2025/09/" target="_blank" rel="noopener">
-<div class="news-title">最近の調剤医療費（電算処理分）の動向 令和7年度9月号</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/topics/medias/shika_iryou/2025/09/" target="_blank" rel="noopener">
-<div class="news-title">最近の歯科医療費（電算処理分）の動向 令和7年度9月号</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/topics/medias/ika_iryou/2025/09/" target="_blank" rel="noopener">
-<div class="news-title">最近の医科医療費（電算処理分）の動向 令和7年度9月号</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/topics/medias/month/25/09.html" target="_blank" rel="noopener">
-<div class="news-title">最近の医療費の動向-MEDIAS-令和7年度9月号</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69406.html" target="_blank" rel="noopener">
-<div class="news-title">第107回社会保障審議会年金数理部会 議事録</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/toukei/saikin/hw/iryosd/m25/is2511.html" target="_blank" rel="noopener">
-<div class="news-title">医療施設動態調査（令和7(2025)年11月末概数）</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/toukei/saikin/hw/gyousei/24/index.html" target="_blank" rel="noopener">
-<div class="news-title">令和６年度福祉行政報告例の概況</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69110.html" target="_blank" rel="noopener">
-<div class="news-title">社会保障審議会（医療保険部会 治療用装具療養費検討専門委員会）の開催について【ハイブリッドにて開催】</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_68794.html" target="_blank" rel="noopener">
-<div class="news-title">「外国人雇用状況」の届出状況まとめ（令和７年10月末時点）</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_68142.html" target="_blank" rel="noopener">
-<div class="news-title">「SaMD 産学官サブフォーラム2026」を開催します</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/other-kenkou_128610_00035.html" target="_blank" rel="noopener">
-<div class="news-title">第14回機能性表示食品等の健康被害情報への対応に関する小委員会（第１小委員会）（Web会議）を開催します。（開催案内）</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000121431_00485.html" target="_blank" rel="noopener">
-<div class="news-title">新型コロナウイルス感染症に関する報道発表資料を更新しました</div>
-<div class="news-meta">
-<span class="news-time">04:55</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/kenkou/kekkaku-kansenshou01/houdou_00023.html" target="_blank" rel="noopener">
-<div class="news-title">インフルエンザに関する報道発表資料を更新しました</div>
-<div class="news-meta">
-<span class="news-time">04:55</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/houkokusuunosuii_00007.html" target="_blank" rel="noopener">
-<div class="news-title">インフルエンザ・新型コロナウイルス感染症の定点当たり報告数の推移を更新しました</div>
-<div class="news-meta">
-<span class="news-time">04:55</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/kenkou/kekkaku-kansenshou01/houdou.html" target="_blank" rel="noopener">
-<div class="news-title">インフルエンザの発生状況を更新しました</div>
-<div class="news-meta">
-<span class="news-time">04:55</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69623.html" target="_blank" rel="noopener">
-<div class="news-title">第206回労働政策審議会労働条件分科会 議事録（2025年12月24日）</div>
-<div class="news-meta">
-<span class="news-time">02:50</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69635.html" target="_blank" rel="noopener">
-<div class="news-title">中央最低賃金審議会 委員名簿（R８.１.30現在）</div>
-<div class="news-meta">
-<span class="news-time">01:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/shingi/shingi-tingin_127939.html" target="_blank" rel="noopener">
-<div class="news-title">中央最低賃金審議会 (中央最低賃金審議会)</div>
-<div class="news-meta">
-<span class="news-time">01:00</span>
-</div>
-</a>
-</div>
-</div>
-</div>
 </div>
 <div class="date-card">
 <div class="date-header">
@@ -886,7 +768,7 @@
 <div class="date-weekday">木曜日</div>
 </div>
 </div>
-<div class="date-count">24件</div>
+<div class="date-count">19件</div>
 </div>
 <div class="source-group">
 <div class="source-header"><span class="source-icon rodo">📰</span>労働新聞社</div>
@@ -1061,51 +943,6 @@
 </div>
 </div>
 <div class="source-group">
-<div class="source-header"><span class="source-icon mhlw">🏛️</span>厚生労働省</div>
-<div class="news-list">
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69302.html" target="_blank" rel="noopener">
-<div class="news-title">一般職業紹介状況(令和7年12月分及び令和7年分)について</div>
-<div class="news-meta">
-<span class="news-time">23:30</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000202923_00033.html" target="_blank" rel="noopener">
-<div class="news-title">令和７年度「地域の医療・観光資源を活用した外国人受入れ推進のための調査・実証事業」成果報告会開催のお知らせ</div>
-<div class="news-meta">
-<span class="news-time">15:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/houdou/0000188884_00004.html" target="_blank" rel="noopener">
-<div class="news-title">令和６年度における保険医療機関等の指導・監査等の実施状況について</div>
-<div class="news-meta">
-<span class="news-time">05:50</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_68716.html" target="_blank" rel="noopener">
-<div class="news-title">「第２回 人口動態統計のICD-11準拠の統計分類適用に係るワーキンググループ」の開催について</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/seisakunitsuite/kaigiroku/index.html" target="_blank" rel="noopener">
-<div class="news-title">国会会議録について</div>
-<div class="news-meta">
-<span class="news-time">01:00</span>
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="source-group">
 <div class="source-header"><span class="source-icon jinjibu">👥</span>日本の人事部（プレスリリース）</div>
 <div class="news-list">
 <div class="news-item">
@@ -1129,7 +966,7 @@
 <div class="date-weekday">水曜日</div>
 </div>
 </div>
-<div class="date-count">23件</div>
+<div class="date-count">9件</div>
 </div>
 <div class="source-group">
 <div class="source-header"><span class="source-icon rodo">📰</span>労働新聞社</div>
@@ -1196,123 +1033,6 @@
 </div>
 </div>
 <div class="source-group">
-<div class="source-header"><span class="source-icon mhlw">🏛️</span>厚生労働省</div>
-<div class="news-list">
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69622.html" target="_blank" rel="noopener">
-<div class="news-title">腎不全患者の在宅医療等に関する医療連携体制モデル事業の公示について</div>
-<div class="news-meta">
-<span class="news-time">09:23</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69620.html" target="_blank" rel="noopener">
-<div class="news-title">腎不全医療に関する情報提供体制整備事業の公示について</div>
-<div class="news-meta">
-<span class="news-time">09:10</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_68450.html" target="_blank" rel="noopener">
-<div class="news-title">薬事審議会血液事業部会令和７年度第４回運営委員会議事録</div>
-<div class="news-meta">
-<span class="news-time">07:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69578.html" target="_blank" rel="noopener">
-<div class="news-title">腎不全の症状緩和等に関する研修体制支援事業の公示について</div>
-<div class="news-meta">
-<span class="news-time">06:46</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69488.html" target="_blank" rel="noopener">
-<div class="news-title">「第３回 職場における熱中症防止対策に係る検討会」 を開催します</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69284.html" target="_blank" rel="noopener">
-<div class="news-title">「第43回社会保障審議会介護給付費分科会介護事業経営調査委員会」を開催します（開催案内）</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69024.html" target="_blank" rel="noopener">
-<div class="news-title">「第91回 労働政策審議会勤労者生活分科会中小企業退職金共済部会」を開催します（開催案内）</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_68620.html" target="_blank" rel="noopener">
-<div class="news-title">第12回戦没者遺骨鑑定センター運営会議の開催について</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/shingi/shingi-hosho_126700.html" target="_blank" rel="noopener">
-<div class="news-title">社会保障審議会(福祉部会)</div>
-<div class="news-meta">
-<span class="news-time">04:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/hukushi_kaigo/seikatsuhogo/jyoseishien_r5_00007.html" target="_blank" rel="noopener">
-<div class="news-title">令和８年度 困難な問題を抱える女性への支援に関する プラットフォーム構築事業の公募について</div>
-<div class="news-meta">
-<span class="news-time">02:22</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69540.html" target="_blank" rel="noopener">
-<div class="news-title">第１回「障害（補償）等給付に係る診断書様式等に関する検討会」</div>
-<div class="news-meta">
-<span class="news-time">02:19</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/kouseiroudoushou/saiyou/hijoukin/hj-kenkou_seikatueiseikyoku03.html" target="_blank" rel="noopener">
-<div class="news-title">採用情報（非常勤職員（健康・生活衛生局）募集情報）</div>
-<div class="news-meta">
-<span class="news-time">02:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/kenkou/ishoku/renkeitaisei_00006.html" target="_blank" rel="noopener">
-<div class="news-title">臓器提供施設連携体制構築事業について</div>
-<div class="news-meta">
-<span class="news-time">02:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69537.html" target="_blank" rel="noopener">
-<div class="news-title">第７６回厚生科学審議会疾病対策部会難病対策委員会・第７回社会保障審議会小児慢性特定疾病対策部会小児慢性特定疾病対策委員会（合同開催）</div>
-<div class="news-meta">
-<span class="news-time">01:35</span>
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="source-group">
 <div class="source-header"><span class="source-icon jinjibu">👥</span>日本の人事部（プレスリリース）</div>
 <div class="news-list">
 <div class="news-item">
@@ -1354,7 +1074,7 @@
 <div class="date-weekday">火曜日</div>
 </div>
 </div>
-<div class="date-count">19件</div>
+<div class="date-count">9件</div>
 </div>
 <div class="source-group">
 <div class="source-header"><span class="source-icon rodo">📰</span>労働新聞社</div>
@@ -1447,91 +1167,6 @@
 </div>
 </div>
 </div>
-<div class="source-group">
-<div class="source-header"><span class="source-icon mhlw">🏛️</span>厚生労働省</div>
-<div class="news-list">
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69481.html" target="_blank" rel="noopener">
-<div class="news-title">労働基準法における「労働者」に関する研究会 第５回資料</div>
-<div class="news-meta">
-<span class="news-time">08:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/hukushi_kaigo/seikatsuhogo/jjoseishien_r7_tyousakenkyu00001_00003.html" target="_blank" rel="noopener">
-<div class="news-title">令和８年度「困難な問題を抱える女性への支援の推進に資する取組に関する調査研究事業」の公募について</div>
-<div class="news-meta">
-<span class="news-time">07:15</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69508.html" target="_blank" rel="noopener">
-<div class="news-title">令和７年度第１回医道審議会医師分科会医師国家試験等改善部会</div>
-<div class="news-meta">
-<span class="news-time">06:59</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69505.html" target="_blank" rel="noopener">
-<div class="news-title">医道審議会歯科医師分科会歯学生共用試験部会を開催します</div>
-<div class="news-meta">
-<span class="news-time">06:55</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_68978.html" target="_blank" rel="noopener">
-<div class="news-title">第145回脳死下での臓器提供事例に係る検証会議を開催します</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_68613.html" target="_blank" rel="noopener">
-<div class="news-title">第48回技能五輪国際大会（中国・上海）に出場する日本代表選手を決定しました</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_68169.html" target="_blank" rel="noopener">
-<div class="news-title">第390回労働政策審議会職業安定分科会労働力需給制度部会 資料</div>
-<div class="news-meta">
-<span class="news-time">04:30</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69485.html" target="_blank" rel="noopener">
-<div class="news-title">令和７年度 医療機関等における賃上げ・物価上昇支援事業について</div>
-<div class="news-meta">
-<span class="news-time">04:12</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/kouseiroudoushou/saiyou/hijoukin/hj-daizinkanboukouseikagakuka01.html" target="_blank" rel="noopener">
-<div class="news-title">採用情報（非常勤職員（大臣官房厚生科学課）募集情報）</div>
-<div class="news-meta">
-<span class="news-time">02:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/toukei/itiran/roudou/monthly/r07/0708/index.html" target="_blank" rel="noopener">
-<div class="news-title">毎月勤労統計調査［地方調査］－令和７年８月分結果概要</div>
-<div class="news-meta">
-<span class="news-time">01:00</span>
-</div>
-</a>
-</div>
-</div>
-</div>
 </div>
 <div class="date-card">
 <div class="date-header">
@@ -1542,108 +1177,7 @@
 <div class="date-weekday">月曜日</div>
 </div>
 </div>
-<div class="date-count">14件</div>
-</div>
-<div class="source-group">
-<div class="source-header"><span class="source-icon mhlw">🏛️</span>厚生労働省</div>
-<div class="news-list">
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69178.html" target="_blank" rel="noopener">
-<div class="news-title">「第２回 職場における熱中症防止対策に係る検討会」 を開催します</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/toukei/itiran/roudou/monthly/tokubetu/25/r07maitoku.html" target="_blank" rel="noopener">
-<div class="news-title">2025（令和７）年毎月勤労統計調査特別調査の概況</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69039.html" target="_blank" rel="noopener">
-<div class="news-title">薬事審議会 医療機器・体外診断薬部会を開催します</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69014.html" target="_blank" rel="noopener">
-<div class="news-title">第179回医学的検証作業グループ</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_68943.html" target="_blank" rel="noopener">
-<div class="news-title">「第17回薬局・薬剤師の機能強化等に関する検討会」の開催について</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_68559.html" target="_blank" rel="noopener">
-<div class="news-title">薬事審議会 要指導・一般用医薬品部会を開催します</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_67783.html" target="_blank" rel="noopener">
-<div class="news-title">第１０９回社会保障審議会年金数理部会の開催について（ペーパーレス開催）</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_67780.html" target="_blank" rel="noopener">
-<div class="news-title">第１０８回社会保障審議会年金数理部会の開催について（ペーパーレス開催）</div>
-<div class="news-meta">
-<span class="news-time">05:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69377.html" target="_blank" rel="noopener">
-<div class="news-title">第67回 医療上の必要性の高い未承認薬・適応外薬検討会議（オンライン会議）を開催します</div>
-<div class="news-meta">
-<span class="news-time">04:30</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/newpage_69350.html" target="_blank" rel="noopener">
-<div class="news-title">第124回社会保障審議会医療部会 資料</div>
-<div class="news-meta">
-<span class="news-time">03:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/kouseiroudoushou/saiyou/hijoukin/hj-iyakukyoku02.html" target="_blank" rel="noopener">
-<div class="news-title">採用情報（期間業務職員（医薬局）募集情報）</div>
-<div class="news-meta">
-<span class="news-time">02:00</span>
-</div>
-</a>
-</div>
-<div class="news-item">
-<a href="https://www.mhlw.go.jp/stf/kouseiroudoushou/saiyou/kokka-den/openzemi2026.html" target="_blank" rel="noopener">
-<div class="news-title">厚生労働省（デジタル・電気・電子区分） 霞が関ＯＰＥＮゼミ</div>
-<div class="news-meta">
-<span class="news-time">01:00</span>
-</div>
-</a>
-</div>
-</div>
+<div class="date-count">2件</div>
 </div>
 <div class="source-group">
 <div class="source-header"><span class="source-icon jinjibu">👥</span>日本の人事部</div>
@@ -1674,6 +1208,17 @@
 </div>
 </div>
 </div>
+        
+        <div class="archive-section">
+            <div class="archive-header">
+                <div class="archive-icon">📚</div>
+                <div class="archive-title">過去のニュース一覧</div>
+            </div>
+            <div class="archive-list">
+                <a href="2026-01-26_2026-02-01.html" class="archive-item current"><span class="archive-item-icon">📅</span><span class="archive-item-date">2026-01-26 〜 2026-02-01</span><span class="archive-item-badge">現在</span></a>
+            </div>
+        </div>
+        
     </div>
 
     <footer>
