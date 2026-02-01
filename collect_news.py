@@ -10,12 +10,20 @@ RSSフィードから最新ニュースを取得し、Markdown形式で保存す
 
 import argparse
 import feedparser
+import os
 from datetime import datetime, timedelta
 from pathlib import Path
 import html
 import re
 from typing import NamedTuple
 from collections import defaultdict
+
+# Anthropic APIクライアント（オプション）
+try:
+    import anthropic
+    ANTHROPIC_AVAILABLE = True
+except ImportError:
+    ANTHROPIC_AVAILABLE = False
 
 
 class NewsItem(NamedTuple):
@@ -29,11 +37,11 @@ class NewsItem(NamedTuple):
 
 # RSSフィードの設定
 RSS_FEEDS = {
-    "厚生労働省": "https://www.mhlw.go.jp/stf/rss/shinchaku.xml",
-    "厚生労働省（報道発表）": "https://www.mhlw.go.jp/stf/rss/houdou.xml",
+    "厚生労働省": "https://www.mhlw.go.jp/stf/news.rdf",
     "労働新聞社": "https://www.rodo.co.jp/feed/",
     "労務ドットコム": "https://roumu.com/feed/",
-    "日本の人事部": "https://jinjibu.jp/rss/news.rss",
+    "日本の人事部": "https://jinjibu.jp/rss/?mode=atcl",
+    "日本の人事部（プレスリリース）": "https://jinjibu.jp/rss/?mode=news",
 }
 
 # 労務関連キーワード（フィルタリング用）
@@ -61,17 +69,32 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>労務関連ニュース - {period}</title>
+    <title>労務ニュース Weekly | {period}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {{
-            --primary-color: #2c5282;
-            --secondary-color: #4a5568;
-            --accent-color: #3182ce;
-            --bg-color: #f7fafc;
-            --card-bg: #ffffff;
-            --border-color: #e2e8f0;
-            --text-color: #2d3748;
-            --text-muted: #718096;
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #334155;
+            --bg-hover: #475569;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border: #475569;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.15);
         }}
 
         * {{
@@ -81,221 +104,505 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         }}
 
         body {{
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
+            font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }}
+
+        .hero {{
+            background: var(--gradient-2);
+            position: relative;
+            overflow: hidden;
+            padding: 60px 20px 80px;
+        }}
+
+        .hero::before {{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }}
+
+        .hero-content {{
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }}
+
+        .hero-badge {{
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }}
+
+        .hero-badge::before {{
+            content: '📰';
+        }}
+
+        .hero h1 {{
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }}
+
+        .hero .period {{
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 32px;
+        }}
+
+        .stats-grid {{
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }}
+
+        .stat-card {{
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 20px 32px;
+            border-radius: 16px;
+            text-align: center;
+            min-width: 140px;
+        }}
+
+        .stat-value {{
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 4px;
+        }}
+
+        .stat-label {{
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }}
+
+        .meta {{
+            font-size: 0.875rem;
+            opacity: 0.7;
         }}
 
         .container {{
             max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
+            transform: translateY(-40px);
         }}
 
-        header {{
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            margin-bottom: 30px;
-            border-radius: 0 0 20px 20px;
-        }}
-
-        header h1 {{
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }}
-
-        header .period {{
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }}
-
-        header .meta {{
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: 15px;
-        }}
-
-        .stats {{
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }}
-
-        .stat-item {{
-            background: rgba(255,255,255,0.2);
-            padding: 10px 20px;
-            border-radius: 10px;
-        }}
-
-        .stat-number {{
-            font-size: 1.5rem;
-            font-weight: bold;
-        }}
-
-        .stat-label {{
-            font-size: 0.85rem;
-            opacity: 0.9;
-        }}
-
-        .date-section {{
-            margin-bottom: 30px;
+        .date-card {{
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            margin-bottom: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+            border: 1px solid var(--border);
         }}
 
         .date-header {{
-            background: var(--primary-color);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 10px 10px 0 0;
-            font-size: 1.1rem;
+            background: var(--bg-card);
+            padding: 20px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid var(--border);
         }}
 
-        .date-header .count {{
-            background: rgba(255,255,255,0.2);
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.85rem;
+        .date-info {{
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }}
 
-        .source-section {{
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-top: none;
+        .date-icon {{
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
         }}
 
-        .source-section:last-child {{
-            border-radius: 0 0 10px 10px;
+        .date-text {{
+            font-size: 1.125rem;
+            font-weight: 600;
+        }}
+
+        .date-weekday {{
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }}
+
+        .date-count {{
+            background: var(--primary);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }}
+
+        .source-group {{
+            border-bottom: 1px solid var(--border);
+        }}
+
+        .source-group:last-child {{
+            border-bottom: none;
         }}
 
         .source-header {{
-            background: var(--bg-color);
-            padding: 10px 20px;
-            font-weight: bold;
-            color: var(--secondary-color);
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.95rem;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background: rgba(255,255,255,0.02);
+        }}
+
+        .source-icon {{
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+        }}
+
+        .source-icon.mhlw {{ background: linear-gradient(135deg, #ef4444, #f97316); }}
+        .source-icon.rodo {{ background: linear-gradient(135deg, #3b82f6, #6366f1); }}
+        .source-icon.roumu {{ background: linear-gradient(135deg, #10b981, #14b8a6); }}
+        .source-icon.jinjibu {{ background: linear-gradient(135deg, #8b5cf6, #a855f7); }}
+
+        .news-list {{
+            padding: 0;
         }}
 
         .news-item {{
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.2s;
-        }}
-
-        .news-item:hover {{
-            background-color: #f0f7ff;
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.2s ease;
+            cursor: pointer;
         }}
 
         .news-item:last-child {{
             border-bottom: none;
         }}
 
-        .news-title {{
-            margin-bottom: 8px;
+        .news-item:hover {{
+            background: var(--bg-hover);
         }}
 
-        .news-title a {{
-            color: var(--accent-color);
+        .news-item a {{
             text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
+            color: inherit;
+            display: block;
         }}
 
-        .news-title a:hover {{
-            text-decoration: underline;
+        .news-title {{
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }}
+
+        .news-title::before {{
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin-top: 8px;
+            flex-shrink: 0;
+        }}
+
+        .news-item:hover .news-title {{
+            color: var(--accent);
+        }}
+
+        .news-meta {{
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-left: 14px;
         }}
 
         .news-time {{
-            color: var(--text-muted);
             font-size: 0.8rem;
-            margin-left: 8px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }}
+
+        .news-time::before {{
+            content: '🕐';
+            font-size: 0.75rem;
         }}
 
         .news-summary {{
+            font-size: 0.875rem;
             color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.5;
+            line-height: 1.6;
+            margin-left: 14px;
+            margin-top: 8px;
+            padding: 12px 16px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }}
+
+        .summary-card {{
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }}
+
+        .summary-card::before {{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-2);
+        }}
+
+        .summary-header {{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }}
+
+        .summary-icon {{
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }}
+
+        .summary-title {{
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }}
+
+        .summary-subtitle {{
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }}
+
+        .summary-content {{
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }}
+
+        .summary-content ul {{
+            list-style: none;
+            padding: 0;
+        }}
+
+        .summary-content li {{
+            padding: 12px 0;
+            padding-left: 28px;
+            position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }}
+
+        .summary-content li:last-child {{
+            border-bottom: none;
+        }}
+
+        .summary-content li::before {{
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }}
+
+        .ai-badge {{
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: auto;
         }}
 
         footer {{
             text-align: center;
-            padding: 30px;
+            padding: 48px 20px;
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.875rem;
         }}
 
         footer a {{
-            color: var(--accent-color);
+            color: var(--accent);
+            text-decoration: none;
         }}
 
-        @media (max-width: 600px) {{
+        footer a:hover {{
+            text-decoration: underline;
+        }}
+
+        .footer-brand {{
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }}
+
+        @media (max-width: 640px) {{
+            .hero {{
+                padding: 40px 16px 60px;
+            }}
+
+            .hero h1 {{
+                font-size: 1.75rem;
+            }}
+
+            .stats-grid {{
+                gap: 12px;
+            }}
+
+            .stat-card {{
+                padding: 16px 24px;
+                min-width: 120px;
+            }}
+
+            .stat-value {{
+                font-size: 2rem;
+            }}
+
             .container {{
-                padding: 10px;
+                padding: 0 12px;
             }}
 
-            header {{
-                padding: 25px 15px;
-                border-radius: 0;
-            }}
-
-            header h1 {{
-                font-size: 1.4rem;
-            }}
-
-            .stats {{
-                gap: 15px;
-            }}
-
-            .stat-item {{
-                padding: 8px 15px;
+            .date-card {{
+                border-radius: 16px;
             }}
 
             .date-header {{
                 flex-direction: column;
-                gap: 8px;
-                text-align: center;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 16px 20px;
             }}
 
+            .date-count {{
+                align-self: flex-start;
+            }}
+
+            .source-header,
             .news-item {{
-                padding: 12px 15px;
+                padding: 14px 20px;
             }}
 
-            .news-title a {{
+            .news-title {{
                 font-size: 0.95rem;
             }}
         }}
+
+        /* Animation */
+        @keyframes fadeInUp {{
+            from {{
+                opacity: 0;
+                transform: translateY(20px);
+            }}
+            to {{
+                opacity: 1;
+                transform: translateY(0);
+            }}
+        }}
+
+        .date-card {{
+            animation: fadeInUp 0.5s ease-out;
+            animation-fill-mode: both;
+        }}
+
+        .date-card:nth-child(1) {{ animation-delay: 0.1s; }}
+        .date-card:nth-child(2) {{ animation-delay: 0.2s; }}
+        .date-card:nth-child(3) {{ animation-delay: 0.3s; }}
+        .date-card:nth-child(4) {{ animation-delay: 0.4s; }}
+        .date-card:nth-child(5) {{ animation-delay: 0.5s; }}
+        .date-card:nth-child(6) {{ animation-delay: 0.6s; }}
+        .date-card:nth-child(7) {{ animation-delay: 0.7s; }}
     </style>
 </head>
 <body>
-    <header>
-        <h1>労務関連ニュース</h1>
-        <div class="period">{period}</div>
-        <div class="stats">
-            <div class="stat-item">
-                <div class="stat-number">{total_count}</div>
-                <div class="stat-label">ニュース件数</div>
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">Weekly Report</div>
+            <h1>労務ニュース Weekly</h1>
+            <div class="period">{period}</div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">{total_count}</div>
+                    <div class="stat-label">ニュース</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{source_count}</div>
+                    <div class="stat-label">ソース</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">{day_count}</div>
+                    <div class="stat-label">日間</div>
+                </div>
             </div>
-            <div class="stat-item">
-                <div class="stat-number">{source_count}</div>
-                <div class="stat-label">情報ソース</div>
-            </div>
+            <div class="meta">Last updated: {collected_at}</div>
         </div>
-        <div class="meta">収集日時: {collected_at}</div>
-    </header>
+    </div>
 
     <div class="container">
+        {summary_section}
         {content}
     </div>
 
     <footer>
-        <p>RSSフィードから自動収集 | <a href="https://github.com/" target="_blank">GitHub</a>で公開中</p>
+        <div class="footer-brand">労務ニュース Weekly</div>
+        <p>RSSフィードから自動収集・更新</p>
     </footer>
 </body>
 </html>
@@ -363,6 +670,51 @@ def fetch_feed(url: str, source_name: str) -> list[NewsItem]:
         print(f"  エラー: {source_name} の取得に失敗しました - {e}")
 
     return items
+
+
+def generate_ai_summary(items: list[NewsItem]) -> str | None:
+    """AIを使って週次ニュースサマリーを生成"""
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+
+    if not ANTHROPIC_AVAILABLE:
+        print("  警告: anthropicパッケージがインストールされていません")
+        return None
+
+    if not api_key:
+        print("  警告: ANTHROPIC_API_KEYが設定されていません")
+        return None
+
+    # ニュースをテキストにまとめる
+    news_text = ""
+    for item in items[:50]:  # 最大50件に制限（トークン節約）
+        news_text += f"- {item.title} ({item.source})\n"
+
+    prompt = f"""以下は今週の労務関連ニュースの一覧です。これを人事・労務担当者向けに、重要なポイントを3〜5つにまとめてください。
+
+【今週のニュース一覧】
+{news_text}
+
+【出力形式】
+- 箇条書きで3〜5つのポイント
+- 各ポイントは1〜2文で簡潔に
+- 専門用語は避け、わかりやすい表現で
+- 実務に役立つ視点でまとめる
+
+日本語で回答してください。"""
+
+    try:
+        client = anthropic.Anthropic(api_key=api_key)
+        message = client.messages.create(
+            model="claude-sonnet-4-20250514",
+            max_tokens=1024,
+            messages=[
+                {"role": "user", "content": prompt}
+            ]
+        )
+        return message.content[0].text
+    except Exception as e:
+        print(f"  エラー: サマリー生成に失敗しました - {e}")
+        return None
 
 
 def filter_by_date_range(
@@ -457,13 +809,92 @@ def escape_html(text: str) -> str:
     )
 
 
+def get_source_icon_class(source: str) -> str:
+    """ソース名からアイコンクラスを取得"""
+    if "厚生労働省" in source:
+        return "mhlw"
+    elif "労働新聞" in source:
+        return "rodo"
+    elif "労務ドットコム" in source or "roumu" in source.lower():
+        return "roumu"
+    elif "人事部" in source:
+        return "jinjibu"
+    return "default"
+
+
+def get_source_emoji(source: str) -> str:
+    """ソース名から絵文字を取得"""
+    if "厚生労働省" in source:
+        return "🏛️"
+    elif "労働新聞" in source:
+        return "📰"
+    elif "労務ドットコム" in source or "roumu" in source.lower():
+        return "💼"
+    elif "人事部" in source:
+        return "👥"
+    return "📄"
+
+
+def get_weekday_jp(date_str: str) -> str:
+    """日付文字列から日本語曜日を取得"""
+    weekdays = ["月", "火", "水", "木", "金", "土", "日"]
+    date_obj = datetime.strptime(date_str, "%Y-%m-%d")
+    return weekdays[date_obj.weekday()]
+
+
 def generate_html(
-    items: list[NewsItem], start_date: datetime, end_date: datetime
+    items: list[NewsItem], start_date: datetime, end_date: datetime,
+    summary: str | None = None
 ) -> str:
     """HTMLコンテンツを生成"""
     start_str = start_date.strftime("%Y-%m-%d")
     end_str = end_date.strftime("%Y-%m-%d")
     period = f"{start_str} 〜 {end_str}"
+
+    # サマリーセクションを生成
+    if summary:
+        # サマリーテキストをHTMLに変換（箇条書きをリストに）
+        summary_html = summary.replace("\n", "<br>")
+        # 箇条書きをリストに変換
+        lines = summary.split("\n")
+        list_items = []
+        for line in lines:
+            line = line.strip()
+            if line.startswith("- ") or line.startswith("・"):
+                item_text = line.lstrip("- ・").strip()
+                list_items.append(f"<li>{escape_html(item_text)}</li>")
+            elif line.startswith("* "):
+                item_text = line.lstrip("* ").strip()
+                list_items.append(f"<li>{escape_html(item_text)}</li>")
+            elif line and not line.startswith("#"):
+                # 番号付きリストも対応
+                import re as regex
+                match = regex.match(r'^\d+[\.\)]\s*(.+)$', line)
+                if match:
+                    list_items.append(f"<li>{escape_html(match.group(1))}</li>")
+
+        if list_items:
+            summary_list = "<ul>" + "".join(list_items) + "</ul>"
+        else:
+            summary_list = f"<p>{escape_html(summary)}</p>"
+
+        summary_section = f'''
+        <div class="summary-card">
+            <div class="summary-header">
+                <div class="summary-icon">🤖</div>
+                <div>
+                    <div class="summary-title">今週のポイント</div>
+                    <div class="summary-subtitle">AIによる自動サマリー</div>
+                </div>
+                <div class="ai-badge">✨ AI Generated</div>
+            </div>
+            <div class="summary-content">
+                {summary_list}
+            </div>
+        </div>
+        '''
+    else:
+        summary_section = ""
 
     # 日付ごとにグループ化
     by_date = group_by_date(items)
@@ -471,20 +902,28 @@ def generate_html(
     # ソース数をカウント
     sources = set(item.source for item in items)
 
+    # 日数をカウント
+    day_count = len(by_date)
+
     # コンテンツ生成
     content_parts = []
 
     for date_str in sorted(by_date.keys(), reverse=True):
         date_items = by_date[date_str]
+        weekday = get_weekday_jp(date_str)
 
-        # 日付ヘッダー
-        content_parts.append(f'<div class="date-section">')
-        content_parts.append(
-            f'<div class="date-header">'
-            f'<span>{date_str}</span>'
-            f'<span class="count">{len(date_items)}件</span>'
-            f'</div>'
-        )
+        # 日付カード
+        content_parts.append(f'<div class="date-card">')
+        content_parts.append(f'<div class="date-header">')
+        content_parts.append(f'<div class="date-info">')
+        content_parts.append(f'<div class="date-icon">📅</div>')
+        content_parts.append(f'<div>')
+        content_parts.append(f'<div class="date-text">{date_str}</div>')
+        content_parts.append(f'<div class="date-weekday">{weekday}曜日</div>')
+        content_parts.append(f'</div>')
+        content_parts.append(f'</div>')
+        content_parts.append(f'<div class="date-count">{len(date_items)}件</div>')
+        content_parts.append(f'</div>')
 
         # ソースごとにグループ化
         by_source = defaultdict(list)
@@ -492,10 +931,17 @@ def generate_html(
             by_source[item.source].append(item)
 
         for source, source_items in sorted(by_source.items()):
-            content_parts.append(f'<div class="source-section">')
+            icon_class = get_source_icon_class(source)
+            emoji = get_source_emoji(source)
+
+            content_parts.append(f'<div class="source-group">')
             content_parts.append(
-                f'<div class="source-header">{escape_html(source)}</div>'
+                f'<div class="source-header">'
+                f'<span class="source-icon {icon_class}">{emoji}</span>'
+                f'{escape_html(source)}'
+                f'</div>'
             )
+            content_parts.append(f'<div class="news-list">')
 
             for item in sorted(source_items, key=lambda x: x.published, reverse=True):
                 time_str = item.published.strftime("%H:%M")
@@ -504,21 +950,24 @@ def generate_html(
                 summary_escaped = escape_html(item.summary) if item.summary else ""
 
                 content_parts.append(f'<div class="news-item">')
-                content_parts.append(f'<div class="news-title">')
                 content_parts.append(
-                    f'<a href="{link_escaped}" target="_blank" rel="noopener">{title_escaped}</a>'
+                    f'<a href="{link_escaped}" target="_blank" rel="noopener">'
                 )
+                content_parts.append(f'<div class="news-title">{title_escaped}</div>')
+                content_parts.append(f'<div class="news-meta">')
                 content_parts.append(f'<span class="news-time">{time_str}</span>')
                 content_parts.append(f'</div>')
                 if summary_escaped:
                     short_summary = (
-                        summary_escaped[:120] + "..."
-                        if len(summary_escaped) > 120
+                        summary_escaped[:100] + "..."
+                        if len(summary_escaped) > 100
                         else summary_escaped
                     )
                     content_parts.append(f'<div class="news-summary">{short_summary}</div>')
+                content_parts.append(f'</a>')
                 content_parts.append(f'</div>')
 
+            content_parts.append(f'</div>')
             content_parts.append(f'</div>')
 
         content_parts.append(f'</div>')
@@ -530,7 +979,9 @@ def generate_html(
         period=period,
         total_count=len(items),
         source_count=len(sources),
+        day_count=day_count,
         collected_at=datetime.now().strftime("%Y-%m-%d %H:%M"),
+        summary_section=summary_section,
         content=content,
     )
 
@@ -575,6 +1026,11 @@ def parse_args():
         action="store_true",
         help="Markdown生成をスキップする",
     )
+    parser.add_argument(
+        "--no-summary",
+        action="store_true",
+        help="AIサマリー生成をスキップする",
+    )
     return parser.parse_args()
 
 
@@ -615,6 +1071,16 @@ def main():
         print("指定期間内にニュースが見つかりませんでした。")
         return
 
+    # AIサマリーを生成
+    summary = None
+    if not args.no_summary:
+        print("AIサマリーを生成中...")
+        summary = generate_ai_summary(filtered_items)
+        if summary:
+            print("  → サマリー生成完了")
+        else:
+            print("  → サマリー生成スキップ（APIキー未設定または失敗）")
+
     # Markdownファイルを生成
     if not args.no_markdown:
         print("Markdownファイルを生成中...")
@@ -625,7 +1091,7 @@ def main():
     # HTMLファイルを生成
     if not args.no_html:
         print("HTMLファイルを生成中...")
-        html_content = generate_html(filtered_items, start_date, end_date)
+        html_content = generate_html(filtered_items, start_date, end_date, summary)
         html_path = save_html(start_date, end_date, html_content)
         print(f"  → {html_path} (GitHub Pages用)")
 

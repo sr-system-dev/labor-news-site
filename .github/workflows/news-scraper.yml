@@ -40,6 +40,8 @@ jobs:
 
       # ニュース収集スクリプトを実行
       - name: Collect news
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           python collect_news.py --days ${{ github.event.inputs.days || '7' }}
 
