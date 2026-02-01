@@ -1,0 +1,70 @@
+name: 労務関連ニュース収集
+
+on:
+  # 毎週月曜日 9:00 JST (= 0:00 UTC) に実行
+  schedule:
+    - cron: '0 0 * * 1'
+
+  # 手動実行も可能
+  workflow_dispatch:
+    inputs:
+      days:
+        description: '収集する日数'
+        required: false
+        default: '7'
+        type: string
+
+# ワークフローの権限設定
+permissions:
+  contents: write
+
+jobs:
+  collect-news:
+    runs-on: ubuntu-latest
+
+    steps:
+      # リポジトリをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Pythonをセットアップ
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      # 依存関係をインストール
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ニュース収集スクリプトを実行
+      - name: Collect news
+        run: |
+          python collect_news.py --days ${{ github.event.inputs.days || '7' }}
+
+      # 変更をコミット＆プッシュ
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          # 変更があるかチェック
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          # 日付を取得
+          DATE=$(date +'%Y-%m-%d')
+
+          # 変更をステージング
+          git add news/ docs/
+
+          # コミット
+          git commit -m "Update labor news: ${DATE}
+
+          Automated news collection by GitHub Actions"
+
+          # プッシュ
+          git push
