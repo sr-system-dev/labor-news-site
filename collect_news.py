@@ -69,6 +69,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weekly SR by iand | {period}</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -393,12 +394,51 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             background: var(--bg-white);
             border-radius: var(--radius-md);
             border-left: 3px solid var(--success);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }}
+
+        .summary-content li:hover {{
+            background: var(--success-bg);
+            transform: translateX(4px);
+        }}
+
+        .summary-content li.active {{
+            background: var(--success-bg);
+            border-left-color: var(--primary);
+            border-left-width: 4px;
         }}
 
         .summary-content li::before {{
             content: '✓';
             color: var(--success);
             font-weight: 700;
+        }}
+
+        .summary-keywords {{
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }}
+
+        .summary-keyword {{
+            background: var(--primary-bg);
+            color: var(--primary);
+            padding: 2px 10px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }}
+
+        /* Highlighted news cards */
+        .news-card.highlighted {{
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-bg), var(--shadow-md);
+        }}
+
+        .news-card.dimmed {{
+            opacity: 0.4;
         }}
 
         /* News Grid */
@@ -800,6 +840,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         // Source filtering
         document.querySelectorAll('.filter-tab').forEach(tab => {{
             tab.addEventListener('click', () => {{
+                // Clear topic selection
+                document.querySelectorAll('.summary-content li').forEach(li => li.classList.remove('active'));
+                document.querySelectorAll('.news-card').forEach(card => {{
+                    card.classList.remove('highlighted', 'dimmed');
+                }});
+
                 document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
                 const filter = tab.dataset.filter;
@@ -818,6 +864,57 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             link.addEventListener('click', (e) => {{
                 document.querySelectorAll('.date-nav-item').forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
+            }});
+        }});
+
+        // Topic click to highlight related articles
+        document.querySelectorAll('.summary-content li').forEach(item => {{
+            item.addEventListener('click', () => {{
+                const keywords = item.dataset.keywords;
+                if (!keywords) return;
+
+                const keywordList = keywords.split(',').map(k => k.trim().toLowerCase());
+                const isActive = item.classList.contains('active');
+
+                // Reset all
+                document.querySelectorAll('.summary-content li').forEach(li => li.classList.remove('active'));
+                document.querySelectorAll('.news-card').forEach(card => {{
+                    card.classList.remove('highlighted', 'dimmed');
+                    card.style.display = '';
+                }});
+
+                // Reset source filter to "all"
+                document.querySelectorAll('.filter-tab').forEach(t => {{
+                    t.classList.toggle('active', t.dataset.filter === 'all');
+                }});
+
+                if (isActive) return; // Toggle off
+
+                item.classList.add('active');
+
+                // Find matching cards
+                let hasMatch = false;
+                document.querySelectorAll('.news-card').forEach(card => {{
+                    const title = card.querySelector('.news-card-title')?.textContent.toLowerCase() || '';
+                    const summary = card.querySelector('.news-card-summary')?.textContent.toLowerCase() || '';
+                    const content = title + ' ' + summary;
+
+                    const matches = keywordList.some(kw => content.includes(kw));
+                    if (matches) {{
+                        card.classList.add('highlighted');
+                        hasMatch = true;
+                    }} else {{
+                        card.classList.add('dimmed');
+                    }}
+                }});
+
+                // Scroll to first match
+                if (hasMatch) {{
+                    const firstMatch = document.querySelector('.news-card.highlighted');
+                    if (firstMatch) {{
+                        firstMatch.scrollIntoView({{ behavior: 'smooth', block: 'center' }});
+                    }}
+                }}
             }});
         }});
     </script>
@@ -906,7 +1003,7 @@ def generate_ai_summary(items: list[NewsItem]) -> str | None:
         news_text += f"- 【{item.source}】{item.title}\n"
 
     prompt = f"""あなたは企業の人事・労務担当者向けに情報を提供する専門家です。
-以下は今週の労務関連ニュースの一覧です。これを分析し、企業が今週押さえるべき重要トピックをまとめてください。
+以下は今週の労務関連ニュースの一覧です。これを分析し、重要トピックをまとめてください。
 
 【今週のニュース一覧】
 {news_text}
@@ -917,13 +1014,15 @@ def generate_ai_summary(items: list[NewsItem]) -> str | None:
 3. 各トピックについて、企業がどのような影響を受けるか、どのような対策・準備が必要かを具体的に述べてください。
 
 【出力形式】
-3〜5つの重要トピックを以下の形式で出力してください：
+3〜5つの重要トピックを以下の形式で出力してください。各トピックの最後に関連キーワードを必ず含めてください：
 
-- **[トピック名]**：[概要と背景を1〜2文で説明]。企業への影響として[影響を説明]。対策として[具体的なアクション]が推奨されます。
+- **[トピック名]**：[概要と背景を1〜2文で説明]。企業への影響として[影響を説明]。対策として[具体的なアクション]が推奨されます。[関連キーワード: キーワード1, キーワード2, キーワード3]
 
 【注意事項】
+- 冒頭に見出しや前置きは不要です。いきなり箇条書きから始めてください。
 - 専門用語は避け、わかりやすい表現を使用
 - 具体的で実践的なアドバイスを心がける
+- 関連キーワードは、ニュース一覧の中から関連する記事を検索するための単語です（2〜4個）
 - 日本語で回答"""
 
     try:
@@ -1098,24 +1197,50 @@ def generate_html(
     if summary:
         lines = summary.split("\n")
         list_items = []
+
+        def parse_summary_line(line: str) -> tuple[str, list[str]]:
+            """サマリー行からテキストとキーワードを抽出"""
+            keywords = []
+            # [関連キーワード: ...] パターンを検索
+            keyword_match = re.search(r'\[関連キーワード[:：]\s*([^\]]+)\]', line)
+            if keyword_match:
+                keywords = [k.strip() for k in keyword_match.group(1).split(',')]
+                line = line[:keyword_match.start()].strip()
+            return line, keywords
+
         for line in lines:
             line = line.strip()
             if not line:
                 continue
+
+            item_text = None
             if line.startswith("- ") or line.startswith("・") or line.startswith("• "):
                 item_text = line.lstrip("-・• ").strip()
-                if item_text:
-                    list_items.append(f"<li>{escape_html(item_text)}</li>")
             elif line.startswith("* "):
                 item_text = line.lstrip("* ").strip()
-                if item_text:
-                    list_items.append(f"<li>{escape_html(item_text)}</li>")
             elif not line.startswith("#") and not line.startswith("**"):
                 match = re.match(r'^\d+[\.\)]\s*(.+)$', line)
                 if match:
-                    list_items.append(f"<li>{escape_html(match.group(1))}</li>")
+                    item_text = match.group(1)
                 elif len(line) > 10:
-                    list_items.append(f"<li>{escape_html(line)}</li>")
+                    item_text = line
+
+            if item_text:
+                text, keywords = parse_summary_line(item_text)
+                if text:
+                    keywords_attr = escape_html(','.join(keywords)) if keywords else ''
+                    keywords_html = ''
+                    if keywords:
+                        keyword_badges = ''.join(
+                            f'<span class="summary-keyword">{escape_html(k)}</span>'
+                            for k in keywords
+                        )
+                        keywords_html = f'<div class="summary-keywords">{keyword_badges}</div>'
+                    list_items.append(
+                        f'<li data-keywords="{keywords_attr}">'
+                        f'<div><div>{escape_html(text)}</div>{keywords_html}</div>'
+                        f'</li>'
+                    )
 
         if list_items:
             summary_list = "<ul>" + "".join(list_items) + "</ul>"
