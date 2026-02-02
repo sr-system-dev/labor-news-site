@@ -68,296 +68,396 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>労務ニュース Weekly | {period}</title>
+    <title>Weekly SR by iand | {period}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {{
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #8b5cf6;
-            --accent: #06b6d4;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-card: #334155;
-            --bg-hover: #475569;
-            --text-primary: #f8fafc;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
-            --border: #475569;
-            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-2: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.15);
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #60a5fa;
+            --primary-bg: #eff6ff;
+            --secondary: #0891b2;
+            --accent: #f59e0b;
+            --accent-bg: #fffbeb;
+            --success: #059669;
+            --success-bg: #ecfdf5;
+            --purple: #7c3aed;
+            --purple-bg: #f5f3ff;
+            --bg-page: #f8fafc;
+            --bg-white: #ffffff;
+            --bg-gray: #f1f5f9;
+            --text-dark: #0f172a;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.1);
         }}
 
-        * {{
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }}
-
+        * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        html {{ scroll-behavior: smooth; }}
         body {{
-            font-family: 'Noto Sans JP', 'Inter', -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            background: var(--bg-primary);
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            background: var(--bg-page);
             color: var(--text-primary);
             line-height: 1.7;
-            min-height: 100vh;
+            font-size: 15px;
         }}
 
-        * {{
-            font-family: inherit;
-        }}
-
-        .hero {{
-            background: var(--gradient-2);
-            position: relative;
-            overflow: hidden;
-            padding: 60px 20px 80px;
-        }}
-
-        .hero::before {{
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
-        }}
-
-        .hero-content {{
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }}
-
-        .hero-badge {{
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-bottom: 24px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }}
-
-        .hero-badge::before {{
-            content: '📰';
-        }}
-
-        .hero h1 {{
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 16px;
-            letter-spacing: -0.02em;
-        }}
-
-        .hero .period {{
-            font-size: 1.25rem;
-            opacity: 0.9;
-            margin-bottom: 32px;
-        }}
-
-        .stats-grid {{
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin-bottom: 24px;
-        }}
-
-        .stat-card {{
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 20px 32px;
-            border-radius: 16px;
-            text-align: center;
-            min-width: 140px;
-        }}
-
-        .stat-value {{
-            font-size: 2.5rem;
-            font-weight: 700;
-            line-height: 1;
-            margin-bottom: 4px;
-        }}
-
-        .stat-label {{
-            font-size: 0.875rem;
-            opacity: 0.8;
-        }}
-
-        .meta {{
-            font-size: 0.875rem;
-            opacity: 0.7;
-        }}
-
-        .container {{
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px;
-            transform: translateY(-40px);
-        }}
-
-        .date-card {{
-            background: var(--bg-secondary);
-            border-radius: 20px;
-            margin-bottom: 24px;
-            overflow: hidden;
-            box-shadow: var(--shadow-lg), var(--shadow-glow);
-            border: 1px solid var(--border);
-        }}
-
-        .date-header {{
-            background: var(--bg-card);
-            padding: 20px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* ===== HEADER ===== */
+        .header {{
+            background: var(--bg-white);
             border-bottom: 1px solid var(--border);
+            padding: 20px 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }}
 
-        .date-info {{
+        .header-inner {{
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }}
+
+        .logo {{
             display: flex;
             align-items: center;
             gap: 12px;
         }}
 
-        .date-icon {{
+        .logo-icon {{
             width: 44px;
             height: 44px;
-            background: var(--gradient-1);
-            border-radius: 12px;
+            background: var(--primary);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.25rem;
         }}
 
-        .date-text {{
-            font-size: 1.125rem;
-            font-weight: 600;
+        .logo-text {{
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
         }}
 
-        .date-weekday {{
-            font-size: 0.875rem;
+        .header-stats {{
+            display: flex;
+            gap: 24px;
+        }}
+
+        .header-stat {{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-gray);
+            border-radius: 100px;
+            font-size: 0.9rem;
+        }}
+
+        .header-stat-value {{
+            font-weight: 700;
+            color: var(--primary);
+        }}
+
+        .header-stat-label {{
             color: var(--text-muted);
-            margin-top: 2px;
         }}
 
-        .date-count {{
-            background: var(--primary);
-            color: white;
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 0.875rem;
-            font-weight: 600;
+        .header-meta {{
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }}
 
-        .source-group {{
-            border-bottom: 1px solid var(--border);
+        /* ===== LAYOUT ===== */
+        .layout {{
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            padding: 32px;
+            min-height: calc(100vh - 85px);
         }}
 
-        .source-group:last-child {{
-            border-bottom: none;
+        /* ===== SIDEBAR ===== */
+        .sidebar {{
+            position: sticky;
+            top: 117px;
+            height: fit-content;
         }}
 
-        .source-header {{
-            padding: 16px 24px;
+        .sidebar-section {{
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }}
+
+        .sidebar-title {{
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-light);
+        }}
+
+        /* Filter Tabs */
+        .filter-tabs {{
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }}
+
+        .filter-tab {{
             display: flex;
             align-items: center;
             gap: 10px;
-            font-weight: 600;
-            color: var(--text-secondary);
+            padding: 12px 14px;
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
             font-size: 0.9rem;
-            background: rgba(255,255,255,0.02);
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            text-align: left;
         }}
 
-        .source-icon {{
-            width: 28px;
-            height: 28px;
-            border-radius: 8px;
+        .filter-tab:hover {{
+            background: var(--bg-gray);
+        }}
+
+        .filter-tab.active {{
+            background: var(--primary-bg);
+            color: var(--primary);
+        }}
+
+        .filter-tab-icon {{
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.875rem;
+            font-size: 0.95rem;
         }}
 
-        .source-icon.rodo {{ background: linear-gradient(135deg, #3b82f6, #6366f1); }}
-        .source-icon.roumu {{ background: linear-gradient(135deg, #10b981, #14b8a6); }}
-        .source-icon.jinjibu {{ background: linear-gradient(135deg, #8b5cf6, #a855f7); }}
+        .filter-tab-icon.all {{ background: var(--bg-gray); }}
+        .filter-tab-icon.rodo {{ background: #dbeafe; }}
+        .filter-tab-icon.roumu {{ background: #d1fae5; }}
+        .filter-tab-icon.jinjibu {{ background: #ede9fe; }}
 
-        .news-list {{
-            padding: 0;
+        .filter-tab-count {{
+            margin-left: auto;
+            background: var(--bg-gray);
+            padding: 2px 10px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
         }}
 
-        .news-item {{
-            padding: 20px 24px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.2s ease;
-            cursor: pointer;
+        .filter-tab.active .filter-tab-count {{
+            background: var(--primary);
+            color: white;
         }}
 
-        .news-item:last-child {{
-            border-bottom: none;
-        }}
-
-        .news-item:hover {{
-            background: var(--bg-hover);
-        }}
-
-        .news-item a {{
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }}
-
-        .news-title {{
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-            line-height: 1.5;
+        /* Date Navigation */
+        .date-nav {{
             display: flex;
-            align-items: flex-start;
-            gap: 8px;
+            flex-direction: column;
+            gap: 4px;
         }}
 
-        .news-title::before {{
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: var(--accent);
-            border-radius: 50%;
-            margin-top: 8px;
-            flex-shrink: 0;
-        }}
-
-        .news-item:hover .news-title {{
-            color: var(--accent);
-        }}
-
-        .news-meta {{
+        .date-nav-item {{
             display: flex;
             align-items: center;
-            gap: 16px;
-            margin-left: 14px;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: all 0.2s;
         }}
 
-        .news-time {{
+        .date-nav-item:hover {{
+            background: var(--bg-gray);
+            color: var(--text-primary);
+        }}
+
+        .date-nav-item.active {{
+            background: var(--primary-bg);
+            color: var(--primary);
+            font-weight: 600;
+        }}
+
+        .date-nav-weekday {{
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-left: auto;
+        }}
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {{
+            min-width: 0;
+        }}
+
+        /* Summary Card */
+        .summary-card {{
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--bg-white) 100%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 28px;
+            margin-bottom: 28px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 20px;
+            align-items: start;
+        }}
+
+        .summary-icon {{
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }}
+
+        .summary-body {{ min-width: 0; }}
+
+        .summary-header {{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }}
+
+        .summary-title {{
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }}
+
+        .ai-badge {{
+            background: var(--bg-white);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid var(--primary-light);
+        }}
+
+        .summary-content {{
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }}
+
+        .summary-content ul {{
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }}
+
+        .summary-content li {{
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--bg-white);
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--success);
+        }}
+
+        .summary-content li::before {{
+            content: '✓';
+            color: var(--success);
+            font-weight: 700;
+        }}
+
+        /* News Grid */
+        .news-grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }}
+
+        .news-card {{
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+        }}
+
+        .news-card:hover {{
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+            border-color: var(--primary-light);
+        }}
+
+        .news-card-header {{
+            padding: 16px 20px;
+            background: var(--bg-gray);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-light);
+        }}
+
+        .news-card-source {{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }}
+
+        .news-card-source-icon {{
+            width: 28px;
+            height: 28px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }}
+
+        .news-card-source-icon.rodo {{ background: #dbeafe; }}
+        .news-card-source-icon.roumu {{ background: #d1fae5; }}
+        .news-card-source-icon.jinjibu {{ background: #ede9fe; }}
+
+        .news-card-date {{
+            margin-left: auto;
             font-size: 0.8rem;
             color: var(--text-muted);
             display: flex;
@@ -365,130 +465,130 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             gap: 4px;
         }}
 
-        .news-time::before {{
-            content: '🕐';
-            font-size: 0.75rem;
+        .news-card-body {{
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }}
 
-        .news-summary {{
-            font-size: 0.875rem;
-            color: var(--text-muted);
+        .news-card-body a {{
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }}
+
+        .news-card-title {{
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
             line-height: 1.6;
-            margin-left: 14px;
-            margin-top: 8px;
-            padding: 12px 16px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 8px;
-            border-left: 3px solid var(--primary);
-        }}
-
-        .summary-card {{
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            border-radius: 20px;
-            padding: 28px;
-            margin-bottom: 32px;
-            position: relative;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
             overflow: hidden;
         }}
 
-        .summary-card::before {{
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient-2);
+        .news-card:hover .news-card-title {{
+            color: var(--primary);
         }}
 
-        .summary-header {{
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-        }}
-
-        .summary-icon {{
-            width: 48px;
-            height: 48px;
-            background: var(--gradient-1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }}
-
-        .summary-header-text {{
-            flex: 1;
-            min-width: 150px;
-        }}
-
-        .summary-title {{
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }}
-
-        .summary-subtitle {{
+        .news-card-summary {{
             font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }}
+
+        .news-card-footer {{
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }}
+
+        .news-card-time {{
+            font-size: 0.8rem;
             color: var(--text-muted);
         }}
 
-        .summary-content {{
-            color: var(--text-secondary);
-            line-height: 1.9;
-            font-size: 0.95rem;
+        .news-card-arrow {{
+            margin-left: auto;
+            color: var(--primary);
+            font-size: 1.1rem;
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: all 0.2s;
         }}
 
-        .summary-content ul {{
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        .news-card:hover .news-card-arrow {{
+            opacity: 1;
+            transform: translateX(0);
         }}
 
-        .summary-content li {{
-            padding: 16px 20px;
-            padding-left: 44px;
-            position: relative;
-            background: rgba(0, 0, 0, 0.15);
-            border-radius: 12px;
-            margin-bottom: 12px;
-            border-left: 4px solid var(--success);
+        /* Date Section */
+        .date-section {{
+            margin-bottom: 32px;
         }}
 
-        .summary-content li:last-child {{
-            margin-bottom: 0;
-        }}
-
-        .summary-content li::before {{
-            content: '✓';
-            position: absolute;
-            left: 16px;
-            top: 16px;
-            color: var(--success);
-            font-weight: bold;
-            font-size: 1rem;
-        }}
-
-        .ai-badge {{
-            display: inline-flex;
+        .date-section-header {{
+            display: flex;
             align-items: center;
-            gap: 6px;
-            background: rgba(99, 102, 241, 0.2);
-            color: var(--accent);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border);
+        }}
+
+        .date-section-icon {{
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: white;
+        }}
+
+        .date-section-info {{
+            flex: 1;
+        }}
+
+        .date-section-date {{
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }}
+
+        .date-section-weekday {{
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }}
+
+        .date-section-count {{
+            background: var(--primary);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.875rem;
             font-weight: 600;
         }}
 
+        /* Archive Section */
         .archive-section {{
-            background: var(--bg-secondary);
-            border-radius: 20px;
+            background: var(--bg-white);
+            border-radius: var(--radius-xl);
             padding: 28px;
             margin-top: 40px;
             border: 1px solid var(--border);
@@ -502,208 +602,225 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         }}
 
         .archive-icon {{
-            width: 40px;
-            height: 40px;
-            background: var(--bg-card);
-            border-radius: 10px;
+            width: 44px;
+            height: 44px;
+            background: var(--accent-bg);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1.2rem;
         }}
 
         .archive-title {{
             font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
+            font-weight: 700;
+            color: var(--text-dark);
         }}
 
         .archive-list {{
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
             gap: 12px;
         }}
 
         .archive-item {{
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 14px 18px;
-            background: var(--bg-card);
-            border-radius: 12px;
+            gap: 10px;
+            padding: 12px 18px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-md);
             text-decoration: none;
             color: var(--text-secondary);
-            transition: all 0.2s ease;
-            border: 1px solid transparent;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 2px solid transparent;
         }}
 
         .archive-item:hover {{
-            background: var(--bg-hover);
+            background: var(--primary-bg);
             border-color: var(--primary);
-            color: var(--text-primary);
+            color: var(--primary);
         }}
 
         .archive-item.current {{
-            border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.1);
-        }}
-
-        .archive-item-icon {{
-            font-size: 1.25rem;
-        }}
-
-        .archive-item-date {{
-            font-weight: 500;
-        }}
-
-        .archive-item-badge {{
-            margin-left: auto;
-            background: var(--bg-primary);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }}
-
-        .archive-item.current .archive-item-badge {{
             background: var(--primary);
             color: white;
+            border-color: var(--primary);
         }}
 
+        .archive-item-icon {{ font-size: 1rem; }}
+
+        /* Footer */
         footer {{
             text-align: center;
-            padding: 48px 20px;
+            padding: 48px 32px;
             color: var(--text-muted);
             font-size: 0.875rem;
-        }}
-
-        footer a {{
-            color: var(--accent);
-            text-decoration: none;
-        }}
-
-        footer a:hover {{
-            text-decoration: underline;
+            border-top: 1px solid var(--border);
+            margin-top: 48px;
         }}
 
         .footer-brand {{
             font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-secondary);
+            font-weight: 700;
+            color: var(--text-dark);
             margin-bottom: 8px;
         }}
 
-        @media (max-width: 640px) {{
-            .hero {{
-                padding: 40px 16px 60px;
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {{
+            .layout {{
+                grid-template-columns: 1fr;
             }}
 
-            .hero h1 {{
-                font-size: 1.75rem;
+            .sidebar {{
+                position: static;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
             }}
 
-            .stats-grid {{
-                gap: 12px;
-            }}
-
-            .stat-card {{
-                padding: 16px 24px;
-                min-width: 120px;
-            }}
-
-            .stat-value {{
-                font-size: 2rem;
-            }}
-
-            .container {{
-                padding: 0 12px;
-            }}
-
-            .date-card {{
-                border-radius: 16px;
-            }}
-
-            .date-header {{
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-                padding: 16px 20px;
-            }}
-
-            .date-count {{
-                align-self: flex-start;
-            }}
-
-            .source-header,
-            .news-item {{
-                padding: 14px 20px;
-            }}
-
-            .news-title {{
-                font-size: 0.95rem;
+            .sidebar-section {{
+                margin-bottom: 0;
             }}
         }}
 
-        /* Animation */
-        @keyframes fadeInUp {{
-            from {{
-                opacity: 0;
-                transform: translateY(20px);
+        @media (max-width: 768px) {{
+            .header-inner {{
+                flex-wrap: wrap;
             }}
-            to {{
-                opacity: 1;
-                transform: translateY(0);
+
+            .header-stats {{
+                display: none;
+            }}
+
+            .layout {{
+                padding: 20px;
+                gap: 20px;
+            }}
+
+            .sidebar {{
+                grid-template-columns: 1fr;
+            }}
+
+            .news-grid {{
+                grid-template-columns: 1fr;
+            }}
+
+            .summary-card {{
+                grid-template-columns: 1fr;
+            }}
+
+            .summary-icon {{
+                display: none;
             }}
         }}
 
-        .date-card {{
-            animation: fadeInUp 0.5s ease-out;
-            animation-fill-mode: both;
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {{
+            from {{ opacity: 0; transform: translateY(16px); }}
+            to {{ opacity: 1; transform: translateY(0); }}
         }}
 
-        .date-card:nth-child(1) {{ animation-delay: 0.1s; }}
-        .date-card:nth-child(2) {{ animation-delay: 0.2s; }}
-        .date-card:nth-child(3) {{ animation-delay: 0.3s; }}
-        .date-card:nth-child(4) {{ animation-delay: 0.4s; }}
-        .date-card:nth-child(5) {{ animation-delay: 0.5s; }}
-        .date-card:nth-child(6) {{ animation-delay: 0.6s; }}
-        .date-card:nth-child(7) {{ animation-delay: 0.7s; }}
+        .news-card {{
+            animation: fadeIn 0.4s ease both;
+        }}
+
+        .date-section:nth-child(1) .news-card {{ animation-delay: 0s; }}
+        .date-section:nth-child(2) .news-card {{ animation-delay: 0.05s; }}
+        .date-section:nth-child(3) .news-card {{ animation-delay: 0.1s; }}
     </style>
 </head>
 <body>
-    <div class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">Weekly Report</div>
-            <h1>労務ニュース Weekly</h1>
-            <div class="period">{period}</div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">{total_count}</div>
-                    <div class="stat-label">ニュース</div>
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-icon">📰</div>
+                <div class="logo-text">Weekly SR by iand</div>
+            </div>
+            <div class="header-stats">
+                <div class="header-stat">
+                    <span class="header-stat-value">{total_count}</span>
+                    <span class="header-stat-label">ニュース</span>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value">{source_count}</div>
-                    <div class="stat-label">ソース</div>
+                <div class="header-stat">
+                    <span class="header-stat-value">{source_count}</span>
+                    <span class="header-stat-label">ソース</span>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value">{day_count}</div>
-                    <div class="stat-label">日間</div>
+                <div class="header-stat">
+                    <span class="header-stat-value">{day_count}</span>
+                    <span class="header-stat-label">日間</span>
                 </div>
             </div>
-            <div class="meta">Last updated: {collected_at}</div>
+            <div class="header-meta">
+                {period}<br>
+                <small>更新: {collected_at}</small>
+            </div>
         </div>
-    </div>
+    </header>
 
-    <div class="container">
-        {summary_section}
-        {content}
-        {archive_section}
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">ソースで絞り込み</div>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">
+                        <span class="filter-tab-icon all">📋</span>
+                        すべて
+                        <span class="filter-tab-count">{total_count}</span>
+                    </button>
+                    {source_filters}
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">日付で移動</div>
+                <nav class="date-nav">
+                    {date_nav}
+                </nav>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            {summary_section}
+            {content}
+            {archive_section}
+        </main>
     </div>
 
     <footer>
-        <div class="footer-brand">労務ニュース Weekly</div>
+        <div class="footer-brand">Weekly SR by iand</div>
         <p>RSSフィードから自動収集・更新</p>
     </footer>
+
+    <script>
+        // Source filtering
+        document.querySelectorAll('.filter-tab').forEach(tab => {{
+            tab.addEventListener('click', () => {{
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const filter = tab.dataset.filter;
+                document.querySelectorAll('.news-card').forEach(card => {{
+                    if (filter === 'all' || card.dataset.source === filter) {{
+                        card.style.display = '';
+                    }} else {{
+                        card.style.display = 'none';
+                    }}
+                }});
+            }});
+        }});
+
+        // Smooth scroll for date nav
+        document.querySelectorAll('.date-nav-item').forEach(link => {{
+            link.addEventListener('click', (e) => {{
+                document.querySelectorAll('.date-nav-item').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            }});
+        }});
+    </script>
 </body>
 </html>
 """
@@ -955,16 +1072,28 @@ def generate_html(
     end_str = end_date.strftime("%Y-%m-%d")
     period = f"{start_str} 〜 {end_str}"
 
+    # 日付ごとにグループ化
+    by_date = group_by_date(items)
+
+    # ソースごとにカウント
+    source_counts = defaultdict(int)
+    for item in items:
+        source_counts[item.source] += 1
+
+    # ソース数をカウント
+    sources = set(item.source for item in items)
+
+    # 日数をカウント
+    day_count = len(by_date)
+
     # サマリーセクションを生成
     if summary:
-        # サマリーテキストをHTMLに変換（箇条書きをリストに）
         lines = summary.split("\n")
         list_items = []
         for line in lines:
             line = line.strip()
             if not line:
                 continue
-            # 箇条書きのパターンをチェック
             if line.startswith("- ") or line.startswith("・") or line.startswith("• "):
                 item_text = line.lstrip("-・• ").strip()
                 if item_text:
@@ -974,114 +1103,121 @@ def generate_html(
                 if item_text:
                     list_items.append(f"<li>{escape_html(item_text)}</li>")
             elif not line.startswith("#") and not line.startswith("**"):
-                # 番号付きリストも対応
                 match = re.match(r'^\d+[\.\)]\s*(.+)$', line)
                 if match:
                     list_items.append(f"<li>{escape_html(match.group(1))}</li>")
-                elif len(line) > 10:  # 短すぎる行は除外
-                    # 通常のテキスト行も箇条書きとして追加
+                elif len(line) > 10:
                     list_items.append(f"<li>{escape_html(line)}</li>")
 
         if list_items:
             summary_list = "<ul>" + "".join(list_items) + "</ul>"
         else:
-            # 箇条書きが見つからない場合は段落として表示
             paragraphs = [f"<p>{escape_html(p.strip())}</p>" for p in summary.split("\n\n") if p.strip()]
             summary_list = "".join(paragraphs) if paragraphs else f"<p>{escape_html(summary)}</p>"
 
         summary_section = f'''
-        <div class="summary-card">
-            <div class="summary-header">
+            <div class="summary-card">
                 <div class="summary-icon">🤖</div>
-                <div class="summary-header-text">
-                    <div class="summary-title">今週のポイント</div>
-                    <div class="summary-subtitle">AIによる自動サマリー</div>
+                <div class="summary-body">
+                    <div class="summary-header">
+                        <div class="summary-title">今週のポイント</div>
+                        <div class="ai-badge">✨ AI Generated</div>
+                    </div>
+                    <div class="summary-content">
+                        {summary_list}
+                    </div>
                 </div>
-                <div class="ai-badge">✨ AI Generated</div>
             </div>
-            <div class="summary-content">
-                {summary_list}
-            </div>
-        </div>
         '''
     else:
         summary_section = ""
 
-    # 日付ごとにグループ化
-    by_date = group_by_date(items)
+    # ソースフィルタータブを生成
+    source_filters = []
+    for source, count in sorted(source_counts.items()):
+        icon_class = get_source_icon_class(source)
+        emoji = get_source_emoji(source)
+        filter_id = icon_class if icon_class != "default" else source.lower().replace(" ", "-")
+        source_filters.append(
+            f'<button class="filter-tab" data-filter="{filter_id}">'
+            f'<span class="filter-tab-icon {icon_class}">{emoji}</span>'
+            f'{escape_html(source)}'
+            f'<span class="filter-tab-count">{count}</span>'
+            f'</button>'
+        )
+    source_filters_html = "\n".join(source_filters)
 
-    # ソース数をカウント
-    sources = set(item.source for item in items)
+    # 日付ナビゲーションを生成
+    date_nav_items = []
+    for i, date_str in enumerate(sorted(by_date.keys(), reverse=True)):
+        weekday = get_weekday_jp(date_str)
+        active_class = " active" if i == 0 else ""
+        date_nav_items.append(
+            f'<a href="#date-{date_str}" class="date-nav-item{active_class}">'
+            f'📅 {date_str}'
+            f'<span class="date-nav-weekday">{weekday}</span>'
+            f'</a>'
+        )
+    date_nav_html = "\n".join(date_nav_items)
 
-    # 日数をカウント
-    day_count = len(by_date)
-
-    # コンテンツ生成
+    # コンテンツ生成（カードグリッド形式）
     content_parts = []
 
     for date_str in sorted(by_date.keys(), reverse=True):
         date_items = by_date[date_str]
         weekday = get_weekday_jp(date_str)
 
-        # 日付カード
-        content_parts.append(f'<div class="date-card">')
-        content_parts.append(f'<div class="date-header">')
-        content_parts.append(f'<div class="date-info">')
-        content_parts.append(f'<div class="date-icon">📅</div>')
-        content_parts.append(f'<div>')
-        content_parts.append(f'<div class="date-text">{date_str}</div>')
-        content_parts.append(f'<div class="date-weekday">{weekday}曜日</div>')
+        content_parts.append(f'<section class="date-section" id="date-{date_str}">')
+        content_parts.append(f'<div class="date-section-header">')
+        content_parts.append(f'<div class="date-section-icon">📅</div>')
+        content_parts.append(f'<div class="date-section-info">')
+        content_parts.append(f'<div class="date-section-date">{date_str}</div>')
+        content_parts.append(f'<div class="date-section-weekday">{weekday}曜日</div>')
         content_parts.append(f'</div>')
-        content_parts.append(f'</div>')
-        content_parts.append(f'<div class="date-count">{len(date_items)}件</div>')
+        content_parts.append(f'<div class="date-section-count">{len(date_items)}件</div>')
         content_parts.append(f'</div>')
 
-        # ソースごとにグループ化
-        by_source = defaultdict(list)
-        for item in date_items:
-            by_source[item.source].append(item)
+        content_parts.append(f'<div class="news-grid">')
 
-        for source, source_items in sorted(by_source.items()):
-            icon_class = get_source_icon_class(source)
-            emoji = get_source_emoji(source)
+        for item in sorted(date_items, key=lambda x: x.published, reverse=True):
+            time_str = item.published.strftime("%H:%M")
+            date_display = item.published.strftime("%m/%d")
+            title_escaped = escape_html(item.title)
+            link_escaped = escape_html(item.link)
+            summary_escaped = escape_html(item.summary) if item.summary else ""
+            icon_class = get_source_icon_class(item.source)
+            emoji = get_source_emoji(item.source)
+            filter_id = icon_class if icon_class != "default" else item.source.lower().replace(" ", "-")
 
-            content_parts.append(f'<div class="source-group">')
-            content_parts.append(
-                f'<div class="source-header">'
-                f'<span class="source-icon {icon_class}">{emoji}</span>'
-                f'{escape_html(source)}'
-                f'</div>'
+            short_summary = (
+                summary_escaped[:120] + "..."
+                if len(summary_escaped) > 120
+                else summary_escaped
             )
-            content_parts.append(f'<div class="news-list">')
 
-            for item in sorted(source_items, key=lambda x: x.published, reverse=True):
-                time_str = item.published.strftime("%H:%M")
-                title_escaped = escape_html(item.title)
-                link_escaped = escape_html(item.link)
-                summary_escaped = escape_html(item.summary) if item.summary else ""
-
-                content_parts.append(f'<div class="news-item">')
-                content_parts.append(
-                    f'<a href="{link_escaped}" target="_blank" rel="noopener">'
-                )
-                content_parts.append(f'<div class="news-title">{title_escaped}</div>')
-                content_parts.append(f'<div class="news-meta">')
-                content_parts.append(f'<span class="news-time">{time_str}</span>')
-                content_parts.append(f'</div>')
-                if summary_escaped:
-                    short_summary = (
-                        summary_escaped[:100] + "..."
-                        if len(summary_escaped) > 100
-                        else summary_escaped
-                    )
-                    content_parts.append(f'<div class="news-summary">{short_summary}</div>')
-                content_parts.append(f'</a>')
-                content_parts.append(f'</div>')
-
+            content_parts.append(f'<article class="news-card" data-source="{filter_id}">')
+            content_parts.append(f'<div class="news-card-header">')
+            content_parts.append(f'<div class="news-card-source">')
+            content_parts.append(f'<span class="news-card-source-icon {icon_class}">{emoji}</span>')
+            content_parts.append(f'{escape_html(item.source)}')
             content_parts.append(f'</div>')
+            content_parts.append(f'<span class="news-card-date">🕐 {time_str}</span>')
             content_parts.append(f'</div>')
+            content_parts.append(f'<div class="news-card-body">')
+            content_parts.append(f'<a href="{link_escaped}" target="_blank" rel="noopener">')
+            content_parts.append(f'<h3 class="news-card-title">{title_escaped}</h3>')
+            if short_summary:
+                content_parts.append(f'<p class="news-card-summary">{short_summary}</p>')
+            content_parts.append(f'<div class="news-card-footer">')
+            content_parts.append(f'<span class="news-card-time">{date_display} {time_str}</span>')
+            content_parts.append(f'<span class="news-card-arrow">→</span>')
+            content_parts.append(f'</div>')
+            content_parts.append(f'</a>')
+            content_parts.append(f'</div>')
+            content_parts.append(f'</article>')
 
         content_parts.append(f'</div>')
+        content_parts.append(f'</section>')
 
     content = "\n".join(content_parts)
 
@@ -1090,24 +1226,22 @@ def generate_html(
         archive_items = []
         for filename, period_label, is_current in archives:
             current_class = " current" if is_current else ""
-            badge_text = "現在" if is_current else "過去"
             archive_items.append(
                 f'<a href="{filename}" class="archive-item{current_class}">'
                 f'<span class="archive-item-icon">📅</span>'
-                f'<span class="archive-item-date">{period_label}</span>'
-                f'<span class="archive-item-badge">{badge_text}</span>'
+                f'{period_label}'
                 f'</a>'
             )
         archive_section = f'''
-        <div class="archive-section">
-            <div class="archive-header">
-                <div class="archive-icon">📚</div>
-                <div class="archive-title">過去のニュース一覧</div>
+            <div class="archive-section">
+                <div class="archive-header">
+                    <div class="archive-icon">📚</div>
+                    <div class="archive-title">過去のニュース一覧</div>
+                </div>
+                <div class="archive-list">
+                    {"".join(archive_items)}
+                </div>
             </div>
-            <div class="archive-list">
-                {"".join(archive_items)}
-            </div>
-        </div>
         '''
     else:
         archive_section = ""
@@ -1122,6 +1256,8 @@ def generate_html(
         summary_section=summary_section,
         archive_section=archive_section,
         content=content,
+        source_filters=source_filters_html,
+        date_nav=date_nav_html,
     )
 
     return html_content
