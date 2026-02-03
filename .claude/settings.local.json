@@ -10,7 +10,14 @@
       "Bash(git add:*)",
       "Bash(git rebase:*)",
       "Bash(GIT_EDITOR=true git rebase:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "WebFetch(domain:www.mhlw.go.jp)",
+      "WebFetch(domain:www.businesslawyers.jp)",
+      "WebFetch(domain:www.psrn.jp)",
+      "WebFetch(domain:www.rosei.jp)",
+      "WebFetch(domain:www.rodo.co.jp)",
+      "WebFetch(domain:news.yahoo.co.jp)",
+      "WebFetch(domain:www.sato-group-sr.jp)"
     ]
   }
 }

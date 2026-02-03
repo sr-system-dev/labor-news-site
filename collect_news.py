@@ -36,12 +36,17 @@ class NewsItem(NamedTuple):
 
 
 # RSSフィードの設定
-RSS_FEEDS = {
-    "労働新聞社": "https://www.rodo.co.jp/feed/",
-    "労務ドットコム": "https://roumu.com/feed/",
-    "日本の人事部": "https://jinjibu.jp/rss/?mode=atcl",
-    "日本の人事部（プレスリリース）": "https://jinjibu.jp/rss/?mode=news",
-}
+# (ソース名, URL) のリスト形式。同じソース名は1つに統合される
+RSS_FEEDS = [
+    ("労働新聞社", "https://www.rodo.co.jp/feed/"),
+    ("労務ドットコム", "https://roumu.com/feed/"),
+    ("日本の人事部", "https://jinjibu.jp/rss/?mode=atcl"),
+    ("日本の人事部", "https://jinjibu.jp/rss/?mode=news"),
+    ("SATO PORTAL", "https://www.sato-group-sr.jp/portal/feed/"),
+    ("弁護士ドットコム", "https://news.yahoo.co.jp/rss/media/bengocom/all.xml"),
+    ("PSRネットワーク", "https://www.psrn.jp/index.xml"),
+    ("PSRネットワーク", "https://www.psrn.jp/houkaisei/index.xml"),
+]
 
 # 労務関連キーワード（フィルタリング用）
 LABOR_KEYWORDS = [
@@ -268,6 +273,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         .filter-tab-icon.rodo {{ background: #dbeafe; }}
         .filter-tab-icon.roumu {{ background: #d1fae5; }}
         .filter-tab-icon.jinjibu {{ background: #ede9fe; }}
+        .filter-tab-icon.sato {{ background: #fef3c7; }}
+        .filter-tab-icon.bengo {{ background: #fce7f3; }}
+        .filter-tab-icon.psr {{ background: #ccfbf1; }}
 
         .filter-tab-count {{
             margin-left: auto;
@@ -1140,6 +1148,12 @@ def get_source_icon_class(source: str) -> str:
         return "roumu"
     elif "人事部" in source:
         return "jinjibu"
+    elif "SATO" in source:
+        return "sato"
+    elif "弁護士ドットコム" in source:
+        return "bengo"
+    elif "PSR" in source:
+        return "psr"
     return "default"
 
 
@@ -1151,6 +1165,12 @@ def get_source_emoji(source: str) -> str:
         return "💼"
     elif "人事部" in source:
         return "👥"
+    elif "SATO" in source:
+        return "🏢"
+    elif "弁護士ドットコム" in source:
+        return "⚖️"
+    elif "PSR" in source:
+        return "📋"
     return "📄"
 
 
@@ -1486,7 +1506,7 @@ def main():
     all_items = []
 
     # 各フィードからニュースを取得
-    for source_name, url in RSS_FEEDS.items():
+    for source_name, url in RSS_FEEDS:
         print(f"取得中: {source_name}...")
         items = fetch_feed(url, source_name)
         print(f"  → {len(items)}件取得")
