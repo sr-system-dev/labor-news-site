@@ -17,7 +17,8 @@
       "WebFetch(domain:www.rosei.jp)",
       "WebFetch(domain:www.rodo.co.jp)",
       "WebFetch(domain:news.yahoo.co.jp)",
-      "WebFetch(domain:www.sato-group-sr.jp)"
+      "WebFetch(domain:www.sato-group-sr.jp)",
+      "WebFetch(domain:i-and.com)"
     ]
   }
 }

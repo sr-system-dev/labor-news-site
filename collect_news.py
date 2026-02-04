@@ -80,33 +80,34 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {{
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --primary-light: #60a5fa;
-            --primary-bg: #eff6ff;
-            --secondary: #0891b2;
-            --accent: #f59e0b;
-            --accent-bg: #fffbeb;
+            /* i-and.com inspired color scheme */
+            --primary: #007cff;
+            --primary-dark: #0066d6;
+            --primary-light: #4da3ff;
+            --primary-bg: #e6f2ff;
+            --secondary: #233a5d;
+            --accent: #007cff;
+            --accent-bg: #e6f2ff;
             --success: #059669;
             --success-bg: #ecfdf5;
-            --purple: #7c3aed;
-            --purple-bg: #f5f3ff;
-            --bg-page: #f8fafc;
+            --navy: #152638;
+            --navy-light: #233a5d;
+            --bg-page: #f5f7fa;
             --bg-white: #ffffff;
-            --bg-gray: #f1f5f9;
-            --text-dark: #0f172a;
-            --text-primary: #1e293b;
-            --text-secondary: #475569;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --border-light: #f1f5f9;
+            --bg-gray: #eef2f7;
+            --text-dark: #152638;
+            --text-primary: #233a5d;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --border: #d8e1eb;
+            --border-light: #eef2f7;
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 16px;
             --radius-xl: 24px;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-            --shadow-lg: 0 8px 24px rgba(0,0,0,0.1);
+            --shadow-sm: 0 1px 3px rgba(21,38,56,0.08);
+            --shadow-md: 0 4px 12px rgba(21,38,56,0.1);
+            --shadow-lg: 0 8px 24px rgba(21,38,56,0.12);
         }}
 
         * {{ box-sizing: border-box; margin: 0; padding: 0; }}
@@ -121,8 +122,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
         /* ===== HEADER ===== */
         .header {{
-            background: var(--bg-white);
-            border-bottom: 1px solid var(--border);
+            background: var(--navy);
+            border-bottom: none;
             padding: 20px 32px;
             position: sticky;
             top: 0;
@@ -153,12 +154,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             align-items: center;
             justify-content: center;
             font-size: 1.25rem;
+            color: #ffffff;
         }}
 
         .logo-text {{
             font-size: 1.25rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: #ffffff;
         }}
 
         .header-stats {{
@@ -171,23 +173,23 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             align-items: center;
             gap: 8px;
             padding: 8px 16px;
-            background: var(--bg-gray);
+            background: rgba(255,255,255,0.1);
             border-radius: 100px;
             font-size: 0.9rem;
         }}
 
         .header-stat-value {{
             font-weight: 700;
-            color: var(--primary);
+            color: #4da3ff;
         }}
 
         .header-stat-label {{
-            color: var(--text-muted);
+            color: rgba(255,255,255,0.7);
         }}
 
         .header-meta {{
             font-size: 0.85rem;
-            color: var(--text-muted);
+            color: rgba(255,255,255,0.8);
         }}
 
         /* ===== LAYOUT ===== */
@@ -348,7 +350,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         .summary-icon {{
             width: 56px;
             height: 56px;
-            background: var(--primary);
+            background: var(--navy);
             border-radius: var(--radius-md);
             display: flex;
             align-items: center;
@@ -727,7 +729,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         .date-section-icon {{
             width: 48px;
             height: 48px;
-            background: var(--primary);
+            background: var(--navy);
             border-radius: var(--radius-md);
             display: flex;
             align-items: center;
@@ -752,7 +754,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         }}
 
         .date-section-count {{
-            background: var(--primary);
+            background: var(--navy);
             color: white;
             padding: 6px 16px;
             border-radius: 100px;
@@ -832,16 +834,16 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         footer {{
             text-align: center;
             padding: 48px 32px;
-            color: var(--text-muted);
+            color: rgba(255,255,255,0.7);
             font-size: 0.875rem;
-            border-top: 1px solid var(--border);
+            background: var(--navy);
             margin-top: 48px;
         }}
 
         .footer-brand {{
             font-size: 1.25rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: #ffffff;
             margin-bottom: 8px;
         }}
 
