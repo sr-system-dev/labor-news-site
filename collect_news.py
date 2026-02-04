@@ -423,6 +423,133 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             font-weight: 700;
         }}
 
+        /* Category-based summary styles */
+        .summary-category {{
+            margin-bottom: 20px;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            background: var(--bg-white);
+        }}
+
+        .summary-category:last-child {{
+            margin-bottom: 0;
+        }}
+
+        .summary-category-header {{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-light);
+        }}
+
+        .summary-category-icon {{
+            font-size: 1.2rem;
+        }}
+
+        .summary-category-title {{
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }}
+
+        .summary-category-law {{
+            border-left: 4px solid #6366f1;
+        }}
+
+        .summary-category-law .summary-category-header {{
+            border-bottom-color: #e0e7ff;
+        }}
+
+        .summary-category-law li {{
+            border-left-color: #6366f1;
+        }}
+
+        .summary-category-law li::before {{
+            color: #6366f1;
+        }}
+
+        .summary-category-court {{
+            border-left: 4px solid #f59e0b;
+        }}
+
+        .summary-category-court .summary-category-header {{
+            border-bottom-color: #fef3c7;
+        }}
+
+        .summary-category-court li {{
+            border-left-color: #f59e0b;
+        }}
+
+        .summary-category-court li::before {{
+            color: #f59e0b;
+        }}
+
+        .summary-category-subsidy {{
+            border-left: 4px solid #10b981;
+        }}
+
+        .summary-category-subsidy .summary-category-header {{
+            border-bottom-color: #d1fae5;
+        }}
+
+        .summary-category-subsidy li {{
+            border-left-color: #10b981;
+        }}
+
+        .summary-category-subsidy li::before {{
+            color: #10b981;
+        }}
+
+        .summary-category-other {{
+            border-left: 4px solid #64748b;
+        }}
+
+        .summary-category-other .summary-category-header {{
+            border-bottom-color: #e2e8f0;
+        }}
+
+        .summary-category-other li {{
+            border-left-color: #64748b;
+        }}
+
+        .summary-category-other li::before {{
+            color: #64748b;
+        }}
+
+        .summary-category ul {{
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 0;
+            padding: 0;
+        }}
+
+        .summary-category li {{
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 14px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--success);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }}
+
+        .summary-category li:hover {{
+            background: var(--primary-bg);
+            transform: translateX(4px);
+        }}
+
+        .summary-category li.active {{
+            background: var(--primary-bg);
+            border-left-width: 4px;
+        }}
+
         .summary-keywords {{
             display: inline-flex;
             flex-wrap: wrap;
@@ -994,7 +1121,7 @@ def fetch_feed(url: str, source_name: str) -> list[NewsItem]:
 
 
 def generate_ai_summary(items: list[NewsItem]) -> str | None:
-    """AIを使って週次ニュースサマリーを生成"""
+    """AIを使って週次ニュースサマリーを生成（カテゴリー別）"""
     api_key = os.environ.get("ANTHROPIC_API_KEY")
 
     if not ANTHROPIC_AVAILABLE:
@@ -1011,7 +1138,7 @@ def generate_ai_summary(items: list[NewsItem]) -> str | None:
         news_text += f"- 【{item.source}】{item.title}\n"
 
     prompt = f"""あなたは企業の人事・労務担当者向けに情報を提供する専門家です。
-以下は今週の労務関連ニュースの一覧です。これを分析し、重要トピックをまとめてください。
+以下は今週の労務関連ニュースの一覧です。これを分析し、カテゴリー別に重要トピックをまとめてください。
 
 【今週のニュース一覧】
 {news_text}
@@ -1022,14 +1149,29 @@ def generate_ai_summary(items: list[NewsItem]) -> str | None:
 3. 各トピックについて、企業がどのような影響を受けるか、どのような対策・準備が必要かを具体的に述べてください。
 
 【出力形式】
-3〜5つの重要トピックを以下の形式で出力してください。各トピックの最後に関連キーワードを必ず含めてください：
+以下のカテゴリーごとに、該当するトピックがあれば記載してください。該当するトピックがないカテゴリーは省略してください。
 
-- **[トピック名]**：[概要と背景を1〜2文で説明]。企業への影響として[影響を説明]。対策として[具体的なアクション]が推奨されます。[関連キーワード: キーワード1, キーワード2, キーワード3]
+## 📜 法改正・制度変更
+労働法規の改正、行政指針の変更など（例：同一賃金指針、育児介護休業法改正）
+- **[トピック名]**：[説明]。[関連キーワード: キーワード1, キーワード2]
+
+## ⚖️ 裁判例・判例
+労働関連の判決、訴訟など（例：解雇無効判決、ハラスメント訴訟）
+- **[トピック名]**：[説明]。[関連キーワード: キーワード1, キーワード2]
+
+## 💰 助成金・補助金
+厚労省の助成金、支援制度など（例：キャリアアップ助成金、雇用調整助成金）
+- **[トピック名]**：[説明]。[関連キーワード: キーワード1, キーワード2]
+
+## 📌 その他重要トピック
+上記に分類されない重要ニュース（例：賃金動向、企業事例、調査結果）
+- **[トピック名]**：[説明]。[関連キーワード: キーワード1, キーワード2]
 
 【注意事項】
-- 冒頭に見出しや前置きは不要です。いきなり箇条書きから始めてください。
+- 必ず「## 📜」「## ⚖️」「## 💰」「## 📌」の見出し形式を使用してください
+- 各カテゴリーには1〜3つのトピックを記載
+- 該当トピックがないカテゴリーは見出しごと省略
 - 専門用語は避け、わかりやすい表現を使用
-- 具体的で実践的なアドバイスを心がける
 - 関連キーワードは、ニュース一覧の中から関連する記事を検索するための単語です（2〜4個）
 - 日本語で回答"""
 
@@ -1213,10 +1355,19 @@ def generate_html(
     # 日数をカウント
     day_count = len(by_date)
 
-    # サマリーセクションを生成
+    # サマリーセクションを生成（カテゴリー別）
     if summary:
         lines = summary.split("\n")
-        list_items = []
+
+        # カテゴリー定義
+        categories = {
+            "📜 法改正・制度変更": {"icon": "📜", "color": "law", "items": []},
+            "⚖️ 裁判例・判例": {"icon": "⚖️", "color": "court", "items": []},
+            "💰 助成金・補助金": {"icon": "💰", "color": "subsidy", "items": []},
+            "📌 その他重要トピック": {"icon": "📌", "color": "other", "items": []},
+        }
+
+        current_category = None
 
         def parse_summary_line(line: str) -> tuple[str, list[str]]:
             """サマリー行からテキストとキーワードを抽出"""
@@ -1233,40 +1384,102 @@ def generate_html(
             if not line:
                 continue
 
-            item_text = None
-            if line.startswith("- ") or line.startswith("・") or line.startswith("• "):
-                item_text = line.lstrip("-・• ").strip()
-            elif line.startswith("* "):
-                item_text = line.lstrip("* ").strip()
-            elif not line.startswith("#") and not line.startswith("**"):
-                match = re.match(r'^\d+[\.\)]\s*(.+)$', line)
-                if match:
-                    item_text = match.group(1)
-                elif len(line) > 10:
-                    item_text = line
+            # カテゴリー見出しをチェック
+            if line.startswith("## "):
+                header_text = line[3:].strip()
+                for cat_name in categories.keys():
+                    if cat_name in header_text or header_text in cat_name:
+                        current_category = cat_name
+                        break
+                continue
 
-            if item_text:
-                text, keywords = parse_summary_line(item_text)
-                if text:
-                    keywords_attr = escape_html(','.join(keywords)) if keywords else ''
-                    keywords_html = ''
-                    if keywords:
-                        keyword_badges = ''.join(
-                            f'<span class="summary-keyword">{escape_html(k)}</span>'
-                            for k in keywords
-                        )
-                        keywords_html = f'<div class="summary-keywords">{keyword_badges}</div>'
-                    list_items.append(
-                        f'<li data-keywords="{keywords_attr}">'
-                        f'<div><div>{escape_html(text)}</div>{keywords_html}</div>'
-                        f'</li>'
+            # 現在のカテゴリーがあれば、アイテムを追加
+            if current_category:
+                item_text = None
+                if line.startswith("- ") or line.startswith("・") or line.startswith("• "):
+                    item_text = line.lstrip("-・• ").strip()
+                elif line.startswith("* "):
+                    item_text = line.lstrip("* ").strip()
+                elif not line.startswith("#") and not line.startswith("**"):
+                    match = re.match(r'^\d+[\.\)]\s*(.+)$', line)
+                    if match:
+                        item_text = match.group(1)
+
+                if item_text:
+                    text, keywords = parse_summary_line(item_text)
+                    if text:
+                        categories[current_category]["items"].append({
+                            "text": text,
+                            "keywords": keywords
+                        })
+
+        # カテゴリー別HTMLを生成
+        category_sections = []
+        for cat_name, cat_data in categories.items():
+            if not cat_data["items"]:
+                continue
+
+            items_html = []
+            for item in cat_data["items"]:
+                keywords_attr = escape_html(','.join(item["keywords"])) if item["keywords"] else ''
+                keywords_html = ''
+                if item["keywords"]:
+                    keyword_badges = ''.join(
+                        f'<span class="summary-keyword">{escape_html(k)}</span>'
+                        for k in item["keywords"]
                     )
+                    keywords_html = f'<div class="summary-keywords">{keyword_badges}</div>'
+                items_html.append(
+                    f'<li data-keywords="{keywords_attr}">'
+                    f'<div><div>{escape_html(item["text"])}</div>{keywords_html}</div>'
+                    f'</li>'
+                )
 
-        if list_items:
-            summary_list = "<ul>" + "".join(list_items) + "</ul>"
+            category_sections.append(f'''
+                <div class="summary-category summary-category-{cat_data["color"]}">
+                    <div class="summary-category-header">
+                        <span class="summary-category-icon">{cat_data["icon"]}</span>
+                        <span class="summary-category-title">{escape_html(cat_name.split(" ", 1)[1] if " " in cat_name else cat_name)}</span>
+                    </div>
+                    <ul>{"".join(items_html)}</ul>
+                </div>
+            ''')
+
+        if category_sections:
+            summary_content = "".join(category_sections)
         else:
-            paragraphs = [f"<p>{escape_html(p.strip())}</p>" for p in summary.split("\n\n") if p.strip()]
-            summary_list = "".join(paragraphs) if paragraphs else f"<p>{escape_html(summary)}</p>"
+            # フォールバック: 旧形式の処理
+            list_items = []
+            for line in lines:
+                line = line.strip()
+                if not line:
+                    continue
+                item_text = None
+                if line.startswith("- ") or line.startswith("・") or line.startswith("• "):
+                    item_text = line.lstrip("-・• ").strip()
+                elif line.startswith("* "):
+                    item_text = line.lstrip("* ").strip()
+                if item_text:
+                    text, keywords = parse_summary_line(item_text)
+                    if text:
+                        keywords_attr = escape_html(','.join(keywords)) if keywords else ''
+                        keywords_html = ''
+                        if keywords:
+                            keyword_badges = ''.join(
+                                f'<span class="summary-keyword">{escape_html(k)}</span>'
+                                for k in keywords
+                            )
+                            keywords_html = f'<div class="summary-keywords">{keyword_badges}</div>'
+                        list_items.append(
+                            f'<li data-keywords="{keywords_attr}">'
+                            f'<div><div>{escape_html(text)}</div>{keywords_html}</div>'
+                            f'</li>'
+                        )
+            if list_items:
+                summary_content = "<ul>" + "".join(list_items) + "</ul>"
+            else:
+                paragraphs = [f"<p>{escape_html(p.strip())}</p>" for p in summary.split("\n\n") if p.strip()]
+                summary_content = "".join(paragraphs) if paragraphs else f"<p>{escape_html(summary)}</p>"
 
         summary_section = f'''
             <div class="summary-card">
@@ -1277,7 +1490,7 @@ def generate_html(
                         <div class="ai-badge">✨ AI Generated</div>
                     </div>
                     <div class="summary-content">
-                        {summary_list}
+                        {summary_content}
                     </div>
                 </div>
             </div>
