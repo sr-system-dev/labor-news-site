@@ -11,8 +11,6 @@
     <style>
         :root {
             --primary: #007cff;
-            --primary-dark: #0066d6;
-            --primary-light: #4da3ff;
             --primary-bg: #e6f2ff;
             --navy: #152638;
             --navy-light: #233a5d;
@@ -28,31 +26,27 @@
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 16px;
-            --radius-xl: 24px;
-            --shadow-sm: 0 1px 3px rgba(21,38,56,0.08);
-            --shadow-md: 0 4px 12px rgba(21,38,56,0.1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
         body {
             font-family: 'Noto Sans JP', 'Inter', sans-serif;
             background: var(--bg-page);
             color: var(--text-primary);
-            line-height: 1.7;
-            font-size: 15px;
+            line-height: 1.6;
+            font-size: 14px;
         }
 
         .header {
             background: var(--navy);
-            padding: 20px 24px;
+            padding: 16px 24px;
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         .header-inner {
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
             display: flex;
             align-items: center;
@@ -63,34 +57,27 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            color: #fff;
+            height: 28px;
+            width: auto;
         }
 
         .logo-text {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            color: #ffffff;
+            color: #f5b800;
         }
 
         .back-link {
             color: rgba(255,255,255,0.8);
             text-decoration: none;
-            font-size: 0.85rem;
-            padding: 6px 14px;
+            font-size: 0.8rem;
+            padding: 5px 12px;
             border-radius: 100px;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.25);
             transition: all 0.2s;
         }
 
@@ -100,109 +87,136 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 32px 24px;
+            padding: 28px 24px;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 24px;
         }
 
         .page-title {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--text-dark);
-            margin-bottom: 8px;
         }
 
         .page-subtitle {
             color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 32px;
+            font-size: 0.82rem;
         }
 
-        .week-card {
+        /* --- Week row --- */
+        .week-row {
             background: var(--bg-white);
             border: 1px solid var(--border);
-            border-radius: var(--radius-xl);
-            margin-bottom: 24px;
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
             overflow: hidden;
         }
 
-        .week-card-header {
-            background: var(--bg-gray);
-            padding: 16px 24px;
+        .week-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-light);
+            gap: 12px;
+            padding: 12px 18px;
             cursor: pointer;
+            transition: background 0.15s;
         }
 
-        .week-card-header:hover {
-            background: var(--primary-bg);
-        }
-
-        .week-period {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .week-meta {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .week-card-body {
-            padding: 20px 24px;
-        }
-
-        .cat-section {
-            margin-bottom: 16px;
-            padding: 14px 16px;
-            border-radius: var(--radius-md);
+        .week-header:hover {
             background: var(--bg-gray);
         }
 
-        .cat-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .cat-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
+        .week-date {
+            font-size: 0.82rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: var(--navy);
+            white-space: nowrap;
+            min-width: 180px;
         }
 
-        .cat-law { border-left: 4px solid #6366f1; }
-        .cat-court { border-left: 4px solid #f59e0b; }
-        .cat-subsidy { border-left: 4px solid #10b981; }
-        .cat-other { border-left: 4px solid #64748b; }
-
-        .cat-item {
-            color: var(--text-secondary);
-            font-size: 0.88rem;
-            line-height: 1.7;
-            padding: 6px 0;
+        .week-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            flex: 1;
+            min-width: 0;
         }
 
-        .cat-item + .cat-item {
-            border-top: 1px solid var(--border-light);
+        .week-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 100px;
+            white-space: nowrap;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
+
+        .week-tag-law { background: #eef2ff; color: #4338ca; }
+        .week-tag-court { background: #fefce8; color: #a16207; }
+        .week-tag-subsidy { background: #ecfdf5; color: #047857; }
+        .week-tag-other { background: #f1f5f9; color: #475569; }
 
         .week-link {
-            display: inline-block;
-            margin-top: 12px;
             color: var(--primary);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 600;
+            white-space: nowrap;
         }
 
         .week-link:hover {
             text-decoration: underline;
+        }
+
+        .week-body {
+            display: none;
+            padding: 0 18px 14px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .week-row.open .week-body {
+            display: block;
+        }
+
+        .cat-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 8px 0;
+        }
+
+        .cat-group + .cat-group {
+            border-top: 1px solid var(--border-light);
+        }
+
+        .cat-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            white-space: nowrap;
+            min-width: 110px;
+            padding-top: 1px;
+        }
+
+        .cat-items {
+            flex: 1;
+        }
+
+        .cat-item-row {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            padding: 2px 0;
         }
 
         .empty-state {
@@ -213,43 +227,30 @@
 
         footer {
             text-align: center;
-            padding: 48px 24px;
+            padding: 36px 24px;
             color: rgba(255,255,255,0.7);
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             background: var(--navy);
-            margin-top: 48px;
+            margin-top: 40px;
         }
 
         .footer-brand {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 8px;
+            color: #f5b800;
+            margin-bottom: 4px;
         }
 
         @media (max-width: 640px) {
-            .container {
-                padding: 20px 16px;
-            }
-
-            .page-title {
-                font-size: 1.2rem;
-            }
-
-            .week-card-header {
-                padding: 14px 16px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 4px;
-            }
-
-            .week-card-body {
-                padding: 16px;
-            }
-
-            .cat-section {
-                padding: 12px;
-            }
+            .container { padding: 20px 14px; }
+            .page-header { flex-direction: column; gap: 4px; margin-bottom: 18px; }
+            .week-header { padding: 10px 14px; flex-wrap: wrap; }
+            .week-date { min-width: auto; font-size: 0.8rem; }
+            .week-tags { gap: 3px; }
+            .week-tag { font-size: 0.68rem; padding: 1px 6px; }
+            .week-body { padding: 0 14px 12px; }
+            .cat-group { flex-direction: column; gap: 2px; }
+            .cat-label { min-width: auto; }
         }
     </style>
 </head>
@@ -257,23 +258,33 @@
     <header class="header">
         <div class="header-inner">
             <div class="logo">
-                <img class="logo-icon" src="logo.png" alt="iand" style="height:32px;width:auto;">
-                <div class="logo-text" style="color:#f5b800;">iand weekly</div>
+                <img class="logo-icon" src="logo.png" alt="iand">
+                <div class="logo-text">iand weekly</div>
             </div>
-            <a href="index.html" class="back-link">← 最新ニュースへ</a>
+            <a href="index.html" class="back-link">← ニュース一覧</a>
         </div>
     </header>
 
     <div class="container">
-        <h1 class="page-title">AIサマリー 週次まとめ</h1>
-        <p class="page-subtitle">毎週のAI分析レポートを振り返ることができます</p>
+        <div class="page-header">
+            <h1 class="page-title">🤖 AIサマリー一覧</h1>
+            <span class="page-subtitle">週次トピックの振り返り</span>
+        </div>
 
-        <div class="week-card"><div class="week-card-header"><span class="week-period">2026-01-30 〜 2026-02-05</span><span class="week-meta">生成: 2026-02-05 15:35</span></div><div class="week-card-body"><div class="cat-section cat-law"><div class="cat-header">📜 法改正・制度変更</div><div class="cat-item">フリーランス・事業者間取引適正化等法の施行 … フリーランス保護を目的とした新法が施行され、企業がフリーランスと契約する際の取引適正化や就業環境の整備が義務化されました。契約書面の交付、報酬支払期日の明確化、ハラスメント防止措置などが求められ、違反した場合は行政指導や公表措置の対象となります。</div><div class="cat-item">事業譲渡指針の改正 … 厚生労働省が企業価値担保権の創設に伴い事業譲渡指針を改正しました。事業譲渡時の労働者保護や労働条件の承継に関するルールが見直され、M&amp;Aや事業再編を行う企業は新たな手続きや配慮事項への対応が必要になります。</div></div><div class="cat-section cat-court"><div class="cat-header">⚖️ 裁判例・判例</div><div class="cat-item">派遣先の使用者性を否定した中労委判断 … 派遣労働者の個別契約逸脱事案において、中央労働委員会が派遣先企業の使用者性を否定する判断を示しました。派遣契約の範囲を超えた業務指示があっても、必ずしも派遣先が直接の使用者責任を負うわけではないことが明確になり、派遣先企業の責任範囲に影響を与える重要な判断です。</div><div class="cat-item">グーグル人員削減における不誠実団交認定 … 東京都労働委員会がグーグルの人員削減をめぐる団体交渉について不誠実団交に該当すると認定しました。大規模な人員削減を実施する際の労働組合との交渉姿勢や情報開示のあり方について、企業が注意すべき点が示された事例です。</div></div><div class="cat-section cat-other"><div class="cat-header">📌 その他重要トピック</div><div class="cat-item">2026年春闘の賃上げ動向 … 電機連合が過去最高となるベースアップ1.8万円の統一要求を決定し、労務行政研究所は2026年賃上げ予測を定昇込みで15,809円・4.69％と発表しました。関西地域では大卒35歳の標準賃金が35.3万円となるなど、継続的な賃上げ圧力が企業の人件費計画に大きな影響を与えています。</div><div class="cat-item">36協定届出の不備多発 … 中央労働基準監督署が36協定の職名記載漏れや過半数代表者欄での記入ミスが多発していることを指摘しました。労働時間管理の基本となる36協定の届出について、企業は記載内容の再確認と適切な手続きの徹底が求められています。</div></div><a href="2026-01-30_2026-02-05.html" class="week-link">この週のニュース一覧を見る →</a></div></div>
+        <div class="week-row"><div class="week-header"><span class="week-date">2026-01-30 〜 2026-02-05</span><div class="week-tags"><span class="week-tag week-tag-law">📜 フリーランス・事業者間取引適正化等法の施行</span><span class="week-tag week-tag-law">📜 事業譲渡指針の改正</span><span class="week-tag week-tag-court">⚖️ 派遣先の使用者性を否定した中労委判断</span><span class="week-tag week-tag-court">⚖️ グーグル人員削減における不誠実団交認定</span><span class="week-tag week-tag-subsidy">💰 福井県の賃上げ支援補助制度</span><span class="week-tag week-tag-other">📌 2026年春季労使交渉の動向</span><span class="week-tag week-tag-other">📌 36協定届出の不備多発</span><span class="week-tag week-tag-other">📌 キャリアコンサルタント制度の見直し</span></div><a href="2026-01-30_2026-02-05.html" class="week-link" onclick="event.stopPropagation()">詳細→</a></div><div class="week-body"><div class="cat-group"><div class="cat-label">📜 法改正・制度変更</div><div class="cat-items"><div class="cat-item-row">フリーランス・事業者間取引適正化等法の施行</div><div class="cat-item-row">事業譲渡指針の改正</div></div></div><div class="cat-group"><div class="cat-label">⚖️ 裁判例・判例</div><div class="cat-items"><div class="cat-item-row">派遣先の使用者性を否定した中労委判断</div><div class="cat-item-row">グーグル人員削減における不誠実団交認定</div></div></div><div class="cat-group"><div class="cat-label">💰 助成金・補助金</div><div class="cat-items"><div class="cat-item-row">福井県の賃上げ支援補助制度</div></div></div><div class="cat-group"><div class="cat-label">📌 その他重要トピック</div><div class="cat-items"><div class="cat-item-row">2026年春季労使交渉の動向</div><div class="cat-item-row">36協定届出の不備多発</div><div class="cat-item-row">キャリアコンサルタント制度の見直し</div></div></div></div></div>
     </div>
 
     <footer>
         <div class="footer-brand">iand weekly</div>
         <p>RSSフィードから自動収集・AI分析</p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.week-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.closest('.week-row').classList.toggle('open');
+            });
+        });
+    </script>
 </body>
 </html>
