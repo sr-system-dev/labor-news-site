@@ -10,6 +10,7 @@ RSSフィードから最新ニュースを取得し、Markdown形式で保存す
 
 import argparse
 import feedparser
+import json
 import os
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -866,6 +867,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         }}
 
         @media (max-width: 768px) {{
+            .header {{
+                padding: 14px 16px;
+            }}
+
             .header-inner {{
                 flex-wrap: wrap;
             }}
@@ -874,25 +879,124 @@ HTML_TEMPLATE = """<!DOCTYPE html>
                 display: none;
             }}
 
+            .header-meta {{
+                font-size: 0.75rem;
+            }}
+
+            .logo-text {{
+                font-size: 1.05rem;
+            }}
+
             .layout {{
-                padding: 20px;
-                gap: 20px;
+                padding: 16px;
+                gap: 16px;
             }}
 
             .sidebar {{
                 grid-template-columns: 1fr;
             }}
 
+            .sidebar-section {{
+                padding: 14px;
+            }}
+
+            .filter-tab {{
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }}
+
             .news-grid {{
                 grid-template-columns: 1fr;
+                gap: 14px;
             }}
 
             .summary-card {{
                 grid-template-columns: 1fr;
+                padding: 18px;
+                border-radius: var(--radius-lg);
             }}
 
             .summary-icon {{
                 display: none;
+            }}
+
+            .summary-title {{
+                font-size: 1rem;
+            }}
+
+            .summary-content {{
+                font-size: 0.88rem;
+            }}
+
+            .summary-category {{
+                padding: 12px;
+                margin-bottom: 14px;
+            }}
+
+            .summary-category li {{
+                padding: 8px 10px;
+                font-size: 0.83rem;
+                line-height: 1.6;
+            }}
+
+            .summary-category-title {{
+                font-size: 0.88rem;
+            }}
+
+            .summary-keyword {{
+                font-size: 0.7rem;
+                padding: 1px 8px;
+            }}
+
+            .date-section-header {{
+                gap: 10px;
+                margin-bottom: 14px;
+                padding-bottom: 12px;
+            }}
+
+            .date-section-icon {{
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }}
+
+            .date-section-date {{
+                font-size: 1rem;
+            }}
+
+            .news-card-header {{
+                padding: 12px 14px;
+            }}
+
+            .news-card-body {{
+                padding: 14px;
+            }}
+
+            .news-card-title {{
+                font-size: 0.92rem;
+                line-height: 1.5;
+            }}
+
+            .news-card-summary {{
+                font-size: 0.82rem;
+                -webkit-line-clamp: 2;
+            }}
+
+            .archive-section {{
+                padding: 18px;
+            }}
+
+            .archive-list {{
+                gap: 8px;
+            }}
+
+            .archive-item {{
+                padding: 10px 14px;
+                font-size: 0.82rem;
+            }}
+
+            footer {{
+                padding: 32px 16px;
             }}
         }}
 
@@ -935,6 +1039,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             <div class="header-meta">
                 {period}<br>
                 <small>更新: {collected_at}</small>
+                <div style="margin-top:6px"><a href="summary.html" style="color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.8rem;padding:4px 12px;border:1px solid rgba(255,255,255,0.3);border-radius:100px;">🤖 AIサマリー一覧</a></div>
             </div>
         </div>
     </header>
@@ -1148,33 +1253,31 @@ def generate_ai_summary(items: list[NewsItem]) -> str | None:
 【分析の観点】
 1. 複数のニュースソースで取り上げられている話題は、今週の労務業界で特に重要なトピックです。優先的に取り上げてください。
 2. 法改正、制度変更、判例など、企業の実務に直接影響するものを重視してください。
-3. 各トピックについて、企業がどのような影響を受けるか、どのような対策・準備が必要かを具体的に述べてください。
+3. 各トピックについて、企業への影響や必要な対応を具体的に述べてください。
 
 【出力形式】
 以下のカテゴリーごとに、該当するトピックがあれば記載してください。該当するトピックがないカテゴリーは省略してください。
 
 ## 📜 法改正・制度変更
-労働法規の改正、行政指針の変更など（例：同一賃金指針、育児介護休業法改正）
-- **[トピック名]**：[説明]。[関連キーワード: キーワード1, キーワード2]
+- トピック名 … 説明文。[関連キーワード: キーワード1, キーワード2]
 
 ## ⚖️ 裁判例・判例
-労働関連の判決、訴訟など（例：解雇無効判決、ハラスメント訴訟）
-- **[トピック名]**：[説明]。[関連キーワード: キーワード1, キーワード2]
+- トピック名 … 説明文。[関連キーワード: キーワード1, キーワード2]
 
 ## 💰 助成金・補助金
-厚労省の助成金、支援制度など（例：キャリアアップ助成金、雇用調整助成金）
-- **[トピック名]**：[説明]。[関連キーワード: キーワード1, キーワード2]
+- トピック名 … 説明文。[関連キーワード: キーワード1, キーワード2]
 
 ## 📌 その他重要トピック
-上記に分類されない重要ニュース（例：賃金動向、企業事例、調査結果）
-- **[トピック名]**：[説明]。[関連キーワード: キーワード1, キーワード2]
+- トピック名 … 説明文。[関連キーワード: キーワード1, キーワード2]
 
 【注意事項】
 - 必ず「## 📜」「## ⚖️」「## 💰」「## 📌」の見出し形式を使用してください
 - 各カテゴリーには1〜3つのトピックを記載
 - 該当トピックがないカテゴリーは見出しごと省略
+- Markdown記号（**、##以外の#、>、``など）は使わないでください。読みやすい自然な日本語で書いてください
+- トピック名の後は「 … 」（スペース三点リーダースペース）で区切り、続けて説明を書いてください
 - 専門用語は避け、わかりやすい表現を使用
-- 関連キーワードは、ニュース一覧の中から関連する記事を検索するための単語です（2〜4個）
+- 関連キーワードは行末に [関連キーワード: ...] の形式で付けてください。ニュース記事を検索するための単語です（2〜4個）
 - 日本語で回答"""
 
     try:
@@ -1372,13 +1475,19 @@ def generate_html(
         current_category = None
 
         def parse_summary_line(line: str) -> tuple[str, list[str]]:
-            """サマリー行からテキストとキーワードを抽出"""
+            """サマリー行からテキストとキーワードを抽出し、Markdown記号を除去"""
             keywords = []
             # [関連キーワード: ...] パターンを検索
             keyword_match = re.search(r'\[関連キーワード[:：]\s*([^\]]+)\]', line)
             if keyword_match:
                 keywords = [k.strip() for k in keyword_match.group(1).split(',')]
                 line = line[:keyword_match.start()].strip()
+            # Markdown記号を除去（**太字**、*斜体*、`コード`）
+            line = re.sub(r'\*\*(.+?)\*\*', r'\1', line)
+            line = re.sub(r'\*(.+?)\*', r'\1', line)
+            line = re.sub(r'`(.+?)`', r'\1', line)
+            # 「：」の前後のスペースを正規化
+            line = line.strip()
             return line, keywords
 
         for line in lines:
@@ -1673,6 +1782,447 @@ def save_html(start_date: datetime, end_date: datetime, content: str) -> Path:
     return index_path
 
 
+def save_summary(start_date: datetime, end_date: datetime, summary: str) -> Path:
+    """AIサマリーをJSONファイルに保存"""
+    summaries_dir = DOCS_DIR / "summaries"
+    summaries_dir.mkdir(parents=True, exist_ok=True)
+
+    start_str = start_date.strftime("%Y-%m-%d")
+    end_str = end_date.strftime("%Y-%m-%d")
+
+    data = {
+        "period_start": start_str,
+        "period_end": end_str,
+        "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "summary": summary,
+    }
+
+    file_path = summaries_dir / f"{start_str}_{end_str}.json"
+    file_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    return file_path
+
+
+def load_all_summaries() -> list[dict]:
+    """保存済みの全サマリーを読み込む（新しい順）"""
+    summaries_dir = DOCS_DIR / "summaries"
+    if not summaries_dir.exists():
+        return []
+
+    summaries = []
+    for json_file in sorted(summaries_dir.glob("*.json"), reverse=True):
+        try:
+            data = json.loads(json_file.read_text(encoding="utf-8"))
+            summaries.append(data)
+        except (json.JSONDecodeError, KeyError):
+            continue
+    return summaries
+
+
+def parse_summary_to_categories(summary_text: str) -> list[dict]:
+    """サマリーテキストをカテゴリー構造にパース"""
+    categories_def = {
+        "📜 法改正・制度変更": {"icon": "📜", "color": "law"},
+        "⚖️ 裁判例・判例": {"icon": "⚖️", "color": "court"},
+        "💰 助成金・補助金": {"icon": "💰", "color": "subsidy"},
+        "📌 その他重要トピック": {"icon": "📌", "color": "other"},
+    }
+
+    lines = summary_text.split("\n")
+    current_category = None
+    result = []
+    current_items = []
+
+    def clean_text(text):
+        text = re.sub(r'\*\*(.+?)\*\*', r'\1', text)
+        text = re.sub(r'\*(.+?)\*', r'\1', text)
+        text = re.sub(r'`(.+?)`', r'\1', text)
+        keyword_match = re.search(r'\[関連キーワード[:：]\s*([^\]]+)\]', text)
+        if keyword_match:
+            text = text[:keyword_match.start()].strip()
+        return text.strip()
+
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+
+        if line.startswith("## "):
+            if current_category and current_items:
+                result.append({
+                    "name": current_category,
+                    **categories_def.get(current_category, {"icon": "📌", "color": "other"}),
+                    "items": current_items,
+                })
+            header_text = line[3:].strip()
+            current_category = None
+            current_items = []
+            for cat_name in categories_def.keys():
+                if cat_name in header_text or header_text in cat_name:
+                    current_category = cat_name
+                    break
+            continue
+
+        if current_category:
+            item_text = None
+            if line.startswith("- ") or line.startswith("・") or line.startswith("• "):
+                item_text = line.lstrip("-・• ").strip()
+            elif line.startswith("* "):
+                item_text = line.lstrip("* ").strip()
+            if item_text:
+                current_items.append(clean_text(item_text))
+
+    if current_category and current_items:
+        result.append({
+            "name": current_category,
+            **categories_def.get(current_category, {"icon": "📌", "color": "other"}),
+            "items": current_items,
+        })
+
+    # カテゴリーなしのフォールバック
+    if not result:
+        items = []
+        for line in lines:
+            line = line.strip()
+            if line.startswith("- ") or line.startswith("・"):
+                items.append(clean_text(line.lstrip("-・• ").strip()))
+        if items:
+            result.append({"name": "トピック", "icon": "📌", "color": "other", "items": items})
+
+    return result
+
+
+SUMMARY_PAGE_TEMPLATE = """<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIサマリー一覧 | Weekly SR by iand</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {{
+            --primary: #007cff;
+            --primary-dark: #0066d6;
+            --primary-light: #4da3ff;
+            --primary-bg: #e6f2ff;
+            --navy: #152638;
+            --navy-light: #233a5d;
+            --bg-page: #f5f7fa;
+            --bg-white: #ffffff;
+            --bg-gray: #eef2f7;
+            --text-dark: #152638;
+            --text-primary: #233a5d;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --border: #d8e1eb;
+            --border-light: #eef2f7;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --shadow-sm: 0 1px 3px rgba(21,38,56,0.08);
+            --shadow-md: 0 4px 12px rgba(21,38,56,0.1);
+        }}
+
+        * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+        html {{ scroll-behavior: smooth; }}
+        body {{
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 15px;
+        }}
+
+        .header {{
+            background: var(--navy);
+            padding: 20px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }}
+
+        .header-inner {{
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }}
+
+        .logo {{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }}
+
+        .logo-icon {{
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #fff;
+        }}
+
+        .logo-text {{
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+        }}
+
+        .back-link {{
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 6px 14px;
+            border-radius: 100px;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.2s;
+        }}
+
+        .back-link:hover {{
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }}
+
+        .container {{
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }}
+
+        .page-title {{
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }}
+
+        .page-subtitle {{
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+        }}
+
+        .week-card {{
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            margin-bottom: 24px;
+            overflow: hidden;
+        }}
+
+        .week-card-header {{
+            background: var(--bg-gray);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-light);
+            cursor: pointer;
+        }}
+
+        .week-card-header:hover {{
+            background: var(--primary-bg);
+        }}
+
+        .week-period {{
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }}
+
+        .week-meta {{
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }}
+
+        .week-card-body {{
+            padding: 20px 24px;
+        }}
+
+        .cat-section {{
+            margin-bottom: 16px;
+            padding: 14px 16px;
+            border-radius: var(--radius-md);
+            background: var(--bg-gray);
+        }}
+
+        .cat-section:last-child {{
+            margin-bottom: 0;
+        }}
+
+        .cat-header {{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }}
+
+        .cat-law {{ border-left: 4px solid #6366f1; }}
+        .cat-court {{ border-left: 4px solid #f59e0b; }}
+        .cat-subsidy {{ border-left: 4px solid #10b981; }}
+        .cat-other {{ border-left: 4px solid #64748b; }}
+
+        .cat-item {{
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.7;
+            padding: 6px 0;
+        }}
+
+        .cat-item + .cat-item {{
+            border-top: 1px solid var(--border-light);
+        }}
+
+        .week-link {{
+            display: inline-block;
+            margin-top: 12px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }}
+
+        .week-link:hover {{
+            text-decoration: underline;
+        }}
+
+        .empty-state {{
+            text-align: center;
+            padding: 60px 24px;
+            color: var(--text-muted);
+        }}
+
+        footer {{
+            text-align: center;
+            padding: 48px 24px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.875rem;
+            background: var(--navy);
+            margin-top: 48px;
+        }}
+
+        .footer-brand {{
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }}
+
+        @media (max-width: 640px) {{
+            .container {{
+                padding: 20px 16px;
+            }}
+
+            .page-title {{
+                font-size: 1.2rem;
+            }}
+
+            .week-card-header {{
+                padding: 14px 16px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }}
+
+            .week-card-body {{
+                padding: 16px;
+            }}
+
+            .cat-section {{
+                padding: 12px;
+            }}
+        }}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-icon">🤖</div>
+                <div class="logo-text">AIサマリー一覧</div>
+            </div>
+            <a href="index.html" class="back-link">← 最新ニュースへ</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title">AIサマリー 週次まとめ</h1>
+        <p class="page-subtitle">毎週のAI分析レポートを振り返ることができます</p>
+
+        {content}
+    </div>
+
+    <footer>
+        <div class="footer-brand">Weekly SR by iand</div>
+        <p>RSSフィードから自動収集・AI分析</p>
+    </footer>
+</body>
+</html>
+"""
+
+
+def generate_summary_page() -> Path:
+    """AIサマリー一覧ページを生成"""
+    summaries = load_all_summaries()
+
+    if not summaries:
+        content = '<div class="empty-state"><p>まだサマリーがありません。</p></div>'
+    else:
+        cards = []
+        for s in summaries:
+            period = f'{s["period_start"]} 〜 {s["period_end"]}'
+            generated = s.get("generated_at", "")
+            archive_file = f'{s["period_start"]}_{s["period_end"]}.html'
+
+            categories = parse_summary_to_categories(s["summary"])
+
+            cat_html_parts = []
+            for cat in categories:
+                items_html = "".join(
+                    f'<div class="cat-item">{escape_html(item)}</div>'
+                    for item in cat["items"]
+                )
+                cat_html_parts.append(
+                    f'<div class="cat-section cat-{cat["color"]}">'
+                    f'<div class="cat-header">{cat["icon"]} {escape_html(cat["name"].split(" ", 1)[1] if " " in cat["name"] else cat["name"])}</div>'
+                    f'{items_html}'
+                    f'</div>'
+                )
+
+            cats_html = "".join(cat_html_parts)
+
+            cards.append(
+                f'<div class="week-card">'
+                f'<div class="week-card-header">'
+                f'<span class="week-period">{period}</span>'
+                f'<span class="week-meta">生成: {generated}</span>'
+                f'</div>'
+                f'<div class="week-card-body">'
+                f'{cats_html}'
+                f'<a href="{archive_file}" class="week-link">この週のニュース一覧を見る →</a>'
+                f'</div>'
+                f'</div>'
+            )
+        content = "\n".join(cards)
+
+    html_content = SUMMARY_PAGE_TEMPLATE.format(content=content)
+    page_path = DOCS_DIR / "summary.html"
+    page_path.write_text(html_content, encoding="utf-8")
+    return page_path
+
+
 def parse_args():
     """コマンドライン引数をパース"""
     parser = argparse.ArgumentParser(
@@ -1746,6 +2296,9 @@ def main():
         summary = generate_ai_summary(filtered_items)
         if summary:
             print("  → サマリー生成完了")
+            # サマリーをJSONファイルに保存
+            summary_path = save_summary(start_date, end_date, summary)
+            print(f"  → サマリー保存: {summary_path}")
         else:
             print("  → サマリー生成スキップ（APIキー未設定または失敗）")
 
@@ -1768,6 +2321,10 @@ def main():
         html_content = generate_html(filtered_items, start_date, end_date, summary, archives)
         html_path = save_html(start_date, end_date, html_content)
         print(f"  → {html_path} (GitHub Pages用)")
+
+        # AIサマリー一覧ページを生成
+        summary_page_path = generate_summary_page()
+        print(f"  → {summary_page_path} (サマリー一覧)")
 
     print()
     print("完了しました！")
