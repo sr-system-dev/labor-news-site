@@ -74,7 +74,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weekly SR by iand | {period}</title>
+    <title>iand weekly | {period}</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -147,21 +147,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         }}
 
         .logo-icon {{
-            width: 44px;
-            height: 44px;
-            background: var(--primary);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            color: #ffffff;
+            height: 36px;
+            width: auto;
         }}
 
         .logo-text {{
             font-size: 1.25rem;
             font-weight: 700;
-            color: #ffffff;
+            color: #f5b800;
         }}
 
         .header-stats {{
@@ -1019,8 +1012,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <header class="header">
         <div class="header-inner">
             <div class="logo">
-                <div class="logo-icon">📰</div>
-                <div class="logo-text">Weekly SR by iand</div>
+                <img class="logo-icon" src="logo.png" alt="iand">
+                <div class="logo-text">iand weekly</div>
             </div>
             <div class="header-stats">
                 <div class="header-stat">
@@ -1074,7 +1067,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     </div>
 
     <footer>
-        <div class="footer-brand">Weekly SR by iand</div>
+        <div class="footer-brand">iand weekly</div>
         <p>RSSフィードから自動収集・更新</p>
     </footer>
 
@@ -1896,7 +1889,7 @@ SUMMARY_PAGE_TEMPLATE = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIサマリー一覧 | Weekly SR by iand</title>
+    <title>AIサマリー一覧 | iand weekly</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2150,8 +2143,8 @@ SUMMARY_PAGE_TEMPLATE = """<!DOCTYPE html>
     <header class="header">
         <div class="header-inner">
             <div class="logo">
-                <div class="logo-icon">🤖</div>
-                <div class="logo-text">AIサマリー一覧</div>
+                <img class="logo-icon" src="logo.png" alt="iand" style="height:32px;width:auto;">
+                <div class="logo-text" style="color:#f5b800;">iand weekly</div>
             </div>
             <a href="index.html" class="back-link">← 最新ニュースへ</a>
         </div>
@@ -2165,7 +2158,7 @@ SUMMARY_PAGE_TEMPLATE = """<!DOCTYPE html>
     </div>
 
     <footer>
-        <div class="footer-brand">Weekly SR by iand</div>
+        <div class="footer-brand">iand weekly</div>
         <p>RSSフィードから自動収集・AI分析</p>
     </footer>
 </body>
