@@ -1897,8 +1897,6 @@ SUMMARY_PAGE_TEMPLATE = """<!DOCTYPE html>
     <style>
         :root {{
             --primary: #007cff;
-            --primary-dark: #0066d6;
-            --primary-light: #4da3ff;
             --primary-bg: #e6f2ff;
             --navy: #152638;
             --navy-light: #233a5d;
@@ -1914,31 +1912,27 @@ SUMMARY_PAGE_TEMPLATE = """<!DOCTYPE html>
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 16px;
-            --radius-xl: 24px;
-            --shadow-sm: 0 1px 3px rgba(21,38,56,0.08);
-            --shadow-md: 0 4px 12px rgba(21,38,56,0.1);
         }}
 
         * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-        html {{ scroll-behavior: smooth; }}
         body {{
             font-family: 'Noto Sans JP', 'Inter', sans-serif;
             background: var(--bg-page);
             color: var(--text-primary);
-            line-height: 1.7;
-            font-size: 15px;
+            line-height: 1.6;
+            font-size: 14px;
         }}
 
         .header {{
             background: var(--navy);
-            padding: 20px 24px;
+            padding: 16px 24px;
             position: sticky;
             top: 0;
             z-index: 100;
         }}
 
         .header-inner {{
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
             display: flex;
             align-items: center;
@@ -1949,34 +1943,27 @@ SUMMARY_PAGE_TEMPLATE = """<!DOCTYPE html>
         .logo {{
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }}
 
         .logo-icon {{
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            color: #fff;
+            height: 28px;
+            width: auto;
         }}
 
         .logo-text {{
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            color: #ffffff;
+            color: #f5b800;
         }}
 
         .back-link {{
             color: rgba(255,255,255,0.8);
             text-decoration: none;
-            font-size: 0.85rem;
-            padding: 6px 14px;
+            font-size: 0.8rem;
+            padding: 5px 12px;
             border-radius: 100px;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.25);
             transition: all 0.2s;
         }}
 
@@ -1986,109 +1973,136 @@ SUMMARY_PAGE_TEMPLATE = """<!DOCTYPE html>
         }}
 
         .container {{
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 32px 24px;
+            padding: 28px 24px;
+        }}
+
+        .page-header {{
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 24px;
         }}
 
         .page-title {{
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--text-dark);
-            margin-bottom: 8px;
         }}
 
         .page-subtitle {{
             color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 32px;
+            font-size: 0.82rem;
         }}
 
-        .week-card {{
+        /* --- Week row --- */
+        .week-row {{
             background: var(--bg-white);
             border: 1px solid var(--border);
-            border-radius: var(--radius-xl);
-            margin-bottom: 24px;
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
             overflow: hidden;
         }}
 
-        .week-card-header {{
-            background: var(--bg-gray);
-            padding: 16px 24px;
+        .week-header {{
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-light);
+            gap: 12px;
+            padding: 12px 18px;
             cursor: pointer;
+            transition: background 0.15s;
         }}
 
-        .week-card-header:hover {{
-            background: var(--primary-bg);
-        }}
-
-        .week-period {{
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }}
-
-        .week-meta {{
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }}
-
-        .week-card-body {{
-            padding: 20px 24px;
-        }}
-
-        .cat-section {{
-            margin-bottom: 16px;
-            padding: 14px 16px;
-            border-radius: var(--radius-md);
+        .week-header:hover {{
             background: var(--bg-gray);
         }}
 
-        .cat-section:last-child {{
-            margin-bottom: 0;
-        }}
-
-        .cat-header {{
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
+        .week-date {{
+            font-size: 0.82rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: var(--navy);
+            white-space: nowrap;
+            min-width: 180px;
         }}
 
-        .cat-law {{ border-left: 4px solid #6366f1; }}
-        .cat-court {{ border-left: 4px solid #f59e0b; }}
-        .cat-subsidy {{ border-left: 4px solid #10b981; }}
-        .cat-other {{ border-left: 4px solid #64748b; }}
-
-        .cat-item {{
-            color: var(--text-secondary);
-            font-size: 0.88rem;
-            line-height: 1.7;
-            padding: 6px 0;
+        .week-tags {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            flex: 1;
+            min-width: 0;
         }}
 
-        .cat-item + .cat-item {{
-            border-top: 1px solid var(--border-light);
+        .week-tag {{
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 100px;
+            white-space: nowrap;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }}
+
+        .week-tag-law {{ background: #eef2ff; color: #4338ca; }}
+        .week-tag-court {{ background: #fefce8; color: #a16207; }}
+        .week-tag-subsidy {{ background: #ecfdf5; color: #047857; }}
+        .week-tag-other {{ background: #f1f5f9; color: #475569; }}
 
         .week-link {{
-            display: inline-block;
-            margin-top: 12px;
             color: var(--primary);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 600;
+            white-space: nowrap;
         }}
 
         .week-link:hover {{
             text-decoration: underline;
+        }}
+
+        .week-body {{
+            display: none;
+            padding: 0 18px 14px;
+            border-top: 1px solid var(--border-light);
+        }}
+
+        .week-row.open .week-body {{
+            display: block;
+        }}
+
+        .cat-group {{
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 8px 0;
+        }}
+
+        .cat-group + .cat-group {{
+            border-top: 1px solid var(--border-light);
+        }}
+
+        .cat-label {{
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            white-space: nowrap;
+            min-width: 110px;
+            padding-top: 1px;
+        }}
+
+        .cat-items {{
+            flex: 1;
+        }}
+
+        .cat-item-row {{
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            padding: 2px 0;
         }}
 
         .empty-state {{
@@ -2099,43 +2113,30 @@ SUMMARY_PAGE_TEMPLATE = """<!DOCTYPE html>
 
         footer {{
             text-align: center;
-            padding: 48px 24px;
+            padding: 36px 24px;
             color: rgba(255,255,255,0.7);
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             background: var(--navy);
-            margin-top: 48px;
+            margin-top: 40px;
         }}
 
         .footer-brand {{
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 8px;
+            color: #f5b800;
+            margin-bottom: 4px;
         }}
 
         @media (max-width: 640px) {{
-            .container {{
-                padding: 20px 16px;
-            }}
-
-            .page-title {{
-                font-size: 1.2rem;
-            }}
-
-            .week-card-header {{
-                padding: 14px 16px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 4px;
-            }}
-
-            .week-card-body {{
-                padding: 16px;
-            }}
-
-            .cat-section {{
-                padding: 12px;
-            }}
+            .container {{ padding: 20px 14px; }}
+            .page-header {{ flex-direction: column; gap: 4px; margin-bottom: 18px; }}
+            .week-header {{ padding: 10px 14px; flex-wrap: wrap; }}
+            .week-date {{ min-width: auto; font-size: 0.8rem; }}
+            .week-tags {{ gap: 3px; }}
+            .week-tag {{ font-size: 0.68rem; padding: 1px 6px; }}
+            .week-body {{ padding: 0 14px 12px; }}
+            .cat-group {{ flex-direction: column; gap: 2px; }}
+            .cat-label {{ min-width: auto; }}
         }}
     </style>
 </head>
@@ -2143,16 +2144,18 @@ SUMMARY_PAGE_TEMPLATE = """<!DOCTYPE html>
     <header class="header">
         <div class="header-inner">
             <div class="logo">
-                <img class="logo-icon" src="logo.png" alt="iand" style="height:32px;width:auto;">
-                <div class="logo-text" style="color:#f5b800;">iand weekly</div>
+                <img class="logo-icon" src="logo.png" alt="iand">
+                <div class="logo-text">iand weekly</div>
             </div>
-            <a href="index.html" class="back-link">← 最新ニュースへ</a>
+            <a href="index.html" class="back-link">← ニュース一覧</a>
         </div>
     </header>
 
     <div class="container">
-        <h1 class="page-title">AIサマリー 週次まとめ</h1>
-        <p class="page-subtitle">毎週のAI分析レポートを振り返ることができます</p>
+        <div class="page-header">
+            <h1 class="page-title">🤖 AIサマリー一覧</h1>
+            <span class="page-subtitle">週次トピックの振り返り</span>
+        </div>
 
         {content}
     </div>
@@ -2161,54 +2164,85 @@ SUMMARY_PAGE_TEMPLATE = """<!DOCTYPE html>
         <div class="footer-brand">iand weekly</div>
         <p>RSSフィードから自動収集・AI分析</p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.week-header').forEach(header => {{
+            header.addEventListener('click', () => {{
+                header.closest('.week-row').classList.toggle('open');
+            }});
+        }});
+    </script>
 </body>
 </html>
 """
 
 
+def shorten_topic(text: str, max_len: int = 40) -> str:
+    """トピックテキストを短縮（一行に収まるように）"""
+    # 「 … 」で区切られている場合、トピック名部分だけ取る
+    if " … " in text:
+        text = text.split(" … ")[0]
+    elif "：" in text:
+        text = text.split("：")[0]
+    elif "…" in text:
+        text = text.split("…")[0]
+    text = text.strip().rstrip("。、")
+    if len(text) > max_len:
+        text = text[:max_len] + "…"
+    return text
+
+
 def generate_summary_page() -> Path:
-    """AIサマリー一覧ページを生成"""
+    """AIサマリー一覧ページを生成（コンパクト版）"""
     summaries = load_all_summaries()
 
     if not summaries:
         content = '<div class="empty-state"><p>まだサマリーがありません。</p></div>'
     else:
-        cards = []
+        rows = []
         for s in summaries:
             period = f'{s["period_start"]} 〜 {s["period_end"]}'
-            generated = s.get("generated_at", "")
             archive_file = f'{s["period_start"]}_{s["period_end"]}.html'
 
             categories = parse_summary_to_categories(s["summary"])
 
-            cat_html_parts = []
+            # ヘッダー用タグ（各トピックを短い一言で）
+            tag_colors = {"law": "law", "court": "court", "subsidy": "subsidy", "other": "other"}
+            tags_html = ""
+            for cat in categories:
+                color = tag_colors.get(cat["color"], "other")
+                for item in cat["items"]:
+                    short = shorten_topic(item, 25)
+                    tags_html += f'<span class="week-tag week-tag-{color}">{cat["icon"]} {escape_html(short)}</span>'
+
+            # 展開用の詳細
+            detail_parts = []
             for cat in categories:
                 items_html = "".join(
-                    f'<div class="cat-item">{escape_html(item)}</div>'
+                    f'<div class="cat-item-row">{escape_html(shorten_topic(item, 60))}</div>'
                     for item in cat["items"]
                 )
-                cat_html_parts.append(
-                    f'<div class="cat-section cat-{cat["color"]}">'
-                    f'<div class="cat-header">{cat["icon"]} {escape_html(cat["name"].split(" ", 1)[1] if " " in cat["name"] else cat["name"])}</div>'
-                    f'{items_html}'
+                cat_name = cat["name"].split(" ", 1)[1] if " " in cat["name"] else cat["name"]
+                detail_parts.append(
+                    f'<div class="cat-group">'
+                    f'<div class="cat-label">{cat["icon"]} {escape_html(cat_name)}</div>'
+                    f'<div class="cat-items">{items_html}</div>'
                     f'</div>'
                 )
 
-            cats_html = "".join(cat_html_parts)
+            detail_html = "".join(detail_parts)
 
-            cards.append(
-                f'<div class="week-card">'
-                f'<div class="week-card-header">'
-                f'<span class="week-period">{period}</span>'
-                f'<span class="week-meta">生成: {generated}</span>'
+            rows.append(
+                f'<div class="week-row">'
+                f'<div class="week-header">'
+                f'<span class="week-date">{period}</span>'
+                f'<div class="week-tags">{tags_html}</div>'
+                f'<a href="{archive_file}" class="week-link" onclick="event.stopPropagation()">詳細→</a>'
                 f'</div>'
-                f'<div class="week-card-body">'
-                f'{cats_html}'
-                f'<a href="{archive_file}" class="week-link">この週のニュース一覧を見る →</a>'
-                f'</div>'
+                f'<div class="week-body">{detail_html}</div>'
                 f'</div>'
             )
-        content = "\n".join(cards)
+        content = "\n".join(rows)
 
     html_content = SUMMARY_PAGE_TEMPLATE.format(content=content)
     page_path = DOCS_DIR / "summary.html"
