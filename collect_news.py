@@ -1288,6 +1288,70 @@ def generate_ai_summary(items: list[NewsItem]) -> str | None:
         return None
 
 
+def generate_fallback_summary(items: list[NewsItem]) -> str:
+    """AIサマリーが使えない時の簡易サマリーを生成する"""
+    category_rules = [
+        (
+            "📜 法改正・制度変更",
+            ["改正", "制度", "施行", "厚労省", "労働時間", "最低賃金", "社会保険", "雇用保険", "年金", "指針", "ガイドライン"],
+        ),
+        (
+            "⚖️ 裁判例・判例",
+            ["判決", "裁判", "訴訟", "地裁", "高裁", "最高裁", "書類送検", "違反", "懲戒", "解雇"],
+        ),
+        (
+            "💰 助成金・補助金",
+            ["助成金", "補助金", "支援金", "給付金", "奨励金"],
+        ),
+        (
+            "📌 その他重要トピック",
+            ["賃上げ", "採用", "人材", "ハラスメント", "労災", "安全衛生", "熱中症", "メンタルヘルス", "退職", "育休"],
+        ),
+    ]
+
+    used_keys = set()
+    sections = []
+    sorted_items = sorted(items, key=lambda item: item.published, reverse=True)
+
+    for category_name, keywords in category_rules:
+        picked = []
+        for item in sorted_items:
+            key = item.link or item.title
+            if key in used_keys:
+                continue
+            haystack = f"{item.title} {item.summary}"
+            matched_keywords = [keyword for keyword in keywords if keyword in haystack]
+            if not matched_keywords:
+                continue
+            used_keys.add(key)
+            picked.append((item, matched_keywords[:3]))
+            if len(picked) >= 3:
+                break
+
+        if not picked:
+            continue
+
+        lines = [f"## {category_name}", ""]
+        for item, matched_keywords in picked:
+            summary = item.summary.strip() or f"{item.source}の関連記事です。"
+            if len(summary) > 90:
+                summary = summary[:90].rstrip("、。") + "..."
+            keyword_text = ", ".join(matched_keywords)
+            lines.append(f"- {item.title} … {summary}[関連キーワード: {keyword_text}]")
+        sections.append("\n".join(lines))
+
+    if not sections:
+        lines = ["## 📌 その他重要トピック", ""]
+        for item in sorted_items[:3]:
+            summary = item.summary.strip() or f"{item.source}の関連記事です。"
+            if len(summary) > 90:
+                summary = summary[:90].rstrip("、。") + "..."
+            lines.append(f"- {item.title} … {summary}[関連キーワード: 労務, ニュース]")
+        sections.append("\n".join(lines))
+
+    return "\n\n".join(sections)
+
+
 def filter_by_date_range(
     items: list[NewsItem], start_date: datetime, end_date: datetime
 ) -> list[NewsItem]:
@@ -1378,6 +1442,12 @@ def escape_html(text: str) -> str:
         .replace(">", "&gt;")
         .replace('"', "&quot;")
     )
+
+
+def strip_trailing_whitespace(content: str) -> str:
+    """生成HTMLの行末空白を除去する"""
+    stripped = "\n".join(line.rstrip() for line in content.splitlines())
+    return stripped + ("\n" if content.endswith("\n") else "")
 
 
 def get_source_icon_class(source: str) -> str:
@@ -1761,6 +1831,7 @@ def get_archive_list(current_start: str, current_end: str) -> list[tuple[str, st
 def save_html(start_date: datetime, end_date: datetime, content: str) -> Path:
     """HTMLファイルを保存（GitHub Pages用）"""
     DOCS_DIR.mkdir(exist_ok=True)
+    content = strip_trailing_whitespace(content)
 
     # index.htmlとして保存（GitHub Pages用）
     index_path = DOCS_DIR / "index.html"
@@ -2246,7 +2317,7 @@ def generate_summary_page() -> Path:
 
     html_content = SUMMARY_PAGE_TEMPLATE.format(content=content)
     page_path = DOCS_DIR / "summary.html"
-    page_path.write_text(html_content, encoding="utf-8")
+    page_path.write_text(strip_trailing_whitespace(html_content), encoding="utf-8")
     return page_path
 
 
@@ -2321,13 +2392,13 @@ def main():
     if not args.no_summary:
         print("AIサマリーを生成中...")
         summary = generate_ai_summary(filtered_items)
-        if summary:
-            print("  → サマリー生成完了")
-            # サマリーをJSONファイルに保存
-            summary_path = save_summary(start_date, end_date, summary)
-            print(f"  → サマリー保存: {summary_path}")
-        else:
-            print("  → サマリー生成スキップ（APIキー未設定または失敗）")
+        if not summary:
+            print("  → AIサマリー生成に失敗したため、簡易サマリーを生成します")
+            summary = generate_fallback_summary(filtered_items)
+        print("  → サマリー生成完了")
+        # サマリーをJSONファイルに保存
+        summary_path = save_summary(start_date, end_date, summary)
+        print(f"  → サマリー保存: {summary_path}")
 
     # Markdownファイルを生成
     if not args.no_markdown:

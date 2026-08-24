@@ -3,40 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weekly SR by iand | 2026-01-28 〜 2026-02-03</title>
+    <title>iand weekly | 2026-01-28 〜 2026-02-03</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --primary-light: #60a5fa;
-            --primary-bg: #eff6ff;
-            --secondary: #0891b2;
-            --accent: #f59e0b;
-            --accent-bg: #fffbeb;
+            /* i-and.com inspired color scheme */
+            --primary: #007cff;
+            --primary-dark: #0066d6;
+            --primary-light: #4da3ff;
+            --primary-bg: #e6f2ff;
+            --secondary: #233a5d;
+            --accent: #007cff;
+            --accent-bg: #e6f2ff;
             --success: #059669;
             --success-bg: #ecfdf5;
-            --purple: #7c3aed;
-            --purple-bg: #f5f3ff;
-            --bg-page: #f8fafc;
+            --navy: #152638;
+            --navy-light: #233a5d;
+            --bg-page: #f5f7fa;
             --bg-white: #ffffff;
-            --bg-gray: #f1f5f9;
-            --text-dark: #0f172a;
-            --text-primary: #1e293b;
-            --text-secondary: #475569;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --border-light: #f1f5f9;
+            --bg-gray: #eef2f7;
+            --text-dark: #152638;
+            --text-primary: #233a5d;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --border: #d8e1eb;
+            --border-light: #eef2f7;
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 16px;
             --radius-xl: 24px;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-            --shadow-lg: 0 8px 24px rgba(0,0,0,0.1);
+            --shadow-sm: 0 1px 3px rgba(21,38,56,0.08);
+            --shadow-md: 0 4px 12px rgba(21,38,56,0.1);
+            --shadow-lg: 0 8px 24px rgba(21,38,56,0.12);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -51,8 +52,8 @@
 
         /* ===== HEADER ===== */
         .header {
-            background: var(--bg-white);
-            border-bottom: 1px solid var(--border);
+            background: var(--navy);
+            border-bottom: none;
             padding: 20px 32px;
             position: sticky;
             top: 0;
@@ -75,20 +76,14 @@
         }
 
         .logo-icon {
-            width: 44px;
-            height: 44px;
-            background: var(--primary);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
+            height: 36px;
+            width: auto;
         }
 
         .logo-text {
             font-size: 1.25rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: #f5b800;
         }
 
         .header-stats {
@@ -101,23 +96,23 @@
             align-items: center;
             gap: 8px;
             padding: 8px 16px;
-            background: var(--bg-gray);
+            background: rgba(255,255,255,0.1);
             border-radius: 100px;
             font-size: 0.9rem;
         }
 
         .header-stat-value {
             font-weight: 700;
-            color: var(--primary);
+            color: #4da3ff;
         }
 
         .header-stat-label {
-            color: var(--text-muted);
+            color: rgba(255,255,255,0.7);
         }
 
         .header-meta {
             font-size: 0.85rem;
-            color: var(--text-muted);
+            color: rgba(255,255,255,0.8);
         }
 
         /* ===== LAYOUT ===== */
@@ -278,7 +273,7 @@
         .summary-icon {
             width: 56px;
             height: 56px;
-            background: var(--primary);
+            background: var(--navy);
             border-radius: var(--radius-md);
             display: flex;
             align-items: center;
@@ -351,6 +346,133 @@
             content: '✓';
             color: var(--success);
             font-weight: 700;
+        }
+
+        /* Category-based summary styles */
+        .summary-category {
+            margin-bottom: 20px;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            background: var(--bg-white);
+        }
+
+        .summary-category:last-child {
+            margin-bottom: 0;
+        }
+
+        .summary-category-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .summary-category-icon {
+            font-size: 1.2rem;
+        }
+
+        .summary-category-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .summary-category-law {
+            border-left: 4px solid #6366f1;
+        }
+
+        .summary-category-law .summary-category-header {
+            border-bottom-color: #e0e7ff;
+        }
+
+        .summary-category-law li {
+            border-left-color: #6366f1;
+        }
+
+        .summary-category-law li::before {
+            color: #6366f1;
+        }
+
+        .summary-category-court {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .summary-category-court .summary-category-header {
+            border-bottom-color: #fef3c7;
+        }
+
+        .summary-category-court li {
+            border-left-color: #f59e0b;
+        }
+
+        .summary-category-court li::before {
+            color: #f59e0b;
+        }
+
+        .summary-category-subsidy {
+            border-left: 4px solid #10b981;
+        }
+
+        .summary-category-subsidy .summary-category-header {
+            border-bottom-color: #d1fae5;
+        }
+
+        .summary-category-subsidy li {
+            border-left-color: #10b981;
+        }
+
+        .summary-category-subsidy li::before {
+            color: #10b981;
+        }
+
+        .summary-category-other {
+            border-left: 4px solid #64748b;
+        }
+
+        .summary-category-other .summary-category-header {
+            border-bottom-color: #e2e8f0;
+        }
+
+        .summary-category-other li {
+            border-left-color: #64748b;
+        }
+
+        .summary-category-other li::before {
+            color: #64748b;
+        }
+
+        .summary-category ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .summary-category li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 14px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--success);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .summary-category li:hover {
+            background: var(--primary-bg);
+            transform: translateX(4px);
+        }
+
+        .summary-category li.active {
+            background: var(--primary-bg);
+            border-left-width: 4px;
         }
 
         .summary-keywords {
@@ -530,7 +652,7 @@
         .date-section-icon {
             width: 48px;
             height: 48px;
-            background: var(--primary);
+            background: var(--navy);
             border-radius: var(--radius-md);
             display: flex;
             align-items: center;
@@ -555,7 +677,7 @@
         }
 
         .date-section-count {
-            background: var(--primary);
+            background: var(--navy);
             color: white;
             padding: 6px 16px;
             border-radius: 100px;
@@ -635,16 +757,16 @@
         footer {
             text-align: center;
             padding: 48px 32px;
-            color: var(--text-muted);
+            color: rgba(255,255,255,0.7);
             font-size: 0.875rem;
-            border-top: 1px solid var(--border);
+            background: var(--navy);
             margin-top: 48px;
         }
 
         .footer-brand {
             font-size: 1.25rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: #ffffff;
             margin-bottom: 8px;
         }
 
@@ -667,6 +789,10 @@
         }
 
         @media (max-width: 768px) {
+            .header {
+                padding: 14px 16px;
+            }
+
             .header-inner {
                 flex-wrap: wrap;
             }
@@ -675,25 +801,124 @@
                 display: none;
             }
 
+            .header-meta {
+                font-size: 0.75rem;
+            }
+
+            .logo-text {
+                font-size: 1.05rem;
+            }
+
             .layout {
-                padding: 20px;
-                gap: 20px;
+                padding: 16px;
+                gap: 16px;
             }
 
             .sidebar {
                 grid-template-columns: 1fr;
             }
 
+            .sidebar-section {
+                padding: 14px;
+            }
+
+            .filter-tab {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }
+
             .news-grid {
                 grid-template-columns: 1fr;
+                gap: 14px;
             }
 
             .summary-card {
                 grid-template-columns: 1fr;
+                padding: 18px;
+                border-radius: var(--radius-lg);
             }
 
             .summary-icon {
                 display: none;
+            }
+
+            .summary-title {
+                font-size: 1rem;
+            }
+
+            .summary-content {
+                font-size: 0.88rem;
+            }
+
+            .summary-category {
+                padding: 12px;
+                margin-bottom: 14px;
+            }
+
+            .summary-category li {
+                padding: 8px 10px;
+                font-size: 0.83rem;
+                line-height: 1.6;
+            }
+
+            .summary-category-title {
+                font-size: 0.88rem;
+            }
+
+            .summary-keyword {
+                font-size: 0.7rem;
+                padding: 1px 8px;
+            }
+
+            .date-section-header {
+                gap: 10px;
+                margin-bottom: 14px;
+                padding-bottom: 12px;
+            }
+
+            .date-section-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .date-section-date {
+                font-size: 1rem;
+            }
+
+            .news-card-header {
+                padding: 12px 14px;
+            }
+
+            .news-card-body {
+                padding: 14px;
+            }
+
+            .news-card-title {
+                font-size: 0.92rem;
+                line-height: 1.5;
+            }
+
+            .news-card-summary {
+                font-size: 0.82rem;
+                -webkit-line-clamp: 2;
+            }
+
+            .archive-section {
+                padding: 18px;
+            }
+
+            .archive-list {
+                gap: 8px;
+            }
+
+            .archive-item {
+                padding: 10px 14px;
+                font-size: 0.82rem;
+            }
+
+            footer {
+                padding: 32px 16px;
             }
         }
 
@@ -716,8 +941,8 @@
     <header class="header">
         <div class="header-inner">
             <div class="logo">
-                <div class="logo-icon">📰</div>
-                <div class="logo-text">Weekly SR by iand</div>
+                <img class="logo-icon" src="logo.png" alt="iand">
+                <div class="logo-text">iand weekly</div>
             </div>
             <div class="header-stats">
                 <div class="header-stat">
@@ -735,7 +960,8 @@
             </div>
             <div class="header-meta">
                 2026-01-28 〜 2026-02-03<br>
-                <small>更新: 2026-02-03 08:22</small>
+                <small>更新: 2026-08-24 22:06</small>
+                <div style="margin-top:6px"><a href="summary.html" style="color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.8rem;padding:4px 12px;border:1px solid rgba(255,255,255,0.3);border-radius:100px;">🤖 AIサマリー一覧</a></div>
             </div>
         </div>
     </header>
@@ -774,7 +1000,7 @@
         </aside>
 
         <main class="main-content">
-            
+
             <div class="summary-card">
                 <div class="summary-icon">🤖</div>
                 <div class="summary-body">
@@ -783,11 +1009,43 @@
                         <div class="ai-badge">✨ AI Generated</div>
                     </div>
                     <div class="summary-content">
-                        <ul><li data-keywords="同一賃金指針,住宅手当,待遇格差"><div><div>**改正同一賃金指針の施行準備**：2025年10月施行予定の改正同一賃金指針では、住宅手当などの記載が拡充されます。企業への影響として正社員と非正規雇用者間の待遇格差に関する説明責任がより厳格化されます。対策として現行の手当制度の見直しと、同一労働同一賃金の観点からの制度整備を早期に進めることが推奨されます。</div><div class="summary-keywords"><span class="summary-keyword">同一賃金指針</span><span class="summary-keyword">住宅手当</span><span class="summary-keyword">待遇格差</span></div></div></li><li data-keywords="ベア,春闘,賃上げ原資"><div><div>**2025年春闘での構造的賃上げ要求**：経労委報告でベア検討が「標準」となり、サービス連合は35歳21万円を底とする最賃要求、UAゼンセンはパート時給90円増要求を決定しました。企業への影響として人件費の大幅増加と採用競争の激化が予想されます。対策として賃上げ原資の確保計画策定と、生産性向上による収益改善策の検討が推奨されます。</div><div class="summary-keywords"><span class="summary-keyword">ベア</span><span class="summary-keyword">春闘</span><span class="summary-keyword">賃上げ原資</span></div></div></li><li data-keywords="フリーランス法,業務委託,取引適正化"><div><div>**フリーランス・事業者間取引適正化等法の本格運用**：2024年11月に施行された同法について、企業での認知と対応準備が急務となっています。企業への影響として業務委託契約や外注取引での新たなコンプライアンス義務が発生します。対策として既存のフリーランスとの契約内容の見直しと、新法に対応した契約書雛形の整備が推奨されます。</div><div class="summary-keywords"><span class="summary-keyword">フリーランス法</span><span class="summary-keyword">業務委託</span><span class="summary-keyword">取引適正化</span></div></div></li><li data-keywords="労働安全衛生法,特別教育,機械設備"><div><div>**労働安全衛生法改正による機械設備規制の強化**：機械設備の安全確保に関する規制対象の具体化が進み、安全教育を怠った事業場の送検事例も複数報告されています。企業への影響として設備投資コストの増加と安全教育体制の再構築が必要となります。対策として現行設備の安全性点検と従業員向け特別教育プログラムの充実化が推奨されます。</div><div class="summary-keywords"><span class="summary-keyword">労働安全衛生法</span><span class="summary-keyword">特別教育</span><span class="summary-keyword">機械設備</span></div></div></li><li data-keywords="賃金カーブ,賃構速報,人事制度"><div><div>**賃金構造の変化と人事制度見直しの必要性**：厚労省の賃構速報で大学卒40歳代後半での賃金減少と賃金カーブのフラット化が確認されました。企業への影響として従来の年功序列型賃金制度の見直し圧力と中高年層のモチベーション低下リスクが高まります。対策として職務給の導入検討とキャリア開発支援制度の強化が推奨されます。</div><div class="summary-keywords"><span class="summary-keyword">賃金カーブ</span><span class="summary-keyword">賃構速報</span><span class="summary-keyword">人事制度</span></div></div></li></ul>
+
+                <div class="summary-category summary-category-law">
+                    <div class="summary-category-header">
+                        <span class="summary-category-icon">📜</span>
+                        <span class="summary-category-title">法改正・制度変更</span>
+                    </div>
+                    <ul><li data-keywords="制度"><div><div>傷病手当金の待期期間に「早退した日」は含まれる？実務で迷いやすいポイントを解説 … 健康保険の制度の中で、企業の人事・労務担当者が対応する機会の多いものの一つに「傷病手当金」があります。特に、傷病手当金の待期期間について、企業の人事ご担当者様からお問い合わせをいた...</div><div class="summary-keywords"><span class="summary-keyword">制度</span></div></div></li><li data-keywords="厚労省"><div><div>大学卒の40歳代後半で賃金減少 厚労省・賃構速報 … 大学卒・45～49歳の平均所定内賃金は、前年比0.2％減の45.8万円――厚生労働省の賃金構造基本統計調査（令和７年・速報）で明らかになっている。 大学卒（フルタイム）の年齢階級別...</div><div class="summary-keywords"><span class="summary-keyword">厚労省</span></div></div></li><li data-keywords="労働時間"><div><div>作成前に再確認！36協定・1年変形協定の作成・届出解説 … 年度単位で、「時間外労働・休日労働に関する協定」（いわゆる「36協定」）を締結したり、1年単位の変形労働時間制を導入したりする企業は多くあるかと思います。これらは専用の様式により...</div><div class="summary-keywords"><span class="summary-keyword">労働時間</span></div></div></li></ul>
+                </div>
+
+                <div class="summary-category summary-category-court">
+                    <div class="summary-category-header">
+                        <span class="summary-category-icon">⚖️</span>
+                        <span class="summary-category-title">裁判例・判例</span>
+                    </div>
+                    <ul><li data-keywords="違反"><div><div>退職代行「モームリ」社長ら逮捕 なぜ「弁護士紹介」が違法に？弁護士法72条のポイント解説(弁護士ドットコムニュース) … 退職代行サービス「モームリ」を運営するアルバトロスの社長、谷本慎二容疑者と、従業員で妻の志織容疑者が2月3日、弁護士法違反の疑いで警視庁に逮捕されました。 産経新聞によると、谷本容...</div><div class="summary-keywords"><span class="summary-keyword">違反</span></div></div></li><li data-keywords="裁判,訴訟,高裁"><div><div>朝日新聞出版パワハラ訴訟、フリー編集者が会社と和解 一審は「親の顔が見たい」 メールを違法認定(弁護士ドットコムニュース) … 朝日新聞出版の社員から「パワハラ」を受けて廃業に追い込まれたとして、フリーランスの女性編集者が同社と社員を相手取り損害賠償を求めた裁判の控訴審は、東京高裁で和解が成立した。 和解は...</div><div class="summary-keywords"><span class="summary-keyword">裁判</span><span class="summary-keyword">訴訟</span><span class="summary-keyword">高裁</span></div></div></li><li data-keywords="裁判,地裁"><div><div>”官製ワーキングプア”会計年度任用職員に「団体交渉権なし」は合憲 東京地裁が判断(弁護士ドットコムニュース) … 憲法で保障されている「労働基本権」が、自治体で働く「会計年度任用職員」に及ばないのは違憲ではないか──。 そんな問いが正面から争われた裁判で、東京地裁は1月29日、「合憲」と判断し...</div><div class="summary-keywords"><span class="summary-keyword">裁判</span><span class="summary-keyword">地裁</span></div></div></li></ul>
+                </div>
+
+                <div class="summary-category summary-category-subsidy">
+                    <div class="summary-category-header">
+                        <span class="summary-category-icon">💰</span>
+                        <span class="summary-category-title">助成金・補助金</span>
+                    </div>
+                    <ul><li data-keywords="補助金"><div><div>賃上げ原資確保へ設備投資を補助 福井県 … 福井県は県内中小企業の賃上げ原資の確保や、円滑な労務費への価格転嫁を後押しするために、設備投資費用を対象とした補助金を新設した。生産性向上や省力化につながる機械やソフトウェアの導入...</div><div class="summary-keywords"><span class="summary-keyword">補助金</span></div></div></li><li data-keywords="支援金"><div><div>令和8年度の都道府県単位保険料率 40都道府県で引き下げの模様 介護保険料率、子ども・子育て支援金率も提示（協会けんぽ） … 協会けんぽ（全国健康保険協会）から、令和8年1月29日開催の「第140回 全国健康保険協会運営委員会」の資料が公表されました。 今回の運営委員会では、「令和8年度都道府県単位保険料...</div><div class="summary-keywords"><span class="summary-keyword">支援金</span></div></div></li></ul>
+                </div>
+
+                <div class="summary-category summary-category-other">
+                    <div class="summary-category-header">
+                        <span class="summary-category-icon">📌</span>
+                        <span class="summary-category-title">その他重要トピック</span>
+                    </div>
+                    <ul><li data-keywords="採用"><div><div>「キャリア観・採用サイトの活用実態調査」を実施 … 新卒・第二新卒の採用サイト活用実態：52%が「仕事の大変さ・失敗談」の開示で信頼度が向上すると回答。求められるのは“会社のリアル”株式会社GIG（本社：東京都中央区、代表取締役：岩...</div><div class="summary-keywords"><span class="summary-keyword">採用</span></div></div></li><li data-keywords="安全衛生"><div><div>労働安全衛生法改正関連：機械設備の安全確保に関する規制対象が具体化へ … 令和9年（2027年）4月1日に施行予定の改正労働安全衛生法に関連し、厚生労働省はパブリックコメント「労働安全衛生法及び作業環境測定法の一部を改正する法律の一部の施行に伴う関係省令...</div><div class="summary-keywords"><span class="summary-keyword">安全衛生</span></div></div></li><li data-keywords="採用"><div><div>【今週の労務書】『日本の就活 新卒一括採用は「悪」なのか』 … 擁護の立場で論陣張る 学業を阻害する、画一的、一度きりの片道切符――など、何かと世間の批判にさらされがちな新卒一括採用。リクルート、大手企業人事部などの勤務を経て、大学教員となった...</div><div class="summary-keywords"><span class="summary-keyword">採用</span></div></div></li></ul>
+                </div>
+
                     </div>
                 </div>
             </div>
-        
+
             <section class="date-section" id="date-2026-02-03">
 <div class="date-section-header">
 <div class="date-section-icon">📅</div>
@@ -809,7 +1067,7 @@
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212535/" target="_blank" rel="noopener">
 <h3 class="news-card-title">賃上げ原資確保へ設備投資を補助 福井県</h3>
-<p class="news-card-summary">福井県は県内中小企業の賃上げ原資の確保や、円滑な労務費への価格転嫁を後押しするために、設備投資費用を対象とした補助金を新設した。生産性向上や省力化につながる機械やソフトウェアの導入費が対象で、掛かった経費の３分の２を補助する。上限額は製造業...</p>
+<p class="news-card-summary">福井県は県内中小企業の賃上げ原資の確保や、円滑な労務費への価格転嫁を後押しするために、設備投資費用を対象とした補助金を新設した。生産性向上や省力化につながる機械やソフトウェアの導入費が対象で、掛かった...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/03 10:00</span>
 <span class="news-card-arrow">→</span>
@@ -828,7 +1086,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://www.sato-group-sr.jp/portal/archives/4103" target="_blank" rel="noopener">
 <h3 class="news-card-title">傷病手当金の待期期間に「早退した日」は含まれる？実務で迷いやすいポイントを解説</h3>
-<p class="news-card-summary">健康保険の制度の中で、企業の人事・労務担当者が対応する機会の多いものの一つに「傷病手当金」があります。特に、傷病手当金の待期期間について、企業の人事ご担当者様からお問い合わせをいただくケースが多くあります。 そこで今回は […]</p>
+<p class="news-card-summary">健康保険の制度の中で、企業の人事・労務担当者が対応する機会の多いものの一つに「傷病手当金」があります。特に、傷病手当金の待期期間について、企業の人事ご担当者様からお問い合わせをいただくケースが多くあり...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/03 05:48</span>
 <span class="news-card-arrow">→</span>
@@ -847,7 +1105,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212544/" target="_blank" rel="noopener">
 <h3 class="news-card-title">延長時間超え残業させ送検 常総労基署</h3>
-<p class="news-card-summary">茨城・常総労働基準監督署（久保木絵津子署長）は、トラック運転者１人に36協定で定めた延長時間を超えて時間外労働を行わせたとして、一般貨物自動車運送業の㈱ロンコ・ジャパン（大阪府大阪市）と同社運輸事業部長を労働基準法第32条（労働時間）違反の...</p>
+<p class="news-card-summary">茨城・常総労働基準監督署（久保木絵津子署長）は、トラック運転者１人に36協定で定めた延長時間を超えて時間外労働を行わせたとして、一般貨物自動車運送業の㈱ロンコ・ジャパン（大阪府大阪市）と同社運輸事業部...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/03 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -866,7 +1124,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212530/" target="_blank" rel="noopener">
 <h3 class="news-card-title">大学卒の40歳代後半で賃金減少 厚労省・賃構速報</h3>
-<p class="news-card-summary">大学卒・45～49歳の平均所定内賃金は、前年比0.2％減の45.8万円――厚生労働省の賃金構造基本統計調査（令和７年・速報）で明らかになっている。 大学卒（フルタイム）の年齢階級別の賃金（７年６月分）は、20～24歳26.4万円、30～34...</p>
+<p class="news-card-summary">大学卒・45～49歳の平均所定内賃金は、前年比0.2％減の45.8万円――厚生労働省の賃金構造基本統計調査（令和７年・速報）で明らかになっている。 大学卒（フルタイム）の年齢階級別の賃金（７年６月分）...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/03 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -885,7 +1143,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212513/" target="_blank" rel="noopener">
 <h3 class="news-card-title">賞与の減少が大幅な修正に 11月毎勤・確報</h3>
-<p class="news-card-summary">厚生労働省は毎月勤労統計調査の昨年11月分の確報を公表した。賞与などを示す特別給は２万2915円で前年同月比1.5％減となっている。速報は17.0％減の１万9293円だったが、大幅な上方修正が入った。 実質賃金も1.6％減と、速報の2.8％...</p>
+<p class="news-card-summary">厚生労働省は毎月勤労統計調査の昨年11月分の確報を公表した。賞与などを示す特別給は２万2915円で前年同月比1.5％減となっている。速報は17.0％減の１万9293円だったが、大幅な上方修正が入った。...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/03 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -923,7 +1181,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://roumu.com/archives/130257.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=130257" target="_blank" rel="noopener">
 <h3 class="news-card-title">作成前に再確認！36協定・1年変形協定の作成・届出解説</h3>
-<p class="news-card-summary">年度単位で、「時間外労働・休日労働に関する協定」（いわゆる「36協定」）を締結したり、1年単位の変形労働時間制を導入したりする企業は多くあるかと思います。これらは専用の様式により、労働基準監督署への届出が必要なものですが […] The p...</p>
+<p class="news-card-summary">年度単位で、「時間外労働・休日労働に関する協定」（いわゆる「36協定」）を締結したり、1年単位の変形労働時間制を導入したりする企業は多くあるかと思います。これらは専用の様式により、労働基準監督署への届...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/03 00:25</span>
 <span class="news-card-arrow">→</span>
@@ -973,7 +1231,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://roumu.com/archives/130192.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=130192" target="_blank" rel="noopener">
 <h3 class="news-card-title">ここからはじめるフリーランス・事業者間取引適正化等法（2026年1月版）</h3>
-<p class="news-card-summary">タイトル：ここからはじめるフリーランス・事業者間取引適正化等法（2026年1月版） 発行者：公正取引委員会・中小企業庁・厚生労働省 発行時期：2026年1月 ページ数：36ページ 概要：このパンフレットは2024年11月 […] The p...</p>
+<p class="news-card-summary">タイトル：ここからはじめるフリーランス・事業者間取引適正化等法（2026年1月版） 発行者：公正取引委員会・中小企業庁・厚生労働省 発行時期：2026年1月 ページ数：36ページ 概要：このパンフレッ...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/02 15:00</span>
 <span class="news-card-arrow">→</span>
@@ -992,7 +1250,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/column/212899/" target="_blank" rel="noopener">
 <h3 class="news-card-title">労働力調査（基本集計）2025年（令和７年）12月分結果―完全失業率は2.6％（総務省）</h3>
-<p class="news-card-summary">総務省は令和７年12月分の労働力調査の結果を公表した。 【ポイント】 （１）就業者数 就業者数は6842万人。前年同月に比べ31万人の増加。41か月連続の増加 （２）完全失業者数 完全失業者数は166万人。前年同月に比べ12万人の増加。5か...</p>
+<p class="news-card-summary">総務省は令和７年12月分の労働力調査の結果を公表した。 【ポイント】 （１）就業者数 就業者数は6842万人。前年同月に比べ31万人の増加。41か月連続の増加 （２）完全失業者数 完全失業者数は166...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/02 13:55</span>
 <span class="news-card-arrow">→</span>
@@ -1011,7 +1269,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212532/" target="_blank" rel="noopener">
 <h3 class="news-card-title">特別教育を怠り送検 入社２日で金型交換 さいたま労基署</h3>
-<p class="news-card-summary">さいたま労働基準監督署（北川敏子署長）は、就労２日目のベトナム人技能実習生が動力プレス機の金型の交換作業中に機械に両手を挟み、指を９本切断した労働災害に関連して、製造業の㈱古川製作所（埼玉県伊奈町）と当時の同社代表取締役を労働安全衛生法第5...</p>
+<p class="news-card-summary">さいたま労働基準監督署（北川敏子署長）は、就労２日目のベトナム人技能実習生が動力プレス機の金型の交換作業中に機械に両手を挟み、指を９本切断した労働災害に関連して、製造業の㈱古川製作所（埼玉県伊奈町）と...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/02 10:00</span>
 <span class="news-card-arrow">→</span>
@@ -1049,7 +1307,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.psrn.jp/topics/detail.php?id=39701" target="_blank" rel="noopener">
 <h3 class="news-card-title">外国人労働者数（令和7年10月末）は257万1,037人 過去最高を更新（厚労省）</h3>
-<p class="news-card-summary">厚生労働省から、「外国人雇用状況の届出状況まとめ（令和7年10月末現在）」が公表されました（令和8年1月30日公表）。 外国人雇用状況の届出制度は、いわゆる労働施策総合推進法に基づくもので、外国人労働者の雇用管理の改善や再就職支援などを目的...</p>
+<p class="news-card-summary">厚生労働省から、「外国人雇用状況の届出状況まとめ（令和7年10月末現在）」が公表されました（令和8年1月30日公表）。 外国人雇用状況の届出制度は、いわゆる労働施策総合推進法に基づくもので、外国人労働...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/02 06:37</span>
 <span class="news-card-arrow">→</span>
@@ -1068,7 +1326,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.psrn.jp/topics/detail.php?id=39700" target="_blank" rel="noopener">
 <h3 class="news-card-title">障害者雇用納付金の対象を常用労働者数100人以下の事業主にも拡大することを検討（厚労省の研究会）</h3>
-<p class="news-card-summary">厚生労働省から、令和8年1月30日に開催された「第13回 今後の障害者雇用促進制度の在り方に関する研究会」の資料が公表されました。 今回の研究会において、「今後の障害者雇用促進制度の在り方に関する研究会 報告書（案）」が提示されています。 ...</p>
+<p class="news-card-summary">厚生労働省から、令和8年1月30日に開催された「第13回 今後の障害者雇用促進制度の在り方に関する研究会」の資料が公表されました。 今回の研究会において、「今後の障害者雇用促進制度の在り方に関する研究...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/02 06:36</span>
 <span class="news-card-arrow">→</span>
@@ -1087,7 +1345,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212527/" target="_blank" rel="noopener">
 <h3 class="news-card-title">事業譲渡指針を改正 企業価値担保権の創設で 厚労省</h3>
-<p class="news-card-summary">厚生労働省は、企業価値担保権の創設に伴う企業の取組み事項などを盛り込んだ改正事業譲渡等指針を告示した。同担保権の設定時に会社が行うことが望ましい事項として、会社が置かれている環境や経営課題について労働者と意見交換を行い、労働者や労働組合の意...</p>
+<p class="news-card-summary">厚生労働省は、企業価値担保権の創設に伴う企業の取組み事項などを盛り込んだ改正事業譲渡等指針を告示した。同担保権の設定時に会社が行うことが望ましい事項として、会社が置かれている環境や経営課題について労働...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/02 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1106,7 +1364,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://www.sato-group-sr.jp/portal/archives/4096" target="_blank" rel="noopener">
 <h3 class="news-card-title">労働安全衛生法改正関連：機械設備の安全確保に関する規制対象が具体化へ</h3>
-<p class="news-card-summary">令和9年（2027年）4月1日に施行予定の改正労働安全衛生法に関連し、厚生労働省はパブリックコメント「労働安全衛生法及び作業環境測定法の一部を改正する法律の一部の施行に伴う関係省令の整備等に関する省令案について（概要）」 […]</p>
+<p class="news-card-summary">令和9年（2027年）4月1日に施行予定の改正労働安全衛生法に関連し、厚生労働省はパブリックコメント「労働安全衛生法及び作業環境測定法の一部を改正する法律の一部の施行に伴う関係省令の整備等に関する省令...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/02 04:48</span>
 <span class="news-card-arrow">→</span>
@@ -1125,7 +1383,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://www.sato-group-sr.jp/portal/archives/4091" target="_blank" rel="noopener">
 <h3 class="news-card-title">再発行を依頼していない資格確認書が届いたときに考えられる原因</h3>
-<p class="news-card-summary">人事担当者の方から、「再発行の依頼をしていないのに資格確認書が発行されている」というお問い合わせをいただくことがあります。 健康保険資格確認書は、通常は会社側で手続きを行った場合や、本人からの申請があった場合に再発行され […]</p>
+<p class="news-card-summary">人事担当者の方から、「再発行の依頼をしていないのに資格確認書が発行されている」というお問い合わせをいただくことがあります。 健康保険資格確認書は、通常は会社側で手続きを行った場合や、本人からの申請があ...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/02 01:22</span>
 <span class="news-card-arrow">→</span>
@@ -1156,7 +1414,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://jinjibu.jp/article/detl/opinion/4002/" target="_blank" rel="noopener">
 <h3 class="news-card-title">タナケン教授の「プロティアン・キャリア」ゼミ【第76回】 キャリアショックと感情知性―AI導入が醸す、人事という仕事の本質―</h3>
-<p class="news-card-summary">人事領域におけるAI導入が、急速に進んでいます。かつては人の判断に委ねられていたプロセスに、AIが深く入り込むようになりました。AIが人事の仕事を大きく前進させたことは間違いありませんが、同時に人事の現...</p>
+<p class="news-card-summary">人事領域におけるAI導入が、急速に進んでいます。かつては人の判断に委ねられていたプロセスに、AIが深く入り込むようになりました。AIが人事の仕事を大きく前進させたことは間違いありませんが、同時に人事の...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/01 19:00</span>
 <span class="news-card-arrow">→</span>
@@ -1175,7 +1433,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://roumu.com/archives/130188.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=130188" target="_blank" rel="noopener">
 <h3 class="news-card-title">知っていますか？フリーランスの取引に関する新しい法律「フリーランス・事業者間取引適正化等法」が2024年11月１日に施行されました。</h3>
-<p class="news-card-summary">タイトル：知っていますか？フリーランスの取引に関する新しい法律「フリーランス・事業者間取引適正化等法」が2024年11月１日に施行されました。 発行者：公正取引委員会・中小企業庁・厚生労働省 発行時期：2026年1月 ペ […] The p...</p>
+<p class="news-card-summary">タイトル：知っていますか？フリーランスの取引に関する新しい法律「フリーランス・事業者間取引適正化等法」が2024年11月１日に施行されました。 発行者：公正取引委員会・中小企業庁・厚生労働省 発行時期...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/01 15:00</span>
 <span class="news-card-arrow">→</span>
@@ -1194,7 +1452,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://roumu.com/archives/130156.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=130156" target="_blank" rel="noopener">
 <h3 class="news-card-title">令和７年賃構調査速報に見る賃金カーブフラット化の進行</h3>
-<p class="news-card-summary">先日、厚生労働省から「令和７年賃金構造基本統計調査 速報」が公表されました。今回の速報では、以下の２つのデータを見ることができます。 一般労働者の学歴、勤続年数階級別賃金及び対前年増減率 一般労働者の学歴、年齢階級別賃金 […] The p...</p>
+<p class="news-card-summary">先日、厚生労働省から「令和７年賃金構造基本統計調査 速報」が公表されました。今回の速報では、以下の２つのデータを見ることができます。 一般労働者の学歴、勤続年数階級別賃金及び対前年増減率 一般労働者の...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/01 15:00</span>
 <span class="news-card-arrow">→</span>
@@ -1213,7 +1471,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/column/212538/" target="_blank" rel="noopener">
 <h3 class="news-card-title">捨てられない情報を選ぶ／サカイ社会保険労務士事務所 代表 坂井 陽子</h3>
-<p class="news-card-summary">私は、社会保険労務士として開業している傍ら、成年後見も行っている。そのほかに地域で手話通訳者として活動しており、令和７年には手話通訳士の資格を取得した。 通訳者は、元の言語を目標言語に変えて伝える。単なる言語の置き換えではなく、意味や意図を...</p>
+<p class="news-card-summary">私は、社会保険労務士として開業している傍ら、成年後見も行っている。そのほかに地域で手話通訳者として活動しており、令和７年には手話通訳士の資格を取得した。 通訳者は、元の言語を目標言語に変えて伝える。単...</p>
 <div class="news-card-footer">
 <span class="news-card-time">02/01 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1244,7 +1502,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/column/212561/" target="_blank" rel="noopener">
 <h3 class="news-card-title">【今週の労務書】『日本の就活 新卒一括採用は「悪」なのか』</h3>
-<p class="news-card-summary">擁護の立場で論陣張る 学業を阻害する、画一的、一度きりの片道切符――など、何かと世間の批判にさらされがちな新卒一括採用。リクルート、大手企業人事部などの勤務を経て、大学教員となった著者が、さまざまな問題を内包しているとしつつ、擁護の立場から...</p>
+<p class="news-card-summary">擁護の立場で論陣張る 学業を阻害する、画一的、一度きりの片道切符――など、何かと世間の批判にさらされがちな新卒一括採用。リクルート、大手企業人事部などの勤務を経て、大学教員となった著者が、さまざまな問...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/31 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1294,7 +1552,7 @@ SATO PORTAL
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212546/" target="_blank" rel="noopener">
 <h3 class="news-card-title">転倒の“仕組み”学ぶ 小売業災害防止に向け 東京労働局</h3>
-<p class="news-card-summary">東京労働局（増田嗣郎局長）は、都内の大手小売業や業界団体で構成する「ＴＯＫＹＯ小売業ＳＡＦＥ協議会」を開催した。健康寿命の延伸に詳しい筑波大学人間系の山田実教授を講師に招き、高年齢労働者が転倒するメカニズムと予防策を学んだ（写真）。 山田教...</p>
+<p class="news-card-summary">東京労働局（増田嗣郎局長）は、都内の大手小売業や業界団体で構成する「ＴＯＫＹＯ小売業ＳＡＦＥ協議会」を開催した。健康寿命の延伸に詳しい筑波大学人間系の山田実教授を講師に招き、高年齢労働者が転倒するメカ...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/30 10:00</span>
 <span class="news-card-arrow">→</span>
@@ -1313,7 +1571,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.psrn.jp/topics/detail.php?id=39694" target="_blank" rel="noopener">
 <h3 class="news-card-title">令和7年平均 有効求人倍率は1.22倍（2年連続で低下） 完全失業率は2.5％（横這い）</h3>
-<p class="news-card-summary">令和8年1月30日、厚生労働省から、令和7年12月分及び令和7年分の一般職業紹介状況が公表されました。 また、同日、総務省から、同月分・同年分の労働力調査の結果が公表されました。 これらにより、有効求人倍率と完全失業率が明らかにされています...</p>
+<p class="news-card-summary">令和8年1月30日、厚生労働省から、令和7年12月分及び令和7年分の一般職業紹介状況が公表されました。 また、同日、総務省から、同月分・同年分の労働力調査の結果が公表されました。 これらにより、有効求...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/30 09:51</span>
 <span class="news-card-arrow">→</span>
@@ -1332,7 +1590,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.psrn.jp/topics/detail.php?id=39693" target="_blank" rel="noopener">
 <h3 class="news-card-title">「テレワーク運用における評価制度の見直しの勧め」（テレワーク総合ポータルサイトのコラム）</h3>
-<p class="news-card-summary">厚生労働省・総務省が運営する「テレワーク総合ポータルサイト」では、テレワークの啓発・導入支援、事例紹介など、テレワークに関する様々な情報を紹介しています。 不定期にコラムも掲載されていますが、この度、コラム17として、「テレワーク運用におけ...</p>
+<p class="news-card-summary">厚生労働省・総務省が運営する「テレワーク総合ポータルサイト」では、テレワークの啓発・導入支援、事例紹介など、テレワークに関する様々な情報を紹介しています。 不定期にコラムも掲載されていますが、この度、...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/30 09:50</span>
 <span class="news-card-arrow">→</span>
@@ -1351,7 +1609,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.psrn.jp/topics/detail.php?id=39691" target="_blank" rel="noopener">
 <h3 class="news-card-title">「仕事と育児カムバック支援サイト」の令和7年度版ご案内リーフレットを掲載</h3>
-<p class="news-card-summary">厚生労働省では、職場復帰・再就職を目指す女性のための情報を提供するサイトとして、「仕事と育児カムバック支援サイト」を運営しています。 この度、このサイトについて、令和7年度版の案内リーフレットが公表されました（令和8年1月29日公表）。 こ...</p>
+<p class="news-card-summary">厚生労働省では、職場復帰・再就職を目指す女性のための情報を提供するサイトとして、「仕事と育児カムバック支援サイト」を運営しています。 この度、このサイトについて、令和7年度版の案内リーフレットが公表さ...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/30 09:48</span>
 <span class="news-card-arrow">→</span>
@@ -1370,7 +1628,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.psrn.jp/topics/detail.php?id=39690" target="_blank" rel="noopener">
 <h3 class="news-card-title">「障害（補償）等給付に係る診断書（案）」などを提示（厚労省の検討会）</h3>
-<p class="news-card-summary">厚生労働省から、令和8年1月29日に開催された「第2回 障害（補償）等給付に係る診断書様式等に関する検討会」の資料が公表されました。 労災保険の障害（補償）等給付請求の診断書様式は、主治医が請求人の残存障害の診断結果を記載し、保険給付請求書...</p>
+<p class="news-card-summary">厚生労働省から、令和8年1月29日に開催された「第2回 障害（補償）等給付に係る診断書様式等に関する検討会」の資料が公表されました。 労災保険の障害（補償）等給付請求の診断書様式は、主治医が請求人の残...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/30 09:44</span>
 <span class="news-card-arrow">→</span>
@@ -1408,7 +1666,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212326/" target="_blank" rel="noopener">
 <h3 class="news-card-title">滑りにくい床を確認 菓子工場で局長パト 兵庫労働局</h3>
-<p class="news-card-summary">兵庫労働局（金成真一局長）は昨年12月19日、グリコマニュファクチャリングジャパン㈱神戸工場で安全パトロールを実施した。金成局長が、滑り止めの素材を混ぜた床面の整備などの転倒防止対策を確認している。 同工場では、従業員が傾斜でつまずいたり滑...</p>
+<p class="news-card-summary">兵庫労働局（金成真一局長）は昨年12月19日、グリコマニュファクチャリングジャパン㈱神戸工場で安全パトロールを実施した。金成局長が、滑り止めの素材を混ぜた床面の整備などの転倒防止対策を確認している。 ...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/30 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1427,7 +1685,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212526/" target="_blank" rel="noopener">
 <h3 class="news-card-title">ベア検討が「標準」に 構造的な賃金引上げへ 経労委報告</h3>
-<p class="news-card-summary">ベースアップの検討が標準に――経団連は、2026年の春季労使交渉における経営側の方針を示した経営労働政策特別委員会報告（経労委報告）を公表した。企業と経団連の社会的責務として、賃金引上げの力強いモメンタム（勢い）の「さらなる定着」に取り組み...</p>
+<p class="news-card-summary">ベースアップの検討が標準に――経団連は、2026年の春季労使交渉における経営側の方針を示した経営労働政策特別委員会報告（経労委報告）を公表した。企業と経団連の社会的責務として、賃金引上げの力強いモメン...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/30 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1446,7 +1704,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212541/" target="_blank" rel="noopener">
 <h3 class="news-card-title">不誠実団交を認定 グーグル人員削減めぐり 都労委</h3>
-<p class="news-card-summary">東京都労働委員会（團藤丈士会長）は、グーグル合同会社（東京都渋谷区）が人員削減をめぐって労働組合と行った団体交渉において、同社の対応は不誠実団交に当たると判断した。産前産後休業・育児休業中の従業員のうち、退職合意の撤回を希望する者の取扱いに...</p>
+<p class="news-card-summary">東京都労働委員会（團藤丈士会長）は、グーグル合同会社（東京都渋谷区）が人員削減をめぐって労働組合と行った団体交渉において、同社の対応は不誠実団交に当たると判断した。産前産後休業・育児休業中の従業員のう...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/30 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1465,7 +1723,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212515/" target="_blank" rel="noopener">
 <h3 class="news-card-title">35歳21万円を底に ３産業統一の最賃要求へ サービス連合・春闘方針</h3>
-<p class="news-card-summary">35歳21万3500円を最低基準に――ホテル、レジャー、ツーリズム・フォワーダー（国際航空貨物）の労働組合で構成するサービス・ツーリズム産業労働組合連合会（櫻田あすか会長＝写真中央）は、「ポイント年齢最低保証賃金」を３産業統一で設定し、すべ...</p>
+<p class="news-card-summary">35歳21万3500円を最低基準に――ホテル、レジャー、ツーリズム・フォワーダー（国際航空貨物）の労働組合で構成するサービス・ツーリズム産業労働組合連合会（櫻田あすか会長＝写真中央）は、「ポイント年齢...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/30 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1484,7 +1742,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://roumu.com/archives/129931.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=129931" target="_blank" rel="noopener">
 <h3 class="news-card-title">○○株式会社 パワーハラスメント防止方針（トップからのメッセージ）</h3>
-<p class="news-card-summary">ハラスメント防止のための会社からのメッセージで、会社の方針を伝えたもの。パワーハラスメント対策導入マニュアル（第4版）に記載されたトップのメッセージのひな形6をword化したものです。 重要度：★★★官公庁への届出：不要 […] The p...</p>
+<p class="news-card-summary">ハラスメント防止のための会社からのメッセージで、会社の方針を伝えたもの。パワーハラスメント対策導入マニュアル（第4版）に記載されたトップのメッセージのひな形6をword化したものです。 重要度：★★★...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/30 03:00</span>
 <span class="news-card-arrow">→</span>
@@ -1515,7 +1773,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://roumu.com/archives/130205.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=130205" target="_blank" rel="noopener">
 <h3 class="news-card-title">全国平均9.9％が予定される2026年3月分からの協会けんぽの健康保険料率</h3>
-<p class="news-card-summary">協会けんぽの健康保険料率および介護保険料率は、例年、3月分（4月納付分）から見直しが行われています。今年も3月に向けて料率の検討が進んでいますが、昨日開催された運営委員会の資料では、都道府県単位保険料率の案が示されていま […] The p...</p>
+<p class="news-card-summary">協会けんぽの健康保険料率および介護保険料率は、例年、3月分（4月納付分）から見直しが行われています。今年も3月に向けて料率の検討が進んでいますが、昨日開催された運営委員会の資料では、都道府県単位保険料...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 22:01</span>
 <span class="news-card-arrow">→</span>
@@ -1534,7 +1792,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="http://jinjibu.jp/news/detl/25976/" target="_blank" rel="noopener">
 <h3 class="news-card-title">「女性の多様な働き方に関する調査」を実施</h3>
-<p class="news-card-summary">ライフイベントとキャリアの両立に悩む72.1％が「サイレント退職※」ユニ・チャーム株式会社（代表取締役 社長執行役員：高原 豪久）は、現在働いている、あるいは過去働いた経験がある女性に対し「女性の多様な働...</p>
+<p class="news-card-summary">ライフイベントとキャリアの両立に悩む72.1％が「サイレント退職※」ユニ・チャーム株式会社（代表取締役 社長執行役員：高原 豪久）は、現在働いている、あるいは過去働いた経験がある女性に対し「女性の多様...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 22:00</span>
 <span class="news-card-arrow">→</span>
@@ -1553,7 +1811,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://roumu.com/archives/130184.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=130184" target="_blank" rel="noopener">
 <h3 class="news-card-title">特定受託事業者に係る取引の適正化等に関する法律（フリーランス・事業者間取引適正化等法）【令和６年11月１日施行】説明資料</h3>
-<p class="news-card-summary">タイトル：特定受託事業者に係る取引の適正化等に関する法律（フリーランス・事業者間取引適正化等法）【令和６年11月１日施行】説明資料 発行者：内閣官房新しい資本主義実現本部事務局・公正取引委員会・中小企業庁・厚生労働省 発 […] The p...</p>
+<p class="news-card-summary">タイトル：特定受託事業者に係る取引の適正化等に関する法律（フリーランス・事業者間取引適正化等法）【令和６年11月１日施行】説明資料 発行者：内閣官房新しい資本主義実現本部事務局・公正取引委員会・中小企...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 15:00</span>
 <span class="news-card-arrow">→</span>
@@ -1591,7 +1849,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212545/" target="_blank" rel="noopener">
 <h3 class="news-card-title">【賃金事例】シンプレクス・ＨＤ／業務上関与の上位者が評価者 年俸額を合議で決定</h3>
-<p class="news-card-summary">多面観察により早期育成へ ＩＴ関連業のシンプレクス・ホールディングス㈱（東京都港区、金子英樹代表取締役社長）は、１年間のパフォーマンスに対し、本人と関係する上位者複数人で総合的な評価を行い、翌年の年俸をダイレクトに決める評価制度「札入れ（フ...</p>
+<p class="news-card-summary">多面観察により早期育成へ ＩＴ関連業のシンプレクス・ホールディングス㈱（東京都港区、金子英樹代表取締役社長）は、１年間のパフォーマンスに対し、本人と関係する上位者複数人で総合的な評価を行い、翌年の年俸...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 10:00</span>
 <span class="news-card-arrow">→</span>
@@ -1610,7 +1868,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.psrn.jp/topics/detail.php?id=39678" target="_blank" rel="noopener">
 <h3 class="news-card-title">令和8年度の都道府県単位保険料率 40都道府県で引き下げの模様 介護保険料率、子ども・子育て支援金率も提示（協会けんぽ）</h3>
-<p class="news-card-summary">協会けんぽ（全国健康保険協会）から、令和8年1月29日開催の「第140回 全国健康保険協会運営委員会」の資料が公表されました。 今回の運営委員会では、「令和8年度都道府県単位保険料率について（案）〔資料1－2〕」、「令和8年度介護保険の保険...</p>
+<p class="news-card-summary">協会けんぽ（全国健康保険協会）から、令和8年1月29日開催の「第140回 全国健康保険協会運営委員会」の資料が公表されました。 今回の運営委員会では、「令和8年度都道府県単位保険料率について（案）〔資...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 08:13</span>
 <span class="news-card-arrow">→</span>
@@ -1629,7 +1887,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.psrn.jp/topics/detail.php?id=39677" target="_blank" rel="noopener">
 <h3 class="news-card-title">労働基準法における「労働者」に関する研究会 これまでの議論の整理（案）を提示</h3>
-<p class="news-card-summary">厚生労働省から、令和8年1月28日に開催された「第5回 労働基準法における「労働者」に関する研究会」の資料が公表されました。 今回の研究会において、「これまでの議論の整理（案）」が提示されています。 これは、この研究会の検討事項の一つである...</p>
+<p class="news-card-summary">厚生労働省から、令和8年1月28日に開催された「第5回 労働基準法における「労働者」に関する研究会」の資料が公表されました。 今回の研究会において、「これまでの議論の整理（案）」が提示されています。 ...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 08:12</span>
 <span class="news-card-arrow">→</span>
@@ -1648,7 +1906,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.psrn.jp/topics/detail.php?id=39676" target="_blank" rel="noopener">
 <h3 class="news-card-title">経団連と連合が懇談会を開催 令和8年春闘が事実上スタート</h3>
-<p class="news-card-summary">経団連（日本経済団体連合会）と連合（日本労働組合総連合会）との懇談会が、令和8年1月27日に開催され、「令和8（2026）年春闘が事実上スタートした」などと報じられました。 令和8年春闘については、経団連・連合ともに賃上げが必要との認識で一...</p>
+<p class="news-card-summary">経団連（日本経済団体連合会）と連合（日本労働組合総連合会）との懇談会が、令和8年1月27日に開催され、「令和8（2026）年春闘が事実上スタートした」などと報じられました。 令和8年春闘については、経...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 08:07</span>
 <span class="news-card-arrow">→</span>
@@ -1667,7 +1925,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.psrn.jp/topics/detail.php?id=39675" target="_blank" rel="noopener">
 <h3 class="news-card-title">派遣労働者の同一労働同一賃金 「賃金比較ツール」・「労使協定のイメージ」などを更新・公開（厚労省）</h3>
-<p class="news-card-summary">厚生労働省から、「賃金比較ツール（令和7年度版・令和8年度適用版）」及び「労使協定のイメージ」などを更新・公開したとのお知らせがありました（令和8年1月28日公表）。 働き方改革関連法による改正労働者派遣法（令和2年4月1日施行）により、次...</p>
+<p class="news-card-summary">厚生労働省から、「賃金比較ツール（令和7年度版・令和8年度適用版）」及び「労使協定のイメージ」などを更新・公開したとのお知らせがありました（令和8年1月28日公表）。 働き方改革関連法による改正労働者...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 08:06</span>
 <span class="news-card-arrow">→</span>
@@ -1686,7 +1944,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.psrn.jp/topics/detail.php?id=39673" target="_blank" rel="noopener">
 <h3 class="news-card-title">「あかるい職場応援団」改ざんに関するご報告とお詫び</h3>
-<p class="news-card-summary">厚生労働省が運営する「あかるい職場応援団」から、「Webサイトが改ざんされ、本来とは異なるページが表示されていたことが判明いたしました」との報告がありました（令和8年1月26日公表）。 厚生労働省で把握している情報は、次のとおり。 ●改ざん...</p>
+<p class="news-card-summary">厚生労働省が運営する「あかるい職場応援団」から、「Webサイトが改ざんされ、本来とは異なるページが表示されていたことが判明いたしました」との報告がありました（令和8年1月26日公表）。 厚生労働省で把...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 08:02</span>
 <span class="news-card-arrow">→</span>
@@ -1705,7 +1963,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://roumu.com/archives/130179.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=130179" target="_blank" rel="noopener">
 <h3 class="news-card-title">大阪で【6年ぶり】の大型セミナーを開催！早稲田大学水町勇一郎教授「労働法改革の動きと課題」</h3>
-<p class="news-card-summary">LCGもコロナ以前は全国各地でセミナーを行っていましたが、コロナを経て、オンラインでどこでもセミナーを受講できるようにして欲しいというみなさんのニーズに対応する形でオンライン化を進めました。その結果、東京以外での本格的な […] The p...</p>
+<p class="news-card-summary">LCGもコロナ以前は全国各地でセミナーを行っていましたが、コロナを経て、オンラインでどこでもセミナーを受講できるようにして欲しいというみなさんのニーズに対応する形でオンライン化を進めました。その結果、...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 07:26</span>
 <span class="news-card-arrow">→</span>
@@ -1724,7 +1982,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://roumu.com/archives/130196.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=130196" target="_blank" rel="noopener">
 <h3 class="news-card-title">賃金事情 2026年2月5日号「1月13日から始まった協会けんぽの電子申請」</h3>
-<p class="news-card-summary">弊社特定社会保険労務士の宮武貴美が「事例で学ぶ社会保険の手続き」のタイトルで連載を行っている「賃金事情」の2026年2月5日号が発売されました。 同月号では「1月13日から始まった協会けんぽの電子申請」についての解説 […] The pos...</p>
+<p class="news-card-summary">弊社特定社会保険労務士の宮武貴美が「事例で学ぶ社会保険の手続き」のタイトルで連載を行っている「賃金事情」の2026年2月5日号が発売されました。 同月号では「1月13日から始まった協会けんぽの電子申請...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 05:10</span>
 <span class="news-card-arrow">→</span>
@@ -1743,7 +2001,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/series/212543/" target="_blank" rel="noopener">
 <h3 class="news-card-title">【中小企業も他人事ではない！ ビジネスと人権 ～基本理念から実務まで～】第４回 実際に取組みが進むまで 22年から国内も加速 対米輸出品差止め契機に／高﨑 真一</h3>
-<p class="news-card-summary">増産要求対応で違法改築重ねる 国連の『ビジネスと人権に関する指導原則』によって、国家に代わる人権尊重のための行動主体となることを期待された企業（主にグローバル企業）であったが、指導原則は国際文書に過ぎず法的拘束力を持たなかったことから、実際...</p>
+<p class="news-card-summary">増産要求対応で違法改築重ねる 国連の『ビジネスと人権に関する指導原則』によって、国家に代わる人権尊重のための行動主体となることを期待された企業（主にグローバル企業）であったが、指導原則は国際文書に過ぎ...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1762,7 +2020,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/series/212613/" target="_blank" rel="noopener">
 <h3 class="news-card-title">【ケーススタディー人事学Ｑ＆Ａ】第75回 森で作業中に脳卒中 労災認定の可能性も 「へき地」に該当する場合／西川 暢春</h3>
-<p class="news-card-summary">【Ｑ】 造園業のＨ社は、施設の景観維持を業としている。ある日、森深くのリゾート施設の草刈りを行っていたＩ作業員が、脳卒中で意識を失って倒れてしまった。同僚が救急車を呼んだが悪路で到着が遅れ、右手の麻痺が後遺症として残った。脳卒中は業務起因で...</p>
+<p class="news-card-summary">【Ｑ】 造園業のＨ社は、施設の景観維持を業としている。ある日、森深くのリゾート施設の草刈りを行っていたＩ作業員が、脳卒中で意識を失って倒れてしまった。同僚が救急車を呼んだが悪路で到着が遅れ、右手の麻痺...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1781,7 +2039,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212522/" target="_blank" rel="noopener">
 <h3 class="news-card-title">改正同一賃金指針 記載拡充し10月施行 住宅手当などを追加 厚労省</h3>
-<p class="news-card-summary">省令で説明義務の改善も 厚生労働省は、非正規労働者の待遇を改善するため、同一労働同一賃金ガイドラインや関係省令を改正し、今年10月に施行する方針だ。１月20日に開いた労働政策審議会の分科会で明らかにした。改正は、労政審同一労働同一賃金部会の...</p>
+<p class="news-card-summary">省令で説明義務の改善も 厚生労働省は、非正規労働者の待遇を改善するため、同一労働同一賃金ガイドラインや関係省令を改正し、今年10月に施行する方針だ。１月20日に開いた労働政策審議会の分科会で明らかにし...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1800,7 +2058,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212510/" target="_blank" rel="noopener">
 <h3 class="news-card-title">解決金は賃金該当せず 控除基づく相殺不可 東京地裁</h3>
-<p class="news-card-summary">労働審判の調停後紛争に 未払い賃金をめぐる労働審判の調停調書に定める「解決金」の法的性質が争点となった裁判で、東京地方裁判所（矢崎達也裁判官）は、解決金は賃金に当たらないと判断した。裁判は東京都内の不動産会社が解決金の実質は賃金であり、所得...</p>
+<p class="news-card-summary">労働審判の調停後紛争に 未払い賃金をめぐる労働審判の調停調書に定める「解決金」の法的性質が争点となった裁判で、東京地方裁判所（矢崎達也裁判官）は、解決金は賃金に当たらないと判断した。裁判は東京都内の不...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1819,7 +2077,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/series/212531/" target="_blank" rel="noopener">
 <h3 class="news-card-title">【人事担当者必見！ 押さえておきたい民法知識】第４回 意思表示と心裡留保 経緯や背景の考慮を 真意に基づいた発言か／石嵜 大介</h3>
-<p class="news-card-summary">行為後の言動を踏まえた判断も 民法は、総則の「法律行為」の章に「意思表示」に関するルールを定めている。今回は、私人間の権利義務関係を創設する法律行為の要素である意思表示とは何かを踏まえたうえで、「心裡留保」を解説する。 １ 意思表示 意思表...</p>
+<p class="news-card-summary">行為後の言動を踏まえた判断も 民法は、総則の「法律行為」の章に「意思表示」に関するルールを定めている。今回は、私人間の権利義務関係を創設する法律行為の要素である意思表示とは何かを踏まえたうえで、「心裡...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1838,7 +2096,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/column/212508/" target="_blank" rel="noopener">
 <h3 class="news-card-title">【主張】将来見据えて重点配分を</h3>
-<p class="news-card-summary">重点配分を基本に据えながら、自社にとって最適な方法を見出す必要がある――。経団連の「経営労働政策特別委員会報告」は、ベースアップの配分方法についてそう記した（関連記事）。今年もベア実施の検討が賃金交渉におけるスタンダードであるとしたうえ、一...</p>
+<p class="news-card-summary">重点配分を基本に据えながら、自社にとって最適な方法を見出す必要がある――。経団連の「経営労働政策特別委員会報告」は、ベースアップの配分方法についてそう記した（関連記事）。今年もベア実施の検討が賃金交渉...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1857,7 +2115,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/series/212614/" target="_blank" rel="noopener">
 <h3 class="news-card-title">【人的資本経営期のＨＲ用語集】第161回 “学び方”改革 外から流入の好機 リスキリングは加速を／木谷 宏</h3>
-<p class="news-card-summary">自己啓発の比重が低く 働き方改革が始まって約10年が経過したが、多様な能力と制約を持つ人々が活躍する社会の実現は道半ばである。今まであまり触れられなかった働き方改革と学びの関係について考えてみたい。 2017年に働き方改革実現会議が掲げた人...</p>
+<p class="news-card-summary">自己啓発の比重が低く 働き方改革が始まって約10年が経過したが、多様な能力と制約を持つ人々が活躍する社会の実現は道半ばである。今まであまり触れられなかった働き方改革と学びの関係について考えてみたい。 ...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1876,7 +2134,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/series/212567/" target="_blank" rel="noopener">
 <h3 class="news-card-title">【実質価値減少を防ぐ！ 退職金制度のインフレ対応】第４回 算定方式ごとの対応と難易度 給与比例が最も容易に 必要性を問う姿勢も重要／谷内 陽一</h3>
-<p class="news-card-summary">上げ幅見極めは唯一の正答なし 退職一時金におけるインフレ（物価・金利・賃金）への対応方法と難易度は算定方法ごとに大きく異なる。違いをまとめると図表のとおりとなる。 ① 給与比例方式 インフレ対応が最も容易なのは、給与比例方式において賃金上昇...</p>
+<p class="news-card-summary">上げ幅見極めは唯一の正答なし 退職一時金におけるインフレ（物価・金利・賃金）への対応方法と難易度は算定方法ごとに大きく異なる。違いをまとめると図表のとおりとなる。 ① 給与比例方式 インフレ対応が最も...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1895,7 +2153,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212514/" target="_blank" rel="noopener">
 <h3 class="news-card-title">パート時給 流通部門は90円増要求 今春闘の方針を決定 ＵＡゼンセン</h3>
-<p class="news-card-summary">産業間格差是正めざす 繊維・流通・サービスなどの労働組合が加盟するＵＡゼンセン（永島智子会長＝写真中央）は、今春闘の方針を決定した。業種別３部門のうち、流通部門がパート・正社員ともに過去最高の要求基準を掲げている。パート時給については、流通...</p>
+<p class="news-card-summary">産業間格差是正めざす 繊維・流通・サービスなどの労働組合が加盟するＵＡゼンセン（永島智子会長＝写真中央）は、今春闘の方針を決定した。業種別３部門のうち、流通部門がパート・正社員ともに過去最高の要求基準...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1914,7 +2172,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212325/" target="_blank" rel="noopener">
 <h3 class="news-card-title">ダム建設の現場で働き方改革事例集 国土交通省</h3>
-<p class="news-card-summary">国土交通省は、「ダム現場の働き方改革事例集」を作成した。現場内にＱＲコードを掲示してヒヤリハット報告を募ったケースなど、安全対策の取組みを含む計106事例を紹介している。国交省のホームページ内に掲載し、地域別での検索やキーワード検索もできる...</p>
+<p class="news-card-summary">国土交通省は、「ダム現場の働き方改革事例集」を作成した。現場内にＱＲコードを掲示してヒヤリハット報告を募ったケースなど、安全対策の取組みを含む計106事例を紹介している。国交省のホームページ内に掲載し...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1933,7 +2191,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/series/212552/" target="_blank" rel="noopener">
 <h3 class="news-card-title">【ピックアップ調査資料】令和７年労働組合基礎調査（厚労省）</h3>
-<p class="news-card-summary">組織率が最低の16％に 令和７年６月30日現在の労働組合の状況を調査した。 単一労働組合の数は２万2244組合で、前年から1.2％（268組合）減少した。組合員数は992万7000人となり0.2％（１万5000人）増加している。 推定組織率...</p>
+<p class="news-card-summary">組織率が最低の16％に 令和７年６月30日現在の労働組合の状況を調査した。 単一労働組合の数は２万2244組合で、前年から1.2％（268組合）減少した。組合員数は992万7000人となり0.2％（１...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1952,7 +2210,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/series/212537/" target="_blank" rel="noopener">
 <h3 class="news-card-title">【気になる労働関連トピック】第４回 ガクチカ重視面接からの転換 聴くべきは学業面 困難に負けない姿勢確認／藤村 博之</h3>
-<p class="news-card-summary">業務に耐え得る人材か 近年、大学生の採用をめぐる環境が大きく変化している。生成ＡＩの普及により、エントリーシートの内容が均質化し、選考の初期段階で応募者の違いを見極めることが難しくなっている。こうした状況のなかで、面接における質問のあり方そ...</p>
+<p class="news-card-summary">業務に耐え得る人材か 近年、大学生の採用をめぐる環境が大きく変化している。生成ＡＩの普及により、エントリーシートの内容が均質化し、選考の初期段階で応募者の違いを見極めることが難しくなっている。こうした...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -1971,7 +2229,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212520/" target="_blank" rel="noopener">
 <h3 class="news-card-title">就業規則 “割増率”主眼に自主点検 集団指導計画へ反映 長野労基署</h3>
-<p class="news-card-summary">60時間超で不記載が多く 長野労働基準監督署（森孝行署長）は、月60時間を超える時間外労働に対する割増率が就業規則に記載されていない事例が散見されるとして、実態把握と法令内容の周知を主眼とした自主点検に乗り出す。点検結果は今後の集団指導の計...</p>
+<p class="news-card-summary">60時間超で不記載が多く 長野労働基準監督署（森孝行署長）は、月60時間を超える時間外労働に対する割増率が就業規則に記載されていない事例が散見されるとして、実態把握と法令内容の周知を主眼とした自主点検...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/29 04:55</span>
 <span class="news-card-arrow">→</span>
@@ -2021,7 +2279,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="http://jinjibu.jp/news/detl/25963/" target="_blank" rel="noopener">
 <h3 class="news-card-title">【書籍紹介】『こうして私たちは現場から会社を変えた』（山下浩史：著）マネジメント社より刊行</h3>
-<p class="news-card-summary">『こうして私たちは現場から会社を変えた』（山下浩史：著）が、マネジメント社より刊行されました。著者は、GAP・リクルート・マツダなどで20年以上にわたり「人づくり・職場づくり」に携わってきた人事コンサル...</p>
+<p class="news-card-summary">『こうして私たちは現場から会社を変えた』（山下浩史：著）が、マネジメント社より刊行されました。著者は、GAP・リクルート・マツダなどで20年以上にわたり「人づくり・職場づくり」に携わってきた人事コンサ...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/28 22:00</span>
 <span class="news-card-arrow">→</span>
@@ -2040,7 +2298,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="http://jinjibu.jp/news/detl/25940/" target="_blank" rel="noopener">
 <h3 class="news-card-title">新興国のトップ大学出身リクルーターとAIを活用した採用支援サービスをリリース</h3>
-<p class="news-card-summary">人材不足に直面する日本企業向けに、新たな採用インフラを提供株式会社Wecrin（本社：東京都中央区、代表取締役：青木 文、以下「当社」）は、新興国のトップ大学出身人材とAIを活用した採用支援サービスの提供を...</p>
+<p class="news-card-summary">人材不足に直面する日本企業向けに、新たな採用インフラを提供株式会社Wecrin（本社：東京都中央区、代表取締役：青木 文、以下「当社」）は、新興国のトップ大学出身人材とAIを活用した採用支援サービスの...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/28 22:00</span>
 <span class="news-card-arrow">→</span>
@@ -2059,7 +2317,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://roumu.com/archives/130140.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=130140" target="_blank" rel="noopener">
 <h3 class="news-card-title">マイナンバーカードを運転免許証として、利用できるようになります。</h3>
-<p class="news-card-summary">タイトル：マイナンバーカードを運転免許証として、利用できるようになります。 発行者：警視庁・都道府県警察 発行時期：2024年10月 ページ数：2ページ 概要：このリーフレットは、マイナンバーカードを運転免許証として利用 […] The p...</p>
+<p class="news-card-summary">タイトル：マイナンバーカードを運転免許証として、利用できるようになります。 発行者：警視庁・都道府県警察 発行時期：2024年10月 ページ数：2ページ 概要：このリーフレットは、マイナンバーカードを...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/28 15:00</span>
 <span class="news-card-arrow">→</span>
@@ -2078,7 +2336,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.psrn.jp/topics/detail.php?id=39663" target="_blank" rel="noopener">
 <h3 class="news-card-title">「職業紹介責任者の兼任」などを盛り込んだ省令の改正案を提示（労政審の労働力需給制度部会）</h3>
-<p class="news-card-summary">厚生労働省から、令和8年1月27日に開催された「第390回 労働政策審議会職業安定分科会労働力需給制度部会」の資料が公表されました。 今回の議事は、「職業安定法施行規則の一部を改正する省令案要綱について（諮問）」、「労使協定書における賃金等...</p>
+<p class="news-card-summary">厚生労働省から、令和8年1月27日に開催された「第390回 労働政策審議会職業安定分科会労働力需給制度部会」の資料が公表されました。 今回の議事は、「職業安定法施行規則の一部を改正する省令案要綱につい...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/28 10:02</span>
 <span class="news-card-arrow">→</span>
@@ -2097,7 +2355,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.psrn.jp/topics/detail.php?id=39662" target="_blank" rel="noopener">
 <h3 class="news-card-title">第6回「職場における学び・学び直し促進シンポジウム」を開催 オンライン開催もあり（厚労省）</h3>
-<p class="news-card-summary">厚生労働省の「職場における学び・学び直し促進ガイドライン特設サイト」から、第6回「職場における学び・学び直し促進シンポジウム」の開催について、お知らせがされています。 このシンポジウムは、「学びの好循環を生む職場へ」をテーマに、有識者講演と...</p>
+<p class="news-card-summary">厚生労働省の「職場における学び・学び直し促進ガイドライン特設サイト」から、第6回「職場における学び・学び直し促進シンポジウム」の開催について、お知らせがされています。 このシンポジウムは、「学びの好循...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/28 10:00</span>
 <span class="news-card-arrow">→</span>
@@ -2116,7 +2374,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212018/" target="_blank" rel="noopener">
 <h3 class="news-card-title">【今週の視点】諸手当 給与への解像度増に活用も 改定意図浸透めざし</h3>
-<p class="news-card-summary">厚労省調査で平均額上昇 物価上昇への対応として、諸手当を活用した企業は多かった。厚生労働省の調査では、諸手当の１人当たりの平均支給額が前回調査から月額7000円増加している。一方で大幅な賃上げを行った企業において、「給与に対する社員の解像度...</p>
+<p class="news-card-summary">厚労省調査で平均額上昇 物価上昇への対応として、諸手当を活用した企業は多かった。厚生労働省の調査では、諸手当の１人当たりの平均支給額が前回調査から月額7000円増加している。一方で大幅な賃上げを行った...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/28 10:00</span>
 <span class="news-card-arrow">→</span>
@@ -2135,7 +2393,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.psrn.jp/topics/detail.php?id=39661" target="_blank" rel="noopener">
 <h3 class="news-card-title">国家公務員の「服務・勤務時間」のページを更新（内閣官房）</h3>
-<p class="news-card-summary">内閣官房から、国家公務員の「服務・勤務時間」のページを更新したとのお知らせがありました（令和8年1月26日公表）。このページでは、国家公務員の服務、国家公務員の勤務時間について、様々な資料や関連リンクが紹介されています。 たとえば、国家公務...</p>
+<p class="news-card-summary">内閣官房から、国家公務員の「服務・勤務時間」のページを更新したとのお知らせがありました（令和8年1月26日公表）。このページでは、国家公務員の服務、国家公務員の勤務時間について、様々な資料や関連リンク...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/28 09:58</span>
 <span class="news-card-arrow">→</span>
@@ -2154,7 +2412,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212027/" target="_blank" rel="noopener">
 <h3 class="news-card-title">合理的配慮こそ職場改善の契機 千葉経協・講演会</h3>
-<p class="news-card-summary">千葉県経営者協会（熊谷俊行会長）は、「障害者雇用と合理的配慮」をテーマに講演会を開いた。障害者の支援事業に取り組むＮＰＯ法人おりがみの都築則彦理事長（＝写真左）、都築政憲理事（＝写真右）が登壇。「障害者にとっての障壁を取り除くことが職場環境...</p>
+<p class="news-card-summary">千葉県経営者協会（熊谷俊行会長）は、「障害者雇用と合理的配慮」をテーマに講演会を開いた。障害者の支援事業に取り組むＮＰＯ法人おりがみの都築則彦理事長（＝写真左）、都築政憲理事（＝写真右）が登壇。「障害...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/28 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -2173,7 +2431,7 @@ PSRネットワーク
 <div class="news-card-body">
 <a href="https://www.rodo.co.jp/news/212008/" target="_blank" rel="noopener">
 <h3 class="news-card-title">事例発表や体験学習 カスハラ対策義務化前に 労働局</h3>
-<p class="news-card-summary">今年10月に義務化が予定されている職場におけるカスタマーハラスメント対策に関して、都道府県労働局では周知に向けた独自の取組みを展開している。 東京労働局（増田嗣郎局長）は３月３日と６日に開催する改正法の説明会で、事例紹介を行う。カスハラが深...</p>
+<p class="news-card-summary">今年10月に義務化が予定されている職場におけるカスタマーハラスメント対策に関して、都道府県労働局では周知に向けた独自の取組みを展開している。 東京労働局（増田嗣郎局長）は３月３日と６日に開催する改正法...</p>
 <div class="news-card-footer">
 <span class="news-card-time">01/28 05:00</span>
 <span class="news-card-arrow">→</span>
@@ -2183,22 +2441,22 @@ PSRネットワーク
 </article>
 </div>
 </section>
-            
+
             <div class="archive-section">
                 <div class="archive-header">
                     <div class="archive-icon">📚</div>
                     <div class="archive-title">過去のニュース一覧</div>
                 </div>
                 <div class="archive-list">
-                    <a href="2026-01-28_2026-02-03.html" class="archive-item current"><span class="archive-item-icon">📅</span>2026-01-28 〜 2026-02-03</a><a href="2026-01-27_2026-02-02.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-01-27 〜 2026-02-02</a><a href="2026-01-26_2026-02-01.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-01-26 〜 2026-02-01</a>
+                    <a href="2026-08-18_2026-08-24.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-08-18 〜 2026-08-24</a><a href="2026-08-11_2026-08-17.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-08-11 〜 2026-08-17</a><a href="2026-08-04_2026-08-10.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-08-04 〜 2026-08-10</a><a href="2026-07-28_2026-08-03.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-07-28 〜 2026-08-03</a><a href="2026-07-21_2026-07-27.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-07-21 〜 2026-07-27</a><a href="2026-07-14_2026-07-20.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-07-14 〜 2026-07-20</a><a href="2026-07-07_2026-07-13.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-07-07 〜 2026-07-13</a><a href="2026-06-30_2026-07-06.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-06-30 〜 2026-07-06</a><a href="2026-06-23_2026-06-29.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-06-23 〜 2026-06-29</a><a href="2026-06-16_2026-06-22.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-06-16 〜 2026-06-22</a><a href="2026-06-09_2026-06-15.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-06-09 〜 2026-06-15</a><a href="2026-06-02_2026-06-08.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-06-02 〜 2026-06-08</a><a href="2026-05-26_2026-06-01.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-05-26 〜 2026-06-01</a><a href="2026-05-19_2026-05-25.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-05-19 〜 2026-05-25</a><a href="2026-05-12_2026-05-18.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-05-12 〜 2026-05-18</a><a href="2026-05-05_2026-05-11.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-05-05 〜 2026-05-11</a><a href="2026-04-28_2026-05-04.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-04-28 〜 2026-05-04</a><a href="2026-04-21_2026-04-27.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-04-21 〜 2026-04-27</a><a href="2026-04-14_2026-04-20.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-04-14 〜 2026-04-20</a><a href="2026-04-07_2026-04-13.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-04-07 〜 2026-04-13</a><a href="2026-03-31_2026-04-06.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-03-31 〜 2026-04-06</a><a href="2026-03-24_2026-03-30.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-03-24 〜 2026-03-30</a><a href="2026-03-17_2026-03-23.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-03-17 〜 2026-03-23</a><a href="2026-03-10_2026-03-16.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-03-10 〜 2026-03-16</a><a href="2026-03-03_2026-03-09.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-03-03 〜 2026-03-09</a><a href="2026-02-24_2026-03-02.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-02-24 〜 2026-03-02</a><a href="2026-02-17_2026-02-23.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-02-17 〜 2026-02-23</a><a href="2026-02-10_2026-02-16.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-02-10 〜 2026-02-16</a><a href="2026-02-03_2026-02-09.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-02-03 〜 2026-02-09</a><a href="2026-01-30_2026-02-05.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-01-30 〜 2026-02-05</a><a href="2026-01-29_2026-02-04.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-01-29 〜 2026-02-04</a><a href="2026-01-28_2026-02-03.html" class="archive-item current"><span class="archive-item-icon">📅</span>2026-01-28 〜 2026-02-03</a><a href="2026-01-27_2026-02-02.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-01-27 〜 2026-02-02</a><a href="2026-01-26_2026-02-01.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-01-26 〜 2026-02-01</a>
                 </div>
             </div>
-        
+
         </main>
     </div>
 
     <footer>
-        <div class="footer-brand">Weekly SR by iand</div>
+        <div class="footer-brand">iand weekly</div>
         <p>RSSフィードから自動収集・更新</p>
     </footer>
 
