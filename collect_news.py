@@ -197,6 +197,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             min-height: calc(100vh - 85px);
         }}
 
+        html.embed-mode .header {{
+            display: none;
+        }}
+
+        html.embed-mode .layout {{
+            padding-top: 16px;
+            min-height: 100vh;
+        }}
+
         /* ===== SIDEBAR ===== */
         .sidebar {{
             position: sticky;
@@ -1007,6 +1016,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         .date-section:nth-child(2) .news-card {{ animation-delay: 0.05s; }}
         .date-section:nth-child(3) .news-card {{ animation-delay: 0.1s; }}
     </style>
+    <script>
+        if (new URLSearchParams(window.location.search).get('embed') === '1') {{
+            document.documentElement.classList.add('embed-mode');
+        }}
+    </script>
 </head>
 <body>
     <header class="header">
@@ -2051,6 +2065,14 @@ SUMMARY_PAGE_TEMPLATE = """<!DOCTYPE html>
             padding: 28px 24px;
         }}
 
+        html.embed-mode .header {{
+            display: none;
+        }}
+
+        html.embed-mode .container {{
+            padding-top: 16px;
+        }}
+
         .page-header {{
             display: flex;
             align-items: baseline;
@@ -2212,6 +2234,11 @@ SUMMARY_PAGE_TEMPLATE = """<!DOCTYPE html>
             .cat-label {{ min-width: auto; }}
         }}
     </style>
+    <script>
+        if (new URLSearchParams(window.location.search).get('embed') === '1') {{
+            document.documentElement.classList.add('embed-mode');
+        }}
+    </script>
 </head>
 <body>
     <header class="header">

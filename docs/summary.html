@@ -92,6 +92,14 @@
             padding: 28px 24px;
         }
 
+        html.embed-mode .header {
+            display: none;
+        }
+
+        html.embed-mode .container {
+            padding-top: 16px;
+        }
+
         .page-header {
             display: flex;
             align-items: baseline;
@@ -253,6 +261,11 @@
             .cat-label { min-width: auto; }
         }
     </style>
+    <script>
+        if (new URLSearchParams(window.location.search).get('embed') === '1') {
+            document.documentElement.classList.add('embed-mode');
+        }
+    </script>
 </head>
 <body>
     <header class="header">
