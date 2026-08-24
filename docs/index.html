@@ -126,6 +126,15 @@
             min-height: calc(100vh - 85px);
         }
 
+        html.embed-mode .header {
+            display: none;
+        }
+
+        html.embed-mode .layout {
+            padding-top: 16px;
+            min-height: 100vh;
+        }
+
         /* ===== SIDEBAR ===== */
         .sidebar {
             position: sticky;
@@ -936,6 +945,11 @@
         .date-section:nth-child(2) .news-card { animation-delay: 0.05s; }
         .date-section:nth-child(3) .news-card { animation-delay: 0.1s; }
     </style>
+    <script>
+        if (new URLSearchParams(window.location.search).get('embed') === '1') {
+            document.documentElement.classList.add('embed-mode');
+        }
+    </script>
 </head>
 <body>
     <header class="header">
