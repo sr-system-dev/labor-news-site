@@ -1223,6 +1223,7 @@ def fetch_feed(url: str, source_name: str) -> list[NewsItem]:
 def generate_ai_summary(items: list[NewsItem]) -> str | None:
     """AIを使って週次ニュースサマリーを生成（カテゴリー別）"""
     api_key = os.environ.get("ANTHROPIC_API_KEY")
+    model = os.environ.get("ANTHROPIC_MODEL", "claude-sonnet-4-6")
 
     if not ANTHROPIC_AVAILABLE:
         print("  警告: anthropicパッケージがインストールされていません")
@@ -1274,9 +1275,10 @@ def generate_ai_summary(items: list[NewsItem]) -> str | None:
 - 日本語で回答"""
 
     try:
+        print(f"  → 使用モデル: {model}")
         client = anthropic.Anthropic(api_key=api_key)
         message = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model=model,
             max_tokens=2048,
             messages=[
                 {"role": "user", "content": prompt}
