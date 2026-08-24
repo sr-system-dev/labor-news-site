@@ -42,6 +42,7 @@ jobs:
       - name: Collect news
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL || 'claude-sonnet-4-6' }}
         run: |
           python collect_news.py --days ${{ github.event.inputs.days || '7' }}
 

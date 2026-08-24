@@ -59,7 +59,7 @@
 │  │                                                                   │   │
 │  │  【Anthropic Claude API】                                        │   │
 │  │                                                                   │   │
-│  │   モデル: Claude Sonnet 4 (claude-sonnet-4-20250514)             │   │
+│  │   モデル: Claude Sonnet 4.6 (claude-sonnet-4-6)                  │   │
 │  │   用途: 週間ニュースのサマリー（要約）生成                        │   │
 │  │                                                                   │   │
 │  └─────────────────────────────────────────────────────────────────┘   │
@@ -229,6 +229,12 @@ labor-news-site/
 | シークレット名 | `ANTHROPIC_API_KEY` |
 | アクセス制限 | GitHub Actions 実行時のみ読み取り可能 |
 
+| 項目 | 設定 |
+|------|------|
+| モデル指定 | GitHub Variables |
+| 変数名 | `ANTHROPIC_MODEL` |
+| 未設定時の既定値 | `claude-sonnet-4-6` |
+
 ### 7.2 アクセス制御（Cloudflare Access）
 
 | 項目 | 設定 |
@@ -310,6 +316,7 @@ labor-news-site/
 | APIキー未設定 | GitHub Secrets に `ANTHROPIC_API_KEY` を設定 |
 | クレジット不足 | Anthropic Console でクレジットを追加購入 |
 | API利用上限到達 | 翌月まで待つか、上限を引き上げ |
+| モデルIDが見つからない | GitHub Variables の `ANTHROPIC_MODEL` を現行モデルIDへ更新 |
 
 ### 10.3 Webページが更新されない場合
 
