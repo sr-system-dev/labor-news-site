@@ -1,0 +1,2350 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iand weekly | 2026-10-27 〜 2026-11-02</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* i-and.com inspired color scheme */
+            --primary: #007cff;
+            --primary-dark: #0066d6;
+            --primary-light: #4da3ff;
+            --primary-bg: #e6f2ff;
+            --secondary: #233a5d;
+            --accent: #007cff;
+            --accent-bg: #e6f2ff;
+            --success: #059669;
+            --success-bg: #ecfdf5;
+            --navy: #152638;
+            --navy-light: #233a5d;
+            --bg-page: #f5f7fa;
+            --bg-white: #ffffff;
+            --bg-gray: #eef2f7;
+            --text-dark: #152638;
+            --text-primary: #233a5d;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --border: #d8e1eb;
+            --border-light: #eef2f7;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --shadow-sm: 0 1px 3px rgba(21,38,56,0.08);
+            --shadow-md: 0 4px 12px rgba(21,38,56,0.1);
+            --shadow-lg: 0 8px 24px rgba(21,38,56,0.12);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: var(--navy);
+            border-bottom: none;
+            padding: 20px 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            height: 36px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #f5b800;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 24px;
+        }
+
+        .header-stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 100px;
+            font-size: 0.9rem;
+        }
+
+        .header-stat-value {
+            font-weight: 700;
+            color: #4da3ff;
+        }
+
+        .header-stat-label {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .header-meta {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* ===== LAYOUT ===== */
+        .layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            padding: 32px;
+            min-height: calc(100vh - 85px);
+        }
+
+        html.embed-mode .header {
+            display: none;
+        }
+
+        html.embed-mode .layout {
+            padding-top: 16px;
+            min-height: 100vh;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            position: sticky;
+            top: 117px;
+            height: fit-content;
+        }
+
+        .sidebar-section {
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .sidebar-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-tab {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .filter-tab:hover {
+            background: var(--bg-gray);
+        }
+
+        .filter-tab.active {
+            background: var(--primary-bg);
+            color: var(--primary);
+        }
+
+        .filter-tab-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+        }
+
+        .filter-tab-icon.all { background: var(--bg-gray); }
+        .filter-tab-icon.rodo { background: #dbeafe; }
+        .filter-tab-icon.roumu { background: #d1fae5; }
+        .filter-tab-icon.jinjibu { background: #ede9fe; }
+        .filter-tab-icon.sato { background: #fef3c7; }
+        .filter-tab-icon.bengo { background: #fce7f3; }
+        .filter-tab-icon.psr { background: #ccfbf1; }
+
+        .filter-tab-count {
+            margin-left: auto;
+            background: var(--bg-gray);
+            padding: 2px 10px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .filter-tab.active .filter-tab-count {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Date Navigation */
+        .date-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .date-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .date-nav-item:hover {
+            background: var(--bg-gray);
+            color: var(--text-primary);
+        }
+
+        .date-nav-item.active {
+            background: var(--primary-bg);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .date-nav-weekday {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            min-width: 0;
+        }
+
+        /* Summary Card */
+        .summary-card {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--bg-white) 100%);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 28px;
+            margin-bottom: 28px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .summary-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--navy);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .summary-body { min-width: 0; }
+
+        .summary-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .summary-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .ai-badge {
+            background: var(--bg-white);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid var(--primary-light);
+        }
+
+        .summary-content {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .summary-content ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .summary-content li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--bg-white);
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--success);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .summary-content li:hover {
+            background: var(--success-bg);
+            transform: translateX(4px);
+        }
+
+        .summary-content li.active {
+            background: var(--success-bg);
+            border-left-color: var(--primary);
+            border-left-width: 4px;
+        }
+
+        .summary-content li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        /* Category-based summary styles */
+        .summary-category {
+            margin-bottom: 20px;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            background: var(--bg-white);
+        }
+
+        .summary-category:last-child {
+            margin-bottom: 0;
+        }
+
+        .summary-category-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-light);
+        }
+
+        .summary-category-icon {
+            font-size: 1.2rem;
+        }
+
+        .summary-category-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .summary-category-law {
+            border-left: 4px solid #6366f1;
+        }
+
+        .summary-category-law .summary-category-header {
+            border-bottom-color: #e0e7ff;
+        }
+
+        .summary-category-law li {
+            border-left-color: #6366f1;
+        }
+
+        .summary-category-law li::before {
+            color: #6366f1;
+        }
+
+        .summary-category-court {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .summary-category-court .summary-category-header {
+            border-bottom-color: #fef3c7;
+        }
+
+        .summary-category-court li {
+            border-left-color: #f59e0b;
+        }
+
+        .summary-category-court li::before {
+            color: #f59e0b;
+        }
+
+        .summary-category-subsidy {
+            border-left: 4px solid #10b981;
+        }
+
+        .summary-category-subsidy .summary-category-header {
+            border-bottom-color: #d1fae5;
+        }
+
+        .summary-category-subsidy li {
+            border-left-color: #10b981;
+        }
+
+        .summary-category-subsidy li::before {
+            color: #10b981;
+        }
+
+        .summary-category-other {
+            border-left: 4px solid #64748b;
+        }
+
+        .summary-category-other .summary-category-header {
+            border-bottom-color: #e2e8f0;
+        }
+
+        .summary-category-other li {
+            border-left-color: #64748b;
+        }
+
+        .summary-category-other li::before {
+            color: #64748b;
+        }
+
+        .summary-category ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .summary-category li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 14px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--success);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .summary-category li:hover {
+            background: var(--primary-bg);
+            transform: translateX(4px);
+        }
+
+        .summary-category li.active {
+            background: var(--primary-bg);
+            border-left-width: 4px;
+        }
+
+        .summary-keywords {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .summary-keyword {
+            background: var(--primary-bg);
+            color: var(--primary);
+            padding: 2px 10px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Highlighted news cards */
+        .news-card.highlighted {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-bg), var(--shadow-md);
+        }
+
+        .news-card.dimmed {
+            opacity: 0.4;
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .news-card {
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+            border-color: var(--primary-light);
+        }
+
+        .news-card-header {
+            padding: 16px 20px;
+            background: var(--bg-gray);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .news-card-source {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .news-card-source-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+
+        .news-card-source-icon.rodo { background: #dbeafe; }
+        .news-card-source-icon.roumu { background: #d1fae5; }
+        .news-card-source-icon.jinjibu { background: #ede9fe; }
+
+        .news-card-date {
+            margin-left: auto;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .news-card-body {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-card-body a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .news-card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .news-card:hover .news-card-title {
+            color: var(--primary);
+        }
+
+        .news-card-summary {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .news-card-footer {
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .news-card-time {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .news-card-arrow {
+            margin-left: auto;
+            color: var(--primary);
+            font-size: 1.1rem;
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: all 0.2s;
+        }
+
+        .news-card:hover .news-card-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Date Section */
+        .date-section {
+            margin-bottom: 32px;
+        }
+
+        .date-section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .date-section-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--navy);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: white;
+        }
+
+        .date-section-info {
+            flex: 1;
+        }
+
+        .date-section-date {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .date-section-weekday {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .date-section-count {
+            background: var(--navy);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        /* Archive Section */
+        .archive-section {
+            background: var(--bg-white);
+            border-radius: var(--radius-xl);
+            padding: 28px;
+            margin-top: 40px;
+            border: 1px solid var(--border);
+        }
+
+        .archive-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .archive-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--accent-bg);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .archive-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .archive-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .archive-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            background: var(--bg-gray);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .archive-item:hover {
+            background: var(--primary-bg);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .archive-item.current {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .archive-item-icon { font-size: 1rem; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 48px 32px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.875rem;
+            background: var(--navy);
+            margin-top: 48px;
+        }
+
+        .footer-brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .sidebar-section {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 14px 16px;
+            }
+
+            .header-inner {
+                flex-wrap: wrap;
+            }
+
+            .header-stats {
+                display: none;
+            }
+
+            .header-meta {
+                font-size: 0.75rem;
+            }
+
+            .logo-text {
+                font-size: 1.05rem;
+            }
+
+            .layout {
+                padding: 16px;
+                gap: 16px;
+            }
+
+            .sidebar {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar-section {
+                padding: 14px;
+            }
+
+            .filter-tab {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .summary-card {
+                grid-template-columns: 1fr;
+                padding: 18px;
+                border-radius: var(--radius-lg);
+            }
+
+            .summary-icon {
+                display: none;
+            }
+
+            .summary-title {
+                font-size: 1rem;
+            }
+
+            .summary-content {
+                font-size: 0.88rem;
+            }
+
+            .summary-category {
+                padding: 12px;
+                margin-bottom: 14px;
+            }
+
+            .summary-category li {
+                padding: 8px 10px;
+                font-size: 0.83rem;
+                line-height: 1.6;
+            }
+
+            .summary-category-title {
+                font-size: 0.88rem;
+            }
+
+            .summary-keyword {
+                font-size: 0.7rem;
+                padding: 1px 8px;
+            }
+
+            .date-section-header {
+                gap: 10px;
+                margin-bottom: 14px;
+                padding-bottom: 12px;
+            }
+
+            .date-section-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .date-section-date {
+                font-size: 1rem;
+            }
+
+            .news-card-header {
+                padding: 12px 14px;
+            }
+
+            .news-card-body {
+                padding: 14px;
+            }
+
+            .news-card-title {
+                font-size: 0.92rem;
+                line-height: 1.5;
+            }
+
+            .news-card-summary {
+                font-size: 0.82rem;
+                -webkit-line-clamp: 2;
+            }
+
+            .archive-section {
+                padding: 18px;
+            }
+
+            .archive-list {
+                gap: 8px;
+            }
+
+            .archive-item {
+                padding: 10px 14px;
+                font-size: 0.82rem;
+            }
+
+            footer {
+                padding: 32px 16px;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .news-card {
+            animation: fadeIn 0.4s ease both;
+        }
+
+        .date-section:nth-child(1) .news-card { animation-delay: 0s; }
+        .date-section:nth-child(2) .news-card { animation-delay: 0.05s; }
+        .date-section:nth-child(3) .news-card { animation-delay: 0.1s; }
+    </style>
+    <script>
+        if (new URLSearchParams(window.location.search).get('embed') === '1') {
+            document.documentElement.classList.add('embed-mode');
+        }
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <img class="logo-icon" src="logo.png" alt="iand">
+                <div class="logo-text">iand weekly</div>
+            </div>
+            <div class="header-stats">
+                <div class="header-stat">
+                    <span class="header-stat-value">58</span>
+                    <span class="header-stat-label">ニュース</span>
+                </div>
+                <div class="header-stat">
+                    <span class="header-stat-value">5</span>
+                    <span class="header-stat-label">ソース</span>
+                </div>
+                <div class="header-stat">
+                    <span class="header-stat-value">7</span>
+                    <span class="header-stat-label">日間</span>
+                </div>
+            </div>
+            <div class="header-meta">
+                2026-10-27 〜 2026-11-02<br>
+                <small>更新: 2026-11-02 03:03</small>
+                <div style="margin-top:6px"><a href="summary.html" style="color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.8rem;padding:4px 12px;border:1px solid rgba(255,255,255,0.3);border-radius:100px;">🤖 AIサマリー一覧</a></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">ソースで絞り込み</div>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">
+                        <span class="filter-tab-icon all">📋</span>
+                        すべて
+                        <span class="filter-tab-count">58</span>
+                    </button>
+                    <button class="filter-tab" data-filter="psr"><span class="filter-tab-icon psr">📋</span>PSRネットワーク<span class="filter-tab-count">10</span></button>
+<button class="filter-tab" data-filter="rodo"><span class="filter-tab-icon rodo">📰</span>労働新聞社<span class="filter-tab-count">32</span></button>
+<button class="filter-tab" data-filter="roumu"><span class="filter-tab-icon roumu">💼</span>労務ドットコム<span class="filter-tab-count">7</span></button>
+<button class="filter-tab" data-filter="bengo"><span class="filter-tab-icon bengo">⚖️</span>弁護士ドットコム<span class="filter-tab-count">3</span></button>
+<button class="filter-tab" data-filter="jinjibu"><span class="filter-tab-icon jinjibu">👥</span>日本の人事部<span class="filter-tab-count">6</span></button>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">日付で移動</div>
+                <nav class="date-nav">
+                    <a href="#date-2026-11-02" class="date-nav-item active">📅 2026-11-02<span class="date-nav-weekday">月</span></a>
+<a href="#date-2026-11-01" class="date-nav-item">📅 2026-11-01<span class="date-nav-weekday">日</span></a>
+<a href="#date-2026-10-31" class="date-nav-item">📅 2026-10-31<span class="date-nav-weekday">土</span></a>
+<a href="#date-2026-10-30" class="date-nav-item">📅 2026-10-30<span class="date-nav-weekday">金</span></a>
+<a href="#date-2026-10-29" class="date-nav-item">📅 2026-10-29<span class="date-nav-weekday">木</span></a>
+<a href="#date-2026-10-28" class="date-nav-item">📅 2026-10-28<span class="date-nav-weekday">水</span></a>
+<a href="#date-2026-10-27" class="date-nav-item">📅 2026-10-27<span class="date-nav-weekday">火</span></a>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <div class="summary-card">
+                <div class="summary-icon">🤖</div>
+                <div class="summary-body">
+                    <div class="summary-header">
+                        <div class="summary-title">今週のポイント</div>
+                        <div class="ai-badge">✨ AI Generated</div>
+                    </div>
+                    <div class="summary-content">
+
+                <div class="summary-category summary-category-law">
+                    <div class="summary-category-header">
+                        <span class="summary-category-icon">📜</span>
+                        <span class="summary-category-title">法改正・制度変更</span>
+                    </div>
+                    <ul><li data-keywords="カスタマーハラスメント,均等方針,ハラスメント対策,就業規則"><div><div>カスタマーハラスメント対策の義務化推進 … 厚労省の均等方針においてカスハラ対策の実施徹底へ指導が行われると示されました。労務ドットコムでも企業のカスハラ対策の実効性確保が取り上げられており、複数ソースで注目されています。介護現場向けのハラスメント事例集・対策マニュアルも公表されており、業種を問わず就業規則や対応マニュアルの整備を急ぐ必要があります。</div><div class="summary-keywords"><span class="summary-keyword">カスタマーハラスメント</span><span class="summary-keyword">均等方針</span><span class="summary-keyword">ハラスメント対策</span><span class="summary-keyword">就業規則</span></div></div></li><li data-keywords="障害者雇用納付金,適用拡大,労政審,障害者雇用"><div><div>障害者雇用納付金の適用拡大案 … 現在は常用労働者100人超の企業が対象となっている障害者雇用納付金について、80人以上への適用拡大が労政審分科会で議論されています。中規模企業にとっても新たな財務負担が生じる可能性があるため、自社の障害者雇用状況を早期に確認し、採用計画を見直すことが求められます。</div><div class="summary-keywords"><span class="summary-keyword">障害者雇用納付金</span><span class="summary-keyword">適用拡大</span><span class="summary-keyword">労政審</span><span class="summary-keyword">障害者雇用</span></div></div></li><li data-keywords="THP指針,健康保持増進,2次予防,健康経営"><div><div>THP指針の改正・適用（2次予防の取組み明記） … 厚労省が労働者の健康保持増進のための指針（THP指針）を改正し、疾病の早期発見・早期対処を目的とする2次予防の取組みを明記しました。健康診断後のフォローアップや高リスク者への対応体制を改めて整備する必要があります。</div><div class="summary-keywords"><span class="summary-keyword">THP指針</span><span class="summary-keyword">健康保持増進</span><span class="summary-keyword">2次予防</span><span class="summary-keyword">健康経営</span></div></div></li></ul>
+                </div>
+
+                <div class="summary-category summary-category-court">
+                    <div class="summary-category-header">
+                        <span class="summary-category-icon">⚖️</span>
+                        <span class="summary-category-title">裁判例・判例</span>
+                    </div>
+                    <ul><li data-keywords="パタハラ,育児休業,配置転換,育休復帰"><div><div>パタハラによる育休復帰時の配置転換が無効と認定（東京高裁） … 育休から復帰した労働者を外勤職から内勤職へ異動させた措置が、パタニティハラスメント（パタハラ）に該当するとして東京高裁が無効と判断しました。育休復帰後の人事異動は正当な業務上の理由が明確でなければ違法と判断されるリスクがあります。復職者の処遇変更には慎重な検討と記録の整備が不可欠です。</div><div class="summary-keywords"><span class="summary-keyword">パタハラ</span><span class="summary-keyword">育児休業</span><span class="summary-keyword">配置転換</span><span class="summary-keyword">育休復帰</span></div></div></li><li data-keywords="SNSハラスメント,使用者責任,服務規律,ハラスメント防止"><div><div>SNS上のハラスメントに使用者責任が認定された事例 … 労働者がSNS上で行ったハラスメント行為について、企業側の使用者責任を認めた裁判例が紹介されています。社内でのSNS利用に関する禁止規定や服務規律を整備し、ハラスメント防止方針に明示することが企業防衛の観点から急務です。</div><div class="summary-keywords"><span class="summary-keyword">SNSハラスメント</span><span class="summary-keyword">使用者責任</span><span class="summary-keyword">服務規律</span><span class="summary-keyword">ハラスメント防止</span></div></div></li></ul>
+                </div>
+
+                <div class="summary-category summary-category-subsidy">
+                    <div class="summary-category-header">
+                        <span class="summary-category-icon">💰</span>
+                        <span class="summary-category-title">助成金・補助金</span>
+                    </div>
+                    <ul><li data-keywords="賃上げ支援,補助金,中小企業,山梨県"><div><div>山梨県の賃上げ加速化支援金（最大100万円） … 山梨県が中小企業の賃上げを後押しするため、最大100万円の支援金を創設しました。賃上げを検討している県内企業は申請要件を早期に確認し、計画的に活用することが望まれます。</div><div class="summary-keywords"><span class="summary-keyword">賃上げ支援</span><span class="summary-keyword">補助金</span><span class="summary-keyword">中小企業</span><span class="summary-keyword">山梨県</span></div></div></li><li data-keywords="出向助成,熊本地震,被災企業,雇用維持"><div><div>熊本地震被災企業への出向時賃金助成特例 … 厚労省が熊本地震の被災企業を対象に、出向時の賃金助成について特例措置を設けることを発表しました。被災地域の企業はもちろん、被災企業から出向者を受け入れる企業も対象となりうるため、要件を確認しておくことが重要です。</div><div class="summary-keywords"><span class="summary-keyword">出向助成</span><span class="summary-keyword">熊本地震</span><span class="summary-keyword">被災企業</span><span class="summary-keyword">雇用維持</span></div></div></li><li data-keywords="雇用関係助成金,共通ルール,Q&amp;A,助成金申請"><div><div>雇用関係助成金の共通ルールに関するQ&amp;A更新 … 雇用関係助成金全般に共通する申請前から受給後までの注意点を整理した新しいQ&amp;Aが公表されました。不正受給リスクを防ぐためにも、申請担当者は改めて最新のルールを確認しておくことを強くお勧めします。</div><div class="summary-keywords"><span class="summary-keyword">雇用関係助成金</span><span class="summary-keyword">共通ルール</span><span class="summary-keyword">Q&amp;A</span><span class="summary-keyword">助成金申請</span></div></div></li></ul>
+                </div>
+
+                <div class="summary-category summary-category-other">
+                    <div class="summary-category-header">
+                        <span class="summary-category-icon">📌</span>
+                        <span class="summary-category-title">その他重要トピック</span>
+                    </div>
+                    <ul><li data-keywords="労働時間管理,監督指導,時間外労働,労働基準監督署"><div><div>労働時間管理の不備に対する監督指導が各地で強化 … 八王子労基署が自己申告による労働時間管理の把握義務違反に勧告を行ったほか、兵庫労働局が飲食店での時間外違反を指摘、厚労省の監督指導結果でも健康障害防止義務を怠る企業が2割に上ることが判明しました。単に残業時間の長短だけでなく、管理職による適切な労働時間把握の仕組み作りが急がれます。</div><div class="summary-keywords"><span class="summary-keyword">労働時間管理</span><span class="summary-keyword">監督指導</span><span class="summary-keyword">時間外労働</span><span class="summary-keyword">労働基準監督署</span></div></div></li><li data-keywords="最低賃金,賃上げ,春闘,賃金体系"><div><div>最低賃金をめぐる企業対応の緊迫化 … 愛知県では特定最低賃金の引き上げが2026年12月から順次実施される予定で、認識しながら違反していた事例も監督結果で明らかになっています。また連合の春闘基本構想では2030年までに35歳36万円・4年で15％増という目標が示され、最賃上昇が正社員の賃金水準にも波及するとの見方も出ています。自社の賃金体系が最賃や同業水準と乖離していないか、今から点検しておくことが必要です。</div><div class="summary-keywords"><span class="summary-keyword">最低賃金</span><span class="summary-keyword">賃上げ</span><span class="summary-keyword">春闘</span><span class="summary-keyword">賃金体系</span></div></div></li><li data-keywords="スポットワーク,タイミー,コンプライアンス,雇用契約"><div><div>スポットワーク（タイミー等）活用企業のコンプライアンスリスク … スポットワーク運営会社がマッチング後の企業側によるキャンセルを認める立場を示したことに対しワーカー側が反発しており、訴訟に発展しています。労務ドットコムでもスポットワーク活用企業のコンプライアンス上の課題が指摘されており、直前キャンセルのルール整備や就業条件の明確化など、自社の運用を見直す機会としてください。</div><div class="summary-keywords"><span class="summary-keyword">スポットワーク</span><span class="summary-keyword">タイミー</span><span class="summary-keyword">コンプライアンス</span><span class="summary-keyword">雇用契約</span></div></div></li></ul>
+                </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <section class="date-section" id="date-2026-11-02">
+<div class="date-section-header">
+<div class="date-section-icon">📅</div>
+<div class="date-section-info">
+<div class="date-section-date">2026-11-02</div>
+<div class="date-section-weekday">月曜日</div>
+</div>
+<div class="date-section-count">5件</div>
+</div>
+<div class="news-grid">
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 10:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227572/" target="_blank" rel="noopener">
+<h3 class="news-card-title">告訴が端緒の送検事案多発 静岡労働局</h3>
+<p class="news-card-summary">静岡労働局（國分一行局長）は令和７年度に実施した送検の状況を公表した。告訴を端緒とする送検事案は過去10年で最多の６件に上る。同労働局監督課は、「労働者の申告をきっかけに是正勧告などをした場合でも、その後の改善状況が思わしくないと、告訴に至...</p>
+<div class="news-card-footer">
+<span class="news-card-time">11/02 10:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227593/" target="_blank" rel="noopener">
+<h3 class="news-card-title">“在宅者”へ学習環境 身体障害者の挑戦促す スタッフサービス</h3>
+<p class="news-card-summary">スキルアップし本社に異動も――テレワークによる重度身体障害者の就労を推進する㈱スタッフサービス・クラウドワーク（神奈川県相模原市、曽根徹哉代表取締役社長）は、障害を抱え在宅で勤務する全社員約700人がオンラインで学習できる環境を整備した。 ...</p>
+<div class="news-card-footer">
+<span class="news-card-time">11/02 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227578/" target="_blank" rel="noopener">
+<h3 class="news-card-title">最大で100万円 賃上げ加速化へ支援金 山梨県</h3>
+<p class="news-card-summary">山梨県は、県内中小企業の賃上げを加速化させるため、１時間当たりの賃金を50円以上引き上げた企業に対し、最大100万円を支給する支援金事業を開始する。今年８月28日～来年６月30日の期間中に賃上げを行った企業を対象とする。申請受付の開始は、1...</p>
+<div class="news-card-footer">
+<span class="news-card-time">11/02 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227573/" target="_blank" rel="noopener">
+<h3 class="news-card-title">出向時の賃金助成 熊本地震被災企業に特例 厚労省</h3>
+<p class="news-card-summary">厚生労働省は、令和８年熊本地震の影響を受けた事業主を対象に、産業雇用安定助成金の特例措置（令和８年熊本地震災害特例人材確保支援コース）を設置した。 地震に伴う経済上の理由により事業活動の一時的な縮小を余儀なくされた熊本県内の事業主が、在籍型...</p>
+<div class="news-card-footer">
+<span class="news-card-time">11/02 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="bengo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon bengo">⚖️</span>
+弁護士ドットコム
+</div>
+<span class="news-card-date">🕐 02:20</span>
+</div>
+<div class="news-card-body">
+<a href="https://news.yahoo.co.jp/articles/955f0705f88726592c116f456ff09126c1e2829f?source=rss" target="_blank" rel="noopener">
+<h3 class="news-card-title">タイミー直前キャンセル訴訟、運営会社の主張明らかに「マッチング後も企業側は解約できる」ワーカー反発(弁護士ドットコムニュース)</h3>
+<p class="news-card-summary">スポットワーク「タイミー」で決まっていた仕事を直前にキャンセルされ、賃金も支払われなかったとして、ワーカー9人が運営会社タイミー（東京都港区）に未払い賃金相当額などを求めている集団訴訟で、タイミー側の</p>
+<div class="news-card-footer">
+<span class="news-card-time">11/02 02:20</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+</div>
+</section>
+<section class="date-section" id="date-2026-11-01">
+<div class="date-section-header">
+<div class="date-section-icon">📅</div>
+<div class="date-section-info">
+<div class="date-section-date">2026-11-01</div>
+<div class="date-section-weekday">日曜日</div>
+</div>
+<div class="date-section-count">7件</div>
+</div>
+<div class="news-grid">
+<article class="news-card" data-source="jinjibu">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon jinjibu">👥</span>
+日本の人事部
+</div>
+<span class="news-card-date">🕐 22:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://jinjibu.jp/news/detl/27051/" target="_blank" rel="noopener">
+<h3 class="news-card-title">AI時代の企業が求める人材像に関する実態調査</h3>
+<p class="news-card-summary">AI時代の採用、企業はどんな人材を求める？「AIの実務活用」から、「専門性・課題解決・創造性との掛け合わせ」へアクシスコンサルティング株式会社（本社：東京都千代田区/代表取締役社長 COO：伊藤 文隆）は、...</p>
+<div class="news-card-footer">
+<span class="news-card-time">11/01 22:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="jinjibu">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon jinjibu">👥</span>
+日本の人事部
+</div>
+<span class="news-card-date">🕐 19:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://jinjibu.jp/article/detl/opinion/4257/" target="_blank" rel="noopener">
+<h3 class="news-card-title">タナケン教授の「プロティアン・キャリア」ゼミ【第85回】 人的資本AI経営時代のキャリア開発</h3>
+<p class="news-card-summary">AIが経営や人事に組み込まれる中で、キャリア開発をいかに進めていくか。採用の効率化、研修の最適化、人事評価の透明化。いずれもAI導入がもたらす変化ですが、それらによって働く人が自分の可能性を理解し、自...</p>
+<div class="news-card-footer">
+<span class="news-card-time">11/01 19:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="roumu">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon roumu">💼</span>
+労務ドットコム
+</div>
+<span class="news-card-date">🕐 15:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://roumu.com/archives/133531.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=133531" target="_blank" rel="noopener">
+<h3 class="news-card-title">2026年12月16日・2027年1月1日から愛知県の特定最低賃金が引上げられます</h3>
+<p class="news-card-summary">愛知県の地域別最低賃金は、2026年10月1日より1,195円が適用されていますが、特定最低賃金が改正され、2026年12月16日より「製鉄業、製鋼・製鋼圧延業、鋼材製造業」は1,230円、「輸送用機械器具製造業」1, […] The po...</p>
+<div class="news-card-footer">
+<span class="news-card-time">11/01 15:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="roumu">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon roumu">💼</span>
+労務ドットコム
+</div>
+<span class="news-card-date">🕐 15:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://roumu.com/archives/133538.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=133538" target="_blank" rel="noopener">
+<h3 class="news-card-title">進む企業のカスハラ対策とその実効性の確保</h3>
+<p class="news-card-summary">近年、カスタマーハラスメント（カスハラ）は従業の心身をむしばむ深刻な経営リスクとして社会問題化しており、10月からは企業にその対策の実施が求められています。そこで今回は、帝国データバンクの「カスタマーハラスメントに関する […] The p...</p>
+<div class="news-card-footer">
+<span class="news-card-time">11/01 15:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="roumu">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon roumu">💼</span>
+労務ドットコム
+</div>
+<span class="news-card-date">🕐 15:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://roumu.com/archives/133438.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=133438" target="_blank" rel="noopener">
+<h3 class="news-card-title">介誰現場におけるハラスメント事例集</h3>
+<p class="news-card-summary">タイトル：介誰現場におけるハラスメント事例集 発行者：株式会社三菱総合研究所 ヘルスケア ウェルネス本部 発行時期：2021年3月 ページ数：44ページ 概要：このリーフレットは、介護現場における利用者や家族等からのハラ […] The p...</p>
+<div class="news-card-footer">
+<span class="news-card-time">11/01 15:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/column/227606/" target="_blank" rel="noopener">
+<h3 class="news-card-title">育休制度の変遷へ対応／社会保険労務士法人広瀬事務所 古田 雪美</h3>
+<p class="news-card-summary">私は団塊ジュニア世代である。就職した当時はまだ総合職と一般職が性別により明確に区分されており、女性は一般職となることが当たり前であった。結婚または出産をきっかけに会社を辞めるのが慣習であり、退職を勧奨されることさえあった。 私は平成９年に社...</p>
+<div class="news-card-footer">
+<span class="news-card-time">11/01 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="bengo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon bengo">⚖️</span>
+弁護士ドットコム
+</div>
+<span class="news-card-date">🕐 00:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://news.yahoo.co.jp/articles/401faa1cac3da6150367f5b9f808cf4cbd393fce?source=rss" target="_blank" rel="noopener">
+<h3 class="news-card-title">「最悪の父親やなぁ」後悔しても暴行やめられず…生後2カ月の次女を殴って骨折させた自衛官の育児ストレス(弁護士ドットコムニュース)</h3>
+<p class="news-card-summary">生後わずか1〜2カ月のわが子の頬を指で弾き、首を絞め、最後には拳で殴って骨折させた。暴行と傷害の罪に問われた20代の男性自衛官は、法廷で一連の暴行を認めた。犯行の理由として語ったのは、泣きやまない子ど</p>
+<div class="news-card-footer">
+<span class="news-card-time">11/01 00:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+</div>
+</section>
+<section class="date-section" id="date-2026-10-31">
+<div class="date-section-header">
+<div class="date-section-icon">📅</div>
+<div class="date-section-info">
+<div class="date-section-date">2026-10-31</div>
+<div class="date-section-weekday">土曜日</div>
+</div>
+<div class="date-section-count">3件</div>
+</div>
+<div class="news-grid">
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/column/227556/" target="_blank" rel="noopener">
+<h3 class="news-card-title">【助成金の解説】雇用関係助成金の共通ルール 新しいQ&amp;Aで確認する申請前から受給後までの注意点／岡 佳伸</h3>
+<p class="news-card-summary">採用や人材育成、働きやすい職場づくりに取り組む際、雇用関係助成金は費用負担を軽減する選択肢となります。ただし、助成額や対象となる取組だけでなく、申請期限や書類の確認、受給後の管理にも目を向ける必要があります。 厚生労働省は、令和8年9月14...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/31 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/column/227616/" target="_blank" rel="noopener">
+<h3 class="news-card-title">【今週の労務書】『改訂版 問題社員トラブル円満解決の実践的手法――訴訟発展リスクを９割減らせる退職勧奨の進め方』</h3>
+<p class="news-card-summary">反発を抑え話し合うには 副題は「訴訟発展リスクを９割減らせる退職勧奨の進め方」。使用者側弁護士の筆者が、対話による円満解決の方法を詳説する。改訂版では、裁判例の更新を行うとともに、「指導に従わず勤務態度が不良な従業員」などのケースを追加した...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/31 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227383/" target="_blank" rel="noopener">
+<h3 class="news-card-title">互いに声を掛け合う安全文化根付かせて 建災防が全国大会</h3>
+<p class="news-card-summary">建設業労働災害防止協会は10月８、９日の両日、「第63回全国建設業労働災害防止大会」を新潟市内で開催した。 初日の総合集会では、今井雅則会長が挨拶（写真）。「現場で働く一人ひとりが危険を見逃さず、互いに声を掛け合って行動する安全文化を根付か...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/31 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+</div>
+</section>
+<section class="date-section" id="date-2026-10-30">
+<div class="date-section-header">
+<div class="date-section-icon">📅</div>
+<div class="date-section-info">
+<div class="date-section-date">2026-10-30</div>
+<div class="date-section-weekday">金曜日</div>
+</div>
+<div class="date-section-count">11件</div>
+</div>
+<div class="news-grid">
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 10:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227580/" target="_blank" rel="noopener">
+<h3 class="news-card-title">スプレーは「霧状」を クマ対策でセミナー 本荘労基署</h3>
+<p class="news-card-summary">秋田・本荘労働基準監督署（貝田直也署長）は10月20日、クマによる労働災害防止対策セミナーを開催した。クマの生態に詳しい秋田県立大学の星崎和彦教授が登壇し、男鹿半島や海岸砂丘上の松林など、「本来の生息域といえない環境でも出没している」と出没...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/30 10:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="psr">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon psr">📋</span>
+PSRネットワーク
+</div>
+<span class="news-card-date">🕐 07:50</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.psrn.jp/topics/detail.php?id=43346" target="_blank" rel="noopener">
+<h3 class="news-card-title">11月は「しわ寄せ」防止キャンペーン月間 令和8年度も実施 リーフレット等で周知</h3>
+<p class="news-card-summary">長時間労働の削減をはじめとする、大企業の働き方改革の取組が、取引先中小事業者に対する、適正なコスト負担を伴わない短納期発注や急な仕様変更などの「しわ寄せ」を生じさせている場合があります。 また、工事の民間発注者による短い工期の設定や、荷主に...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/30 07:50</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="psr">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon psr">📋</span>
+PSRネットワーク
+</div>
+<span class="news-card-date">🕐 07:48</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.psrn.jp/topics/detail.php?id=43345" target="_blank" rel="noopener">
+<h3 class="news-card-title">令和8年9月 有効求人倍率は3か月ぶりに上昇・完全失業率は2か月ぶりに改善</h3>
+<p class="news-card-summary">令和8年10月30日、厚生労働省から、令和8年9月分の一般職業紹介状況が公表されました。また、同日、総務省から、同月分の労働力調査の結果が公表されました。 これらにより、令和8年9月分の有効求人倍率と完全失業率が明らかにされています。 ●有...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/30 07:48</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="psr">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon psr">📋</span>
+PSRネットワーク
+</div>
+<span class="news-card-date">🕐 07:46</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.psrn.jp/topics/detail.php?id=43344" target="_blank" rel="noopener">
+<h3 class="news-card-title">「グッドキャリア企業アワード2026」の受賞企業を公表 取組事例も紹介（厚労省）</h3>
+<p class="news-card-summary">厚生労働省から、「グッドキャリア企業アワード2026」の受賞企業を決定したとのお知らせがありました（令和8年10月30日公表）。 このアワードは、従業員の自律的なキャリア形成支援について、他の模範となる取り組みを行っている企業を表彰し、その...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/30 07:46</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="psr">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon psr">📋</span>
+PSRネットワーク
+</div>
+<span class="news-card-date">🕐 07:42</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.psrn.jp/topics/detail.php?id=43343" target="_blank" rel="noopener">
+<h3 class="news-card-title">106万円の壁の撤廃に伴い『「年収の壁」への対応』のページを更新（厚労省）</h3>
+<p class="news-card-summary">厚生労働省では、短時間労働者が「年収の壁」を意識せず働くことができる環境づくりを支援しており、その一環として、施策情報などを紹介する専用ページ（「年収の壁」への対応）を設けています。 この度、令和8年10月からの「106万円の壁」の撤廃に伴...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/30 07:42</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227570/" target="_blank" rel="noopener">
+<h3 class="news-card-title">把握義務違反へ勧告 自己申告で労働時間管理 八王子労基署</h3>
+<p class="news-card-summary">労働時間の状況の適正な把握義務違反で、東京・八王子労働基準監督署（髙石一郎署長）が、９月に都内の公立大学法人に是正勧告をしていたことが同法人への取材により分かった。非常勤講師の労働時間について、手書きの帳簿に出退勤時刻と授業のコマ数を自己申...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/30 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227582/" target="_blank" rel="noopener">
+<h3 class="news-card-title">住宅補助月８万円に 給与以外の還元策強化へ 帝国不動産</h3>
+<p class="news-card-summary">賃貸住宅の「LiVLi」を展開する帝国不動産㈱（東京都中央区、木本啓紀代表取締役社長）は来年１月、給与以外での社員への成果還元策として、住宅補助の上限額を月5.5万円から８万円に引き上げる。食事補助や奨学金返済補助も導入する。2025年から...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/30 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227571/" target="_blank" rel="noopener">
+<h3 class="news-card-title">２次予防の取組み明記 ＴＨＰ指針を改正・適用 厚労省</h3>
+<p class="news-card-summary">厚生労働省は10月19日、事業場における労働者の健康保持増進のための指針（ＴＨＰ指針）を改正した。がんや女性特有の健康課題などに対する検診・精密検査の受診勧奨といった「２次予防」を健康保持増進措置の対象として明確に位置付けている。 指針では...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/30 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227382/" target="_blank" rel="noopener">
+<h3 class="news-card-title">集団分析結果踏まえリスク要因洗い出し 東京産保フォーラム</h3>
+<p class="news-card-summary">東京労働局は９月29日、「産業保健フォーラム IN TOKYO 2026」を開催した。北里大学医学部の堤明純教授が、ストレスチェック制度の活用方法を解説（写真）。集団分析結果を基に高リスクの要因をリストアップし、改善につなげるよう勧めている...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/30 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227564/" target="_blank" rel="noopener">
+<h3 class="news-card-title">社労士白書を公表 巻頭特集は「労務監査」 全国社労士会</h3>
+<p class="news-card-summary">全国社会保険労務士会連合会（若林正清会長）は2026年版の社会保険労務士白書を公表した。昨年６月の第９次社労士法改正により社労士の業務として明記された、労務監査を巻頭特集としている。 同白書は企業内部での管理の高度化と、外部に対する説明責任...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/30 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="bengo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon bengo">⚖️</span>
+弁護士ドットコム
+</div>
+<span class="news-card-date">🕐 01:30</span>
+</div>
+<div class="news-card-body">
+<a href="https://news.yahoo.co.jp/articles/b27ab6734a55246f370e882118825c51276d3ae9?source=rss" target="_blank" rel="noopener">
+<h3 class="news-card-title">「アイちゃんごめんね…堪忍して」最愛の妻と心中図った64歳夫、介護に疲れ果てた末の決断…法廷で嗚咽(弁護士ドットコムニュース)</h3>
+<p class="news-card-summary">「アイちゃんごめんね...俺が悪かった…堪忍して…」長年連れ添った妻と心中を図り、承諾殺人未遂の罪に問われた64歳の男性が、法廷で声を震わせた。【写真】25年も寝たきり…あの凶悪事件で被害に10月21</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/30 01:30</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+</div>
+</section>
+<section class="date-section" id="date-2026-10-29">
+<div class="date-section-header">
+<div class="date-section-icon">📅</div>
+<div class="date-section-info">
+<div class="date-section-date">2026-10-29</div>
+<div class="date-section-weekday">木曜日</div>
+</div>
+<div class="date-section-count">16件</div>
+</div>
+<div class="news-grid">
+<article class="news-card" data-source="roumu">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon roumu">💼</span>
+労務ドットコム
+</div>
+<span class="news-card-date">🕐 15:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://roumu.com/archives/133518.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=133518" target="_blank" rel="noopener">
+<h3 class="news-card-title">スポットワーク活用企業におけるコンプライアンス上の課題</h3>
+<p class="news-card-summary">人手不足の長期化に伴い、アプリ等を介して単発・短時間で働く「スキマバイト（スポットワーカー）」の活用が広がっています。そこで本日は、東京商工リサーチの「2026年10月 企業の「スキマバイト」に関するアンケート調査」から […] The p...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 15:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="psr">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon psr">📋</span>
+PSRネットワーク
+</div>
+<span class="news-card-date">🕐 11:26</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.psrn.jp/topics/detail.php?id=43324" target="_blank" rel="noopener">
+<h3 class="news-card-title">社労士の日常業務と労使トラブルの未然防止等に関する実態調査の結果を公表（全国社労士会連合会）</h3>
+<p class="news-card-summary">社会保険労務士総合研究機構は、「社労士の日常業務と労使トラブルの未然防止等に関する実態調査」を実施しました。 その調査結果が、全国社会保険労務士会連合会から公表されました（令和8年10月29日公表）。 この調査は、社会保険労務士法第１条に定...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 11:26</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="psr">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon psr">📋</span>
+PSRネットワーク
+</div>
+<span class="news-card-date">🕐 11:20</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.psrn.jp/topics/detail.php?id=43322" target="_blank" rel="noopener">
+<h3 class="news-card-title">「令和8年度 被扶養者資格再確認について」協会けんぽから案内</h3>
+<p class="news-card-summary">協会けんぽ（全国健康保険協会）では、保険給付の適正化などを目的に、健康保険法施行規則第50条に基づき、健康保険の被扶養者となっている方が、現在もその状況にあるかを確認するため、毎年度、被扶養者資格の再確認を実施しています。 本年度においては...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 11:20</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 10:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227584/" target="_blank" rel="noopener">
+<h3 class="news-card-title">【賃金調査】厚労省 26年確定初任給／大卒・男性 職種別初任給 事務系で26.6万円 伸び幅１万円超える</h3>
+<p class="news-card-summary">高卒生産職 20万円未満は５地域に 厚生労働省によると、今年４月に入社した大学卒・男性の職業別初任給は、企画系総合職などが含まれる「事務の職業」が26.6万円、ソフトウェア作成者や技術者などの「専門的・技術的職業」が25.7万円だった。各職...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 10:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227585/" target="_blank" rel="noopener">
+<h3 class="news-card-title">2030年までに35歳36万円 ４年で15％増めざす 連合・春闘基本構想</h3>
+<p class="news-card-summary">来春要求は「６％中心」へ 連合は10月17日、中央執行委員会を開き、2027春闘の方針策定に向けた基本構想を確認した。来春の賃上げ要求の目安を定期昇給分込みで「６％中心・５％以上」としたほか、初めて中期の賃金水準目標を設定した。今後４年間で...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/series/227625/" target="_blank" rel="noopener">
+<h3 class="news-card-title">【特別企画】オンラインセミナー 「その賃金差、説明できますか？」 改正同一労働同一賃金ガイドラインのポイントと職務分析・職務評価の活用法 働き方改革推進支援セミナー 2026秋／主催…全国社会保険労務士会連合会 共催…労働新聞社</h3>
+<p class="news-card-summary">ガイドラインが見直されたことで、ますます同一労働同一賃金に注目が集まっている。全国社会保険労務士会連合会は10月８日にオンラインセミナーを開き、制度の周知啓発を図った。パネルディスカッションでは、パートタイム労働者に対する人事制度を整備した...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227563/" target="_blank" rel="noopener">
+<h3 class="news-card-title">パタハラ 育休復帰時の配転無効 外勤職から内勤職へ 東京高裁</h3>
+<p class="news-card-summary">固定残業代対象から外れ 東京都内に本社がある住宅設備の大手企業で働く労働者が、育児休業から復帰した際の異動を不服として訴えた裁判で、東京高等裁判所（伊藤繁裁判長）は外勤職から内勤職への異動を違法・無効とした一審判決を維持した。異動に伴い外勤...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/column/227562/" target="_blank" rel="noopener">
+<h3 class="news-card-title">【主張】正社員にも最賃の影響が</h3>
+<p class="news-card-summary">今年度の賃上げは、中堅・中小規模に限って前年比プラスに――。このほど発表された厚生労働省の「賃金引上げ等の実態調査」によると、100～299人規模の１人平均賃金改定額は約1000円増の１万1279円、300～999人規模では約600円増の１...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227576/" target="_blank" rel="noopener">
+<h3 class="news-card-title">飲食店で時間外違反めだつ 店長の働き方改善を 兵庫労働局</h3>
+<p class="news-card-summary">負担軽減策示すリーフ 兵庫労働局（金成真一局長）は、昨年度実施した監督指導において、飲食店では全業種計の違反率を上回る23.4％の事業場で時間外労働関連の法違反を確認したと明らかにした。長時間労働抑制に向けて、“店長”の働き方の見直しを促す...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/series/227599/" target="_blank" rel="noopener">
+<h3 class="news-card-title">【人的資本経営期のＨＲ用語集】第197回 スパン・オブ・コントロール 適正数は５～７人 部下の能力などで変動／木谷 宏</h3>
+<p class="news-card-summary">過重労働を背景に注目 スパン・オブ・コントロール（ＳＯＣ：Span of Control）は「管理限界」と訳され、一人の管理職が同時に管理できる部下の人数を意味する。組織構造に関しては、分業（分離）と調整（統合）によるヒエラルキーを念頭に、...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/series/227581/" target="_blank" rel="noopener">
+<h3 class="news-card-title">【ピックアップ調査資料】令和８年度 労働環境の整備に関するアンケート結果（全国建設業協会）</h3>
+<p class="news-card-summary">４割が変形時間制導入 今年６月１日現在の状況について、会員企業3781社より回答を得ている。事業内容別の内訳は土木2470社、土木建築805社、建築340社、その他166社。 変形労働時間制の導入状況をみると、「１カ月以内での変形労働時間制...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227569/" target="_blank" rel="noopener">
+<h3 class="news-card-title">障害者雇用納付金 80人以上へ適用拡大案 準備期間を確保し 労政審分科会</h3>
+<p class="news-card-summary">中小企業団体は反対姿勢 労働政策審議会障害者雇用分科会は10月21日、法定雇用率の未達成企業から徴収する「納付金」の適用範囲を100人以下企業にまで広げるかをめぐって議論した（写真）。厚生労働省が、適用を拡大する場合のイメージとして、80～...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/series/227602/" target="_blank" rel="noopener">
+<h3 class="news-card-title">【キーは管理職！ 労働時間管理】第５回 月80時間以下なら良い？ 要因や配置に着目を 「残業の長短」ではなく／佐藤 有美</h3>
+<p class="news-card-summary">「超えてない」と「安全」は別問題 Ｑ Ａ課長の部下Ｂさんは、繁忙期が続き、今月の時間外労働・休日労働の合計が１カ月70時間程度で、休日出勤の日もあった。Ｂさんは「80時間にならないから大丈夫です」と話す。Ａ課長は負担を減らそうと仕事を一部引...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/series/227608/" target="_blank" rel="noopener">
+<h3 class="news-card-title">【ＡＩ＆ＳＮＳにまつわる最新労務トラブル防止術】第５回 ＳＮＳ上でハラスメント 使用者責任認定例も 禁止規定設けて姿勢示す／原 英彰</h3>
+<p class="news-card-summary">私生活は制限できない ＳＮＳの登場によって、連絡先の交換は電話番号の交換を行っていたころに比べてカジュアルになった。業務連絡などにLINEなどのＳＮＳを利用している企業も多い。 しかし、ＳＮＳのカジュアルさゆえに、トラブルが発生しやすいのも...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/series/227600/" target="_blank" rel="noopener">
+<h3 class="news-card-title">【ケーススタディー人事学Ｑ＆Ａ】第111回 机を片付けない労働者 整理整頓を業務命令 「懲戒になり得る」明確に／西川 暢春</h3>
+<p class="news-card-summary">【Ｑ】 専門商社のＡ社には、打合せのため社外から来客者が日々訪れる。少しでも印象を良くするため、社員には日頃からデスク周りの片付けを指示している。しかし社員Ｂは一向に片付けず、机には書類の山が積み重なっている状況。就業規則には服務規律として...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/series/227596/" target="_blank" rel="noopener">
+<h3 class="news-card-title">【人事の目的に立ち返った転居転勤制度の見直し】第１回 火付け役となった公務員白書 日本社会の課題が凝縮 前向きな職員は「少数派」／池田 心豪</h3>
+<p class="news-card-summary">強い人事権が背景 転居を伴う転勤への関心がにわかに高まっている。さまざまなメディアが転勤制度の問題点を指摘し、転勤制度を見直した企業の事例を紹介しているのは周知のとおりである。 その火付け役になったのは６月17日に公表された人事院の令和７年...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/29 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+</div>
+</section>
+<section class="date-section" id="date-2026-10-28">
+<div class="date-section-header">
+<div class="date-section-icon">📅</div>
+<div class="date-section-info">
+<div class="date-section-date">2026-10-28</div>
+<div class="date-section-weekday">水曜日</div>
+</div>
+<div class="date-section-count">8件</div>
+</div>
+<div class="news-grid">
+<article class="news-card" data-source="roumu">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon roumu">💼</span>
+労務ドットコム
+</div>
+<span class="news-card-date">🕐 21:22</span>
+</div>
+<div class="news-card-body">
+<a href="https://roumu.com/archives/133515.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=133515" target="_blank" rel="noopener">
+<h3 class="news-card-title">社会保険加入の検討に利用できる手取り試算ツール</h3>
+<p class="news-card-summary">社会保険の適用拡大により、2027年10月から、従業員数36人～50人の企業で働く週20時間以上のパートタイマー等も、新たに社会保険の加入対象となります。 加入によって従業員の将来の年金額や傷病手当金・出産手当金等の保障 […] The p...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/28 21:22</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="jinjibu">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon jinjibu">👥</span>
+日本の人事部
+</div>
+<span class="news-card-date">🕐 19:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://jinjibu.jp/article/detl/hr-survey/4233/" target="_blank" rel="noopener">
+<h3 class="news-card-title">東証プライム上場企業の2026年 年末一時金（賞与・ボーナス）の妥結水準調査（労務行政研究所）</h3>
+<p class="news-card-summary">民間調査機関の一般財団法人 労務行政研究所（理事⾧：猪股 宏）では、東証プライム上場企業を対象に2026年年末一時金の妥結水準を調査し、支給水準は175社、支給月数は192社の結果を集計した（2026年8月24日現在...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/28 19:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="roumu">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon roumu">💼</span>
+労務ドットコム
+</div>
+<span class="news-card-date">🕐 15:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://roumu.com/archives/133435.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=133435" target="_blank" rel="noopener">
+<h3 class="news-card-title">介誰現場におけるハラスメント対策マニュアル</h3>
+<p class="news-card-summary">タイトル：介誰現場におけるハラスメント対策マニュアル 発行者：株式会社三菱総合研究所 ヘルスケア ウェルネス本部 発行時期：2022年3月 ページ数：7ページ 概要：このリーフレットは、介護現場における利用者や家族等から […] The p...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/28 15:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 10:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227259/" target="_blank" rel="noopener">
+<h3 class="news-card-title">【今週の視点】メンタルヘルス 管理者を支援者に 人間関係で悩み深刻</h3>
+<p class="news-card-summary">「職場ルール」の指導を 職場の心の健康問題が後を絶たない。とくに新卒者の離職率の高さは深刻だ。主な背景には上司との人間関係や仕事のきつさがある。産業医科大学の柴田喜幸教授は、職場に馴染み、組織の一員として定着し、戦力として活躍できるよう管理...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/28 10:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="psr">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon psr">📋</span>
+PSRネットワーク
+</div>
+<span class="news-card-date">🕐 07:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.psrn.jp/topics/detail.php?id=43270" target="_blank" rel="noopener">
+<h3 class="news-card-title">パート組合員の令和9年春闘賃上げ 昇給分を含め7%（時間額で90円）引き上げる目標を掲げる（UAゼンセン）</h3>
+<p class="news-card-summary">UAゼンセン（全国繊維化学食品流通サービス一般労働組合同盟）は、令和8年10月26日、第2回中央執行委員会を開催し、2027労働条件闘争方針の素案を確認しました。これを受けて、翌27日、2027労働条件闘争素案に関する事前説明会（記者会見）...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/28 07:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="psr">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon psr">📋</span>
+PSRネットワーク
+</div>
+<span class="news-card-date">🕐 06:44</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.psrn.jp/topics/detail.php?id=43269" target="_blank" rel="noopener">
+<h3 class="news-card-title">協会けんぽの傷病手当金 支給原因の4割超が「精神及び行動の障害」（令和7年度の調査）</h3>
+<p class="news-card-summary">協会けんぽ（全国健康保険協会）から、「現金給付受給者状況調査（令和7年度）」が公表されています。これにより、令和７年10月の傷病手当金と出産手当金の受給状況が明らかにされています。 たとえば、傷病手当金について、受給の原因となった傷病別に件...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/28 06:44</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227253/" target="_blank" rel="noopener">
+<h3 class="news-card-title">運輸業人材確保 職安と連携し未経験者取込 石川県</h3>
+<p class="news-card-summary">石川県は、トラックやタクシーなど運輸業への未経験者の取込みに向け、石川労働局（常盤剛史局長）との連携を強化する。未経験から入職したドライバーの声を多く盛り込んだリーフレットを作成。県内のハローワークの相談窓口で求職者に配布する。 同県交通政...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/28 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227380/" target="_blank" rel="noopener">
+<h3 class="news-card-title">健康障害防止２割が怠る 違法な時間外は４割弱も 厚労省・監督指導結果</h3>
+<p class="news-card-summary">厚生労働省は、「長時間労働が疑われる事業場に対する令和７年度の監督指導結果」を公表した。対象となった２万9150事業場のうち、過重労働による健康障害防止措置に関する法令に違反していたとして、5919事業場（20.3％）に是正勧告書を交付して...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/28 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+</div>
+</section>
+<section class="date-section" id="date-2026-10-27">
+<div class="date-section-header">
+<div class="date-section-icon">📅</div>
+<div class="date-section-info">
+<div class="date-section-date">2026-10-27</div>
+<div class="date-section-weekday">火曜日</div>
+</div>
+<div class="date-section-count">8件</div>
+</div>
+<div class="news-grid">
+<article class="news-card" data-source="jinjibu">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon jinjibu">👥</span>
+日本の人事部
+</div>
+<span class="news-card-date">🕐 22:47</span>
+</div>
+<div class="news-card-body">
+<a href="https://jinjibu.jp/news/detl/27036/" target="_blank" rel="noopener">
+<h3 class="news-card-title">企業の休職者対応と健康経営に関する意識調査</h3>
+<p class="news-card-summary">メンタルヘルス対策にAI・アプリを導入する企業の6割が「身体面の不調の見極めは、人が担う役割」と回答。未導入企業の約2倍メンタルヘルス対策全般については、成果を「十分」と感じる担当者は2割弱。休職者対応...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/27 22:47</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="jinjibu">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon jinjibu">👥</span>
+日本の人事部
+</div>
+<span class="news-card-date">🕐 19:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://jinjibu.jp/article/detl/hr-survey/4249/" target="_blank" rel="noopener">
+<h3 class="news-card-title">母親ペナルティの背景に迫る－分析で原因を見極め、施策につなげる (マーサージャパン)</h3>
+<p class="news-card-summary">子どもを持つ女性の時間当たり賃金が、子どもを持たない女性より平均的に低い現象は、「母親ペナルティ（マザーフッド・ペナルティ）」と呼ばれる。本稿では、子どもを持つ女性と持たない女性の賃金差の原因仮説...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/27 19:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="jinjibu">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon jinjibu">👥</span>
+日本の人事部
+</div>
+<span class="news-card-date">🕐 19:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://jinjibu.jp/article/detl/moyamoya/4247/" target="_blank" rel="noopener">
+<h3 class="news-card-title">職場のモヤモヤ解決図鑑【第113回】 年間5日の有給休暇、消化しない社員にどうやって取得させる？</h3>
+<p class="news-card-summary">有給休暇の取得を拒否する従業員に対して、人事や管理職がどのようにアプローチすべきかを説明します。</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/27 19:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="roumu">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon roumu">💼</span>
+労務ドットコム
+</div>
+<span class="news-card-date">🕐 15:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://roumu.com/archives/133490.html?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=133490" target="_blank" rel="noopener">
+<h3 class="news-card-title">厚生労働省が公表した女性管理職登用・育成のためのリーフレット</h3>
+<p class="news-card-summary">2026年4月1日に改正女性活躍推進法が施行され、従業員数101人以上の企業において、女性管理職比率の情報公表が義務付けられましたが、これに関連するものとして、厚生労働省から女性管理職登用・育成のためのリーフレットが公表 […] The p...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/27 15:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 10:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227255/" target="_blank" rel="noopener">
+<h3 class="news-card-title">認識済みでの違反増加 最賃係る監督結果公表 愛知労働局</h3>
+<p class="news-card-summary">地域別最低賃金の改定を知りながら、違反する事業場が増加――愛知労働局（久知良俊二局長）は１～３月に実施した最低賃金の履行確保にかかる監督指導結果を公表した。違反理由を「最低賃金の改定（金額・発効日）を知っていたが賃金の改定をしていなかった」...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/27 10:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="psr">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon psr">📋</span>
+PSRネットワーク
+</div>
+<span class="news-card-date">🕐 09:51</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.psrn.jp/topics/detail.php?id=43258" target="_blank" rel="noopener">
+<h3 class="news-card-title">介護認定審査会の簡素化対象の拡大などを議論（社保審の介護保険部会）</h3>
+<p class="news-card-summary">厚生労働省から、令和8年10月26日に開催された「第137回 社会保障審議会介護保険部会」の資料が公表されました。 今回の議事に、要介護認定が含まれており、そのなかで、介護認定審査会の簡素化＊の対象の拡大が議論されていることが話題になってい...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/27 09:51</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="psr">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon psr">📋</span>
+PSRネットワーク
+</div>
+<span class="news-card-date">🕐 09:50</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.psrn.jp/topics/detail.php?id=43257" target="_blank" rel="noopener">
+<h3 class="news-card-title">オンラインセミナー「現場業務でもできるテレワーク改革」を開催（テレワーク総合ポータルサイト）</h3>
+<p class="news-card-summary">厚生労働省・総務省が運営する「テレワーク総合ポータルサイト」では、テレワークの啓発・導入支援、事例紹介など、テレワークに関する様々な情報を紹介しています。 このサイトにおいて、「テレワーク オンライン セミナー 第4回」の募集が開始されまし...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/27 09:50</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+<article class="news-card" data-source="rodo">
+<div class="news-card-header">
+<div class="news-card-source">
+<span class="news-card-source-icon rodo">📰</span>
+労働新聞社
+</div>
+<span class="news-card-date">🕐 05:00</span>
+</div>
+<div class="news-card-body">
+<a href="https://www.rodo.co.jp/news/227223/" target="_blank" rel="noopener">
+<h3 class="news-card-title">カスハラ対策の実施徹底へ指導 厚労省・均等方針</h3>
+<p class="news-card-summary">行政指導を通じてカスタマーハラスメント対策を徹底――厚生労働省は、労働施策総合推進法等の改正を受け、男女雇用機会均等対策基本方針を改定する。近年の均等法や女性活躍推進法、労推法関連の制度改正を踏まえた施策の方向性を明示する。パブリックコメン...</p>
+<div class="news-card-footer">
+<span class="news-card-time">10/27 05:00</span>
+<span class="news-card-arrow">→</span>
+</div>
+</a>
+</div>
+</article>
+</div>
+</section>
+
+            <div class="archive-section">
+                <div class="archive-header">
+                    <div class="archive-icon">📚</div>
+                    <div class="archive-title">過去のニュース一覧</div>
+                </div>
+                <div class="archive-list">
+                    <a href="2026-10-27_2026-11-02.html" class="archive-item current"><span class="archive-item-icon">📅</span>2026-10-27 〜 2026-11-02</a><a href="2026-10-20_2026-10-26.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-10-20 〜 2026-10-26</a><a href="2026-10-13_2026-10-19.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-10-13 〜 2026-10-19</a><a href="2026-10-06_2026-10-12.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-10-06 〜 2026-10-12</a><a href="2026-09-29_2026-10-05.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-09-29 〜 2026-10-05</a><a href="2026-09-22_2026-09-28.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-09-22 〜 2026-09-28</a><a href="2026-09-15_2026-09-21.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-09-15 〜 2026-09-21</a><a href="2026-09-08_2026-09-14.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-09-08 〜 2026-09-14</a><a href="2026-09-01_2026-09-07.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-09-01 〜 2026-09-07</a><a href="2026-08-25_2026-08-31.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-08-25 〜 2026-08-31</a><a href="2026-08-18_2026-08-24.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-08-18 〜 2026-08-24</a><a href="2026-08-11_2026-08-17.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-08-11 〜 2026-08-17</a><a href="2026-08-04_2026-08-10.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-08-04 〜 2026-08-10</a><a href="2026-07-28_2026-08-03.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-07-28 〜 2026-08-03</a><a href="2026-07-21_2026-07-27.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-07-21 〜 2026-07-27</a><a href="2026-07-14_2026-07-20.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-07-14 〜 2026-07-20</a><a href="2026-07-07_2026-07-13.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-07-07 〜 2026-07-13</a><a href="2026-06-30_2026-07-06.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-06-30 〜 2026-07-06</a><a href="2026-06-23_2026-06-29.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-06-23 〜 2026-06-29</a><a href="2026-06-16_2026-06-22.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-06-16 〜 2026-06-22</a><a href="2026-06-09_2026-06-15.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-06-09 〜 2026-06-15</a><a href="2026-06-02_2026-06-08.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-06-02 〜 2026-06-08</a><a href="2026-05-26_2026-06-01.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-05-26 〜 2026-06-01</a><a href="2026-05-19_2026-05-25.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-05-19 〜 2026-05-25</a><a href="2026-05-12_2026-05-18.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-05-12 〜 2026-05-18</a><a href="2026-05-05_2026-05-11.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-05-05 〜 2026-05-11</a><a href="2026-04-28_2026-05-04.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-04-28 〜 2026-05-04</a><a href="2026-04-21_2026-04-27.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-04-21 〜 2026-04-27</a><a href="2026-04-14_2026-04-20.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-04-14 〜 2026-04-20</a><a href="2026-04-07_2026-04-13.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-04-07 〜 2026-04-13</a><a href="2026-03-31_2026-04-06.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-03-31 〜 2026-04-06</a><a href="2026-03-24_2026-03-30.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-03-24 〜 2026-03-30</a><a href="2026-03-17_2026-03-23.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-03-17 〜 2026-03-23</a><a href="2026-03-10_2026-03-16.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-03-10 〜 2026-03-16</a><a href="2026-03-03_2026-03-09.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-03-03 〜 2026-03-09</a><a href="2026-02-24_2026-03-02.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-02-24 〜 2026-03-02</a><a href="2026-02-17_2026-02-23.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-02-17 〜 2026-02-23</a><a href="2026-02-10_2026-02-16.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-02-10 〜 2026-02-16</a><a href="2026-02-03_2026-02-09.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-02-03 〜 2026-02-09</a><a href="2026-01-30_2026-02-05.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-01-30 〜 2026-02-05</a><a href="2026-01-29_2026-02-04.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-01-29 〜 2026-02-04</a><a href="2026-01-28_2026-02-03.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-01-28 〜 2026-02-03</a><a href="2026-01-27_2026-02-02.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-01-27 〜 2026-02-02</a><a href="2026-01-26_2026-02-01.html" class="archive-item"><span class="archive-item-icon">📅</span>2026-01-26 〜 2026-02-01</a>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-brand">iand weekly</div>
+        <p>RSSフィードから自動収集・更新</p>
+    </footer>
+
+    <script>
+        // Source filtering
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Clear topic selection
+                document.querySelectorAll('.summary-content li').forEach(li => li.classList.remove('active'));
+                document.querySelectorAll('.news-card').forEach(card => {
+                    card.classList.remove('highlighted', 'dimmed');
+                });
+
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const filter = tab.dataset.filter;
+                document.querySelectorAll('.news-card').forEach(card => {
+                    if (filter === 'all' || card.dataset.source === filter) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Smooth scroll for date nav
+        document.querySelectorAll('.date-nav-item').forEach(link => {
+            link.addEventListener('click', (e) => {
+                document.querySelectorAll('.date-nav-item').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+
+        // Topic click to highlight related articles
+        document.querySelectorAll('.summary-content li').forEach(item => {
+            item.addEventListener('click', () => {
+                const keywords = item.dataset.keywords;
+                if (!keywords) return;
+
+                const keywordList = keywords.split(',').map(k => k.trim().toLowerCase());
+                const isActive = item.classList.contains('active');
+
+                // Reset all
+                document.querySelectorAll('.summary-content li').forEach(li => li.classList.remove('active'));
+                document.querySelectorAll('.news-card').forEach(card => {
+                    card.classList.remove('highlighted', 'dimmed');
+                    card.style.display = '';
+                });
+
+                // Reset source filter to "all"
+                document.querySelectorAll('.filter-tab').forEach(t => {
+                    t.classList.toggle('active', t.dataset.filter === 'all');
+                });
+
+                if (isActive) return; // Toggle off
+
+                item.classList.add('active');
+
+                // Find matching cards
+                let hasMatch = false;
+                document.querySelectorAll('.news-card').forEach(card => {
+                    const title = card.querySelector('.news-card-title')?.textContent.toLowerCase() || '';
+                    const summary = card.querySelector('.news-card-summary')?.textContent.toLowerCase() || '';
+                    const content = title + ' ' + summary;
+
+                    const matches = keywordList.some(kw => content.includes(kw));
+                    if (matches) {
+                        card.classList.add('highlighted');
+                        hasMatch = true;
+                    } else {
+                        card.classList.add('dimmed');
+                    }
+                });
+
+                // Scroll to first match
+                if (hasMatch) {
+                    const firstMatch = document.querySelector('.news-card.highlighted');
+                    if (firstMatch) {
+                        firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
